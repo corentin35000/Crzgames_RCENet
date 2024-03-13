@@ -1,9 +1,9 @@
-#ifndef RCENET_UNIX_H
-#define RCENET_UNIX_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+/** 
+ @file  unix.h
+ @brief ENet Unix header
+*/
+#ifndef __ENET_UNIX_H__
+#define __ENET_UNIX_H__
 
 #include <stdlib.h>
 #include <sys/time.h>
@@ -43,9 +43,6 @@ typedef fd_set ENetSocketSet;
 #define ENET_SOCKETSET_ADD(sockset, socket)    FD_SET (socket, & (sockset))
 #define ENET_SOCKETSET_REMOVE(sockset, socket) FD_CLR (socket, & (sockset))
 #define ENET_SOCKETSET_CHECK(sockset, socket)  FD_ISSET (socket, & (sockset))
+    
+#endif /* __ENET_UNIX_H__ */
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* RCENET_UNIX_H */

@@ -1,5 +1,9 @@
+/** 
+ @file list.c
+ @brief ENet linked list functions
+*/
 #define ENET_BUILDING_LIB 1
-#include "rcenet/enet.h"
+#include "enet6/enet.h"
 
 /** 
     @defgroup list ENet linked list utility functions

@@ -1,9 +1,9 @@
-#ifndef RCENET_TIME_H
-#define RCENET_TIME_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+/** 
+ @file  time.h
+ @brief ENet time constants and macros
+*/
+#ifndef __ENET_TIME_H__
+#define __ENET_TIME_H__
 
 #define ENET_TIME_OVERFLOW 86400000
 
@@ -14,8 +14,5 @@ extern "C" {
 
 #define ENET_TIME_DIFFERENCE(a, b) ((a) - (b) >= ENET_TIME_OVERFLOW ? (b) - (a) : (a) - (b))
 
-#ifdef __cplusplus
-}
-#endif
+#endif /* __ENET_TIME_H__ */
 
-#endif /* RCENET_TIME_H */

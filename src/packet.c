@@ -1,6 +1,10 @@
-#define ENET_BUILDING_LIB 1
-#include "rcenet/enet.h"
+/** 
+ @file  packet.c
+ @brief ENet packet management functions
+*/
 #include <string.h>
+#define ENET_BUILDING_LIB 1
+#include "enet6/enet.h"
 
 /** @defgroup Packet ENet packet functions 
     @{ 
@@ -42,6 +46,8 @@ enet_packet_create (const void * data, size_t dataLength, enet_uint32 flags)
     packet -> dataLength = dataLength;
     packet -> freeCallback = NULL;
     packet -> userData = NULL;
+    packet -> acknowledgeCallback = NULL;
+    packet -> remainingFragments = 0;
 
     return packet;
 }
@@ -149,6 +155,39 @@ enet_crc32 (const ENetBuffer * buffers, size_t bufferCount)
     }
 
     return ENET_HOST_TO_NET_32 (~ crc);
+}
+
+void* enet_packet_get_data(const ENetPacket* packet) {
+  return (void*)packet->data;
+}
+
+void* enet_packet_get_user_data(const ENetPacket* packet) {
+  return packet->userData;
+}
+
+void enet_packet_set_user_data(ENetPacket* packet, void* userData) {
+  packet->userData = userData;
+}
+
+int enet_packet_get_length(const ENetPacket* packet) {
+  return packet->dataLength;
+}
+
+void enet_packet_set_acknowledge_callback(ENetPacket* packet, ENetPacketAcknowledgedCallback callback) {
+  packet->acknowledgeCallback = callback;
+}
+
+void enet_packet_set_free_callback(ENetPacket* packet, ENetPacketFreeCallback callback) {
+  packet->freeCallback = callback;
+}
+
+int enet_packet_check_references(const ENetPacket* packet) {
+  return (int)packet->referenceCount;
+}
+
+void enet_packet_dispose(ENetPacket* packet) {
+  if (packet->referenceCount == 0)
+    enet_packet_destroy(packet);
 }
 
 /** @} */

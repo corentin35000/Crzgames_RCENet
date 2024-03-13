@@ -1,9 +1,9 @@
-#ifndef RCENET_LIST_H
-#define RCENET_LIST_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+/** 
+ @file  list.h
+ @brief ENet list management 
+*/
+#ifndef __ENET_LIST_H__
+#define __ENET_LIST_H__
 
 #include <stdlib.h>
 
@@ -39,8 +39,5 @@ extern size_t enet_list_size (ENetList *);
 #define enet_list_front(list) ((void *) (list) -> sentinel.next)
 #define enet_list_back(list) ((void *) (list) -> sentinel.previous)
 
-#ifdef __cplusplus
-}
-#endif
+#endif /* __ENET_LIST_H__ */
 
-#endif /* RCENET_LIST_H */

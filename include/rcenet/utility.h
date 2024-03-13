@@ -1,16 +1,13 @@
-#ifndef RCENET_UTILITY_H
-#define RCENET_UTILITY_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+/** 
+ @file  utility.h
+ @brief ENet utility header
+*/
+#ifndef __ENET_UTILITY_H__
+#define __ENET_UTILITY_H__
 
 #define ENET_MAX(x, y) ((x) > (y) ? (x) : (y))
 #define ENET_MIN(x, y) ((x) < (y) ? (x) : (y))
 #define ENET_DIFFERENCE(x, y) ((x) < (y) ? (y) - (x) : (x) - (y))
 
-#ifdef __cplusplus
-}
-#endif
+#endif /* __ENET_UTILITY_H__ */
 
-#endif /* RCENET_UTILITY_H */

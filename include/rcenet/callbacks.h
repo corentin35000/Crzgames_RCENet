@@ -1,13 +1,14 @@
-#ifndef RCENET_CALLBACKS_H
-#define RCENET_CALLBACKS_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+/** 
+ @file  callbacks.h
+ @brief ENet callbacks
+*/
+#ifndef __ENET_CALLBACKS_H__
+#define __ENET_CALLBACKS_H__
 
 #include <stdlib.h>
 
-typedef struct _ENetCallbacks {
+typedef struct _ENetCallbacks
+{
     void * (ENET_CALLBACK * malloc) (size_t size);
     void (ENET_CALLBACK * free) (void * memory);
     void (ENET_CALLBACK * no_memory) (void);
@@ -17,11 +18,10 @@ typedef struct _ENetCallbacks {
     @{
     @ingroup private
 */
-extern void *enet_malloc (size_t);
-extern void enet_free (void *);
+extern void * enet_malloc (size_t);
+extern void   enet_free (void *);
 
-#ifdef __cplusplus
-}
-#endif
+/** @} */
 
-#endif /* RCENET_CALLBACKS_H */
+#endif /* __ENET_CALLBACKS_H__ */
+
