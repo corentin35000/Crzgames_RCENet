@@ -2,7 +2,6 @@
 
 ## 🛠 Tech Stack
 - C (Language)
-- A C99 Compiler
 - CI / CD (Github Actions)
 - CMake and xMake (Build script)
 - Compiler (GCC, CL, Clang, Ninja, NDK)
