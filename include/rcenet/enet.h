@@ -1,9 +1,5 @@
-/** 
- @file  enet.h
- @brief ENet public header file
-*/
-#ifndef __ENET_ENET_H__
-#define __ENET_ENET_H__
+#ifndef RCENET_H
+#define RCENET_H
 
 #ifdef __cplusplus
 extern "C"
@@ -12,17 +8,18 @@ extern "C"
 
 #include <stdlib.h>
 
-#ifdef _WIN32
-#include "enet/win32.h"
-#else
-#include "enet/unix.h"
+#ifdef _WIN32 /* Windows */
+#include "rcenet/win32.h"
+#else         /* Unix (Linux, macOS, Android, iOS, BSD, Solaris, etc.) */
+#include "rcenet/unix.h"
 #endif
 
-#include "enet/types.h"
-#include "enet/protocol.h"
-#include "enet/list.h"
-#include "enet/callbacks.h"
+#include "rcenet/types.h"
+#include "rcenet/protocol.h"
+#include "rcenet/list.h"
+#include "rcenet/callbacks.h"
 
+/* Versioning RCENet */
 #define ENET_VERSION_MAJOR 1
 #define ENET_VERSION_MINOR 3
 #define ENET_VERSION_PATCH 17
@@ -612,5 +609,4 @@ extern size_t enet_protocol_command_size (enet_uint8);
 }
 #endif
 
-#endif /* __ENET_ENET_H__ */
-
+#endif /* RCENET_H */

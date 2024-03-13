@@ -1,16 +1,16 @@
-/** 
- @file  win32.h
- @brief ENet Win32 header
-*/
-#ifndef __ENET_WIN32_H__
-#define __ENET_WIN32_H__
+#ifndef RCENET_WIN32_H
+#define RCENET_WIN32_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifdef _MSC_VER
 #ifdef ENET_BUILDING_LIB
-#pragma warning (disable: 4267) // size_t to int conversion
-#pragma warning (disable: 4244) // 64bit to 32bit int
-#pragma warning (disable: 4018) // signed/unsigned mismatch
-#pragma warning (disable: 4146) // unary minus operator applied to unsigned type
+#pragma warning (disable: 4267) /* size_t to int conversion */
+#pragma warning (disable: 4244) /* 64bit to 32bit int */
+#pragma warning (disable: 4018) /* signed/unsigned mismatch */
+#pragma warning (disable: 4146) /* unary minus operator applied to unsigned type */
 #define _CRT_SECURE_NO_DEPRECATE
 #define _CRT_SECURE_NO_WARNINGS
 #endif
@@ -54,6 +54,8 @@ typedef fd_set ENetSocketSet;
 #define ENET_SOCKETSET_REMOVE(sockset, socket) FD_CLR (socket, & (sockset))
 #define ENET_SOCKETSET_CHECK(sockset, socket)  FD_ISSET (socket, & (sockset))
 
-#endif /* __ENET_WIN32_H__ */
+#ifdef __cplusplus
+}
+#endif
 
-
+#endif /* RCENET_WIN32_H */
