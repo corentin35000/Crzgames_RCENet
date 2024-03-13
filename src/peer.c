@@ -1,10 +1,6 @@
-/** 
- @file  peer.c
- @brief ENet peer management functions
-*/
-#include <string.h>
 #define ENET_BUILDING_LIB 1
-#include "enet/enet.h"
+#include "rcenet/enet.h"
+#include <string.h>
 
 /** @defgroup peer ENet peer functions 
     @{

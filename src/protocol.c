@@ -1,13 +1,9 @@
-/** 
- @file  protocol.c
- @brief ENet protocol functions
-*/
+#define ENET_BUILDING_LIB 1
+#include "rcenet/utility.h"
+#include "rcenet/time.h"
+#include "rcenet/enet.h"
 #include <stdio.h>
 #include <string.h>
-#define ENET_BUILDING_LIB 1
-#include "enet/utility.h"
-#include "enet/time.h"
-#include "enet/enet.h"
 
 static const size_t commandSizes [ENET_PROTOCOL_COMMAND_COUNT] =
 {

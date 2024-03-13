@@ -1,11 +1,7 @@
-/** 
- @file  win32.c
- @brief ENet Win32 system specific functions
-*/
 #ifdef _WIN32
 
 #define ENET_BUILDING_LIB 1
-#include "enet/enet.h"
+#include "rcenet/enet.h"
 #include <windows.h>
 #include <mmsystem.h>
 #include <ws2ipdef.h>

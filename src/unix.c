@@ -1,7 +1,3 @@
-/** 
- @file  unix.c
- @brief ENet Unix system specific functions
-*/
 #ifndef _WIN32
 
 #include <sys/types.h>
@@ -16,7 +12,7 @@
 #include <time.h>
 
 #define ENET_BUILDING_LIB 1
-#include "enet/enet.h"
+#include "rcenet/enet.h"
 
 #ifdef __APPLE__
 #ifdef HAS_POLL
