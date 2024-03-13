@@ -53,7 +53,7 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 <br /><br /><br /><br />
 
 
-## ⚙️ Setup Environment
+## ⚙️ Setup Environment Development
 1. Clone the project repository using the following commands :
   ```bash
   git clone git@github.com:corentin35000/Crzgames_RCENet.git
