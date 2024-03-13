@@ -1,11 +1,5 @@
 # Changelog
 
-
-
-<br /><br /><br ><br /><br /><br /><br ><br />
-
-# ENet :
-
 ## 1.0.0 (2024-03-13)
 
 
@@ -26,6 +20,11 @@
 * refactoring CHANGELOG ([214f3ed](https://github.com/corentin35000/Crzgames_RCENet/commit/214f3ed9fca43a6087f85cfba163b06156becc2a))
 * refactoring CMakeLists.txt updating ([68ada46](https://github.com/corentin35000/Crzgames_RCENet/commit/68ada462c9d62e258000a4610c16fcf00e4abb49))
 * updating README.md for project ([f263a49](https://github.com/corentin35000/Crzgames_RCENet/commit/f263a490ce534acbc9b3930980e3d079e8e3ca41))
+
+<br /><br /><br /><br /><br /><br />
+
+
+# ENet :
 
 ## [1.3.17](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.3.16...v1.3.17) - 2020-11-15
 
