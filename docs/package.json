@@ -1,0 +1,16 @@
+{
+  "name": "rcenet-docs",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vitepress dev --open",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "dependencies": {
+    "vitepress": "^1.0.0-rc.45"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

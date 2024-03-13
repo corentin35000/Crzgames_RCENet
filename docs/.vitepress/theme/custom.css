@@ -1,0 +1,11 @@
+/* Text 'RC2D' in page home */
+:root {
+    --vp-home-hero-name-color: var(--vp-c-green-1);
+}
+
+/* Button 'Get started' */
+:root {
+    --vp-button-brand-bg: var(--vp-c-green-3); /* Couleur de fond normale */
+    --vp-button-brand-hover-bg: var(--vp-c-green-2); /* Couleur de fond au survol */
+    --vp-button-brand-active-bg: var(--vp-c-green-1); /* Couleur de fond lors du clic */
+}
