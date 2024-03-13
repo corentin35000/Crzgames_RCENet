@@ -2,10 +2,10 @@
  @file  protocol.h
  @brief ENet protocol
 */
-#ifndef __ENET_PROTOCOL_H__
-#define __ENET_PROTOCOL_H__
+#ifndef RCENET_PROTOCOL_H
+#define RCENET_PROTOCOL_H
 
-#include "enet6/types.h"
+#include "rcenet/types.h"
 
 enum
 {
@@ -202,5 +202,5 @@ typedef union _ENetProtocol
 #pragma pack(pop)
 #endif
 
-#endif /* __ENET_PROTOCOL_H__ */
+#endif /* RCENET_PROTOCOL_H */
 

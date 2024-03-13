@@ -2,8 +2,8 @@
  @file  win32.h
  @brief ENet Win32 header
 */
-#ifndef __ENET_WIN32_H__
-#define __ENET_WIN32_H__
+#ifndef RCENET_WIN32_H
+#define RCENET_WIN32_H
 
 #ifdef _MSC_VER
 #ifdef ENET_BUILDING_LIB
@@ -54,6 +54,6 @@ typedef fd_set ENetSocketSet;
 #define ENET_SOCKETSET_REMOVE(sockset, socket) FD_CLR (socket, & (sockset))
 #define ENET_SOCKETSET_CHECK(sockset, socket)  FD_ISSET (socket, & (sockset))
 
-#endif /* __ENET_WIN32_H__ */
+#endif /* RCENET_WIN32_H */
 
 

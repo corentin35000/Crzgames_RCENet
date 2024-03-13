@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 #define ENET_BUILDING_LIB 1
-#include "enet6/utility.h"
-#include "enet6/time.h"
-#include "enet6/enet.h"
+#include "rcenet/utility.h"
+#include "rcenet/time.h"
+#include "rcenet/enet.h"
 
 static const size_t commandSizes [ENET_PROTOCOL_COMMAND_COUNT] =
 {

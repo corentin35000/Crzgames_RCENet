@@ -2,8 +2,8 @@
  @file  callbacks.h
  @brief ENet callbacks
 */
-#ifndef __ENET_CALLBACKS_H__
-#define __ENET_CALLBACKS_H__
+#ifndef RCENET_CALLBACKS_H
+#define RCENET_CALLBACKS_H
 
 #include <stdlib.h>
 
@@ -23,5 +23,5 @@ extern void   enet_free (void *);
 
 /** @} */
 
-#endif /* __ENET_CALLBACKS_H__ */
+#endif /* RCENET_CALLBACKS_H */
 

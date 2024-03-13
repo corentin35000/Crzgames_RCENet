@@ -4,7 +4,7 @@
 */
 #define ENET_BUILDING_LIB 1
 #include <string.h>
-#include "enet6/enet.h"
+#include "rcenet/enet.h"
 
 /** @defgroup host ENet host functions
     @{
@@ -190,7 +190,7 @@ enet_host_random (ENetHost * host)
     @param host host to enable or disable encryption for
     @param compressor callbacks for for the packet encryptor; if NULL, then encryption is disabled
 
-    @remarks enabling encryption enables the enet6 extended protocol and breaks compatibility 
+    @remarks enabling encryption enables the rcenet extended protocol and breaks compatibility 
     with the regular enet protocol.
 */
 void

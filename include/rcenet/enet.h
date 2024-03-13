@@ -2,8 +2,8 @@
  @file  enet.h
  @brief ENet public header file
 */
-#ifndef __ENET_ENET_H__
-#define __ENET_ENET_H__
+#ifndef RCENET_ENET_H
+#define RCENET_ENET_H
 
 #ifdef __cplusplus
 extern "C"
@@ -13,15 +13,15 @@ extern "C"
 #include <stdlib.h>
 
 #ifdef _WIN32
-#include "enet6/win32.h"
+#include "rcenet/win32.h"
 #else
-#include "enet6/unix.h"
+#include "rcenet/unix.h"
 #endif
 
-#include "enet6/types.h"
-#include "enet6/protocol.h"
-#include "enet6/list.h"
-#include "enet6/callbacks.h"
+#include "rcenet/types.h"
+#include "rcenet/protocol.h"
+#include "rcenet/list.h"
+#include "rcenet/callbacks.h"
 
 #define ENET_VERSION_MAJOR 6
 #define ENET_VERSION_MINOR 1
@@ -425,7 +425,7 @@ typedef struct _ENetHost
    size_t               duplicatePeers;              /**< optional number of allowed peers from duplicate IPs, defaults to ENET_PROTOCOL_MAXIMUM_PEER_ID */
    size_t               maximumPacketSize;           /**< the maximum allowable packet size that may be sent or received on a peer */
    size_t               maximumWaitingData;          /**< the maximum aggregate amount of buffer space a peer may use waiting for packets to be delivered */
-   /* enet6 fields start here */
+   /* rcenet fields start here */
    ENetEncryptor        encryptor;
 } ENetHost;
 
@@ -731,5 +731,5 @@ ENET_API void enet_peer_set_data(ENetPeer*, const void*);
 }
 #endif
 
-#endif /* __ENET_ENET_H__ */
+#endif /* RCENET_ENET_H */
 
