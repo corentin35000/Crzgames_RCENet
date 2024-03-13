@@ -6,6 +6,27 @@
 
 # ENet :
 
+## 1.0.0 (2024-03-13)
+
+
+### 🚀 Features
+
+* add .gitignore ([d9ef39f](https://github.com/corentin35000/Crzgames_RCENet/commit/d9ef39f45b7d24f88c8f3d52faba5d5d3047f55f))
+* add new build-scripts with xMake ([20ef698](https://github.com/corentin35000/Crzgames_RCENet/commit/20ef6985664b00ab144a1f15ce7e4c3327a09859))
+* add new doc with Vitepress ([73d1e4c](https://github.com/corentin35000/Crzgames_RCENet/commit/73d1e4cfd12f6712ec5acfb3dc5015ae51267323))
+* add version.txt for version project to release-please in ci ([11dc80c](https://github.com/corentin35000/Crzgames_RCENet/commit/11dc80c1149ada60311023cb02969e692ecb5853))
+* create directory src for all files sources ([f881679](https://github.com/corentin35000/Crzgames_RCENet/commit/f881679e4f30cf68a4d16bdc0dbf4dd2e09eaedc))
+* create two environment staging and prod, add ci ([b602f00](https://github.com/corentin35000/Crzgames_RCENet/commit/b602f006f9193267e0bfc871c29d12945f33cb31))
+* delete files not use (ENet original) ([e2ee983](https://github.com/corentin35000/Crzgames_RCENet/commit/e2ee9831ab3171869e523ba13a994bcd4638148b))
+* rename enet to rcenet for include files ([7990211](https://github.com/corentin35000/Crzgames_RCENet/commit/79902116c3e66afb213c2f05cea6e9f1af86e703))
+
+
+### ♻️ Refactoring
+
+* refactoring CHANGELOG ([214f3ed](https://github.com/corentin35000/Crzgames_RCENet/commit/214f3ed9fca43a6087f85cfba163b06156becc2a))
+* refactoring CMakeLists.txt updating ([68ada46](https://github.com/corentin35000/Crzgames_RCENet/commit/68ada462c9d62e258000a4610c16fcf00e4abb49))
+* updating README.md for project ([f263a49](https://github.com/corentin35000/Crzgames_RCENet/commit/f263a490ce534acbc9b3930980e3d079e8e3ca41))
+
 ## [1.3.17](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.3.16...v1.3.17) - 2020-11-15
 
 ### 🐛 Bug Fixes
