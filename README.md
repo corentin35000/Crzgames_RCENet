@@ -64,7 +64,7 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
   # Windows :
   1. Requirements : Windows >= 10
   1. Download and Install Visual Studio == 2022 (MSVC >= v143 + Windows SDK >= 10) : https://visualstudio.microsoft.com/fr/downloads/
-  2. Download and Install CMake >= 3.25 : https://cmake.org/download/ and add PATH ENVIRONMENT.
+  2. Download and Install CMake >= 3.25 : https://cmake.org/download/ and add PATH ENVIRONMENT OR xMake.
 
   
   # Linux :
@@ -76,21 +76,21 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" &&
     sudo apt-get install -y build-essential &&
     brew install gcc
-  4. Download and Install CMake >= 3.25 : brew install cmake
+  4. Download and Install CMake >= 3.25 : brew install cmake OR xMake.
 
 
   # macOS :
   1. Requirements : MacOS X >= 14.2
   2. Download and Install xCode >= 15.2.0
   3. Download and Install Command Line Tools : xcode-select --install
-  4. Download and Install CMake >= 3.25 : brew install cmake
+  4. Download and Install CMake >= 3.25 : brew install cmake OR xMake.
 
 
   # Android (run in Windows) :
   1. Download and Install : Android Studio 2023.2.1 (iguana) or newer
   2. Add environment variable: ANDROID_HOME for path SDK Android (SDK Manager path)
   3. Download and Install CMake >= 3.25 : https://cmake.org/download/ and add PATH ENVIRONMENT.
-  4. Download and Install Java JDK LTS (Oracle) == 17.0.10
+  4. Download and Install Java JDK LTS (Oracle) == 17.0.10.
 
   # Android (run in Unix) :
   1. TODO: A faire
@@ -102,15 +102,17 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
   3. Download and Install xCode >= 15.2.0
   4. Download and Install SDK iOS >= 17.2
   5. Download and Install brew : /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  6. Download and Install CMake >= 3.25 : brew install cmake 
+  6. Download and Install CMake >= 3.25 : brew install cmake OR xMake.
   ```
   
 <br /><br /><br /><br />
 
 
 ## 🔄 Cycle Development
-1. Open favorite IDE.
-2. Edit or add files in 'src' or 'include' folder
+1. Generate project for Executable (Visual Studio 2022, xCode..)
+2. Open project with Visual Studio, xCode..
+3. Edit or add files in 'src' or 'include' folder
+4. Run project
   
 <br /><br /><br /><br />
 
