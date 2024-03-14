@@ -1061,12 +1061,19 @@ enet_protocol_handle_incoming_commands (ENetHost * host, ENetEvent * event)
 
     header = (ENetProtocolHeader *) host -> receivedData;
 
-    peerID = ENET_NET_TO_HOST_16 (header -> peerID);
+    peerID = ENET_NET_TO_HOST_16 (header -> peerID);    
     sessionID = (peerID & ENET_PROTOCOL_HEADER_SESSION_MASK) >> ENET_PROTOCOL_HEADER_SESSION_SHIFT;
     flags = peerID & ENET_PROTOCOL_HEADER_FLAG_MASK;
-    peerID &= ~ (ENET_PROTOCOL_HEADER_FLAG_MASK | ENET_PROTOCOL_HEADER_SESSION_MASK);
+    peerID = peerID & ~ ( ENET_PROTOCOL_HEADER_FLAG_MASK | ENET_PROTOCOL_HEADER_SESSION_MASK ); 
 
     headerSize = (flags & ENET_PROTOCOL_HEADER_FLAG_SENT_TIME ? sizeof (ENetProtocolHeader) : (size_t) & ((ENetProtocolHeader *) 0) -> sentTime);
+    if (peerID == 0xfff)
+    {
+      enet_uint16 * headerPeerID = (enet_uint16 *) & host -> receivedData [headerSize];
+      peerID = *headerPeerID; 
+      headerSize += sizeof (enet_uint16);        
+    }
+
     if (host -> checksum != NULL)
       headerSize += sizeof (enet_uint32);
     if (hasExtendedHeaders)
@@ -1684,7 +1691,7 @@ enet_protocol_check_outgoing_commands (ENetHost * host, ENetPeer * peer, ENetLis
 static int
 enet_protocol_send_outgoing_commands (ENetHost * host, ENetEvent * event, int checkForTimeouts)
 {
-    enet_uint8 headerData [sizeof (ENetProtocolHeader) + sizeof (enet_uint32) + sizeof(enet_uint16)];
+    enet_uint8 headerData [sizeof (ENetProtocolHeader) + sizeof(enet_uint16) + sizeof (enet_uint32)];
     ENetProtocolHeader * header = (ENetProtocolHeader *) headerData;
     int sentLength = 0;
     size_t newSize = 0;
@@ -1825,7 +1832,16 @@ enet_protocol_send_outgoing_commands (ENetHost * host, ENetEvent * event, int ch
 
         if (currentPeer -> outgoingPeerID < ENET_PROTOCOL_MAXIMUM_PEER_ID)
           host -> headerFlags |= currentPeer -> outgoingSessionID << ENET_PROTOCOL_HEADER_SESSION_SHIFT;
-        header -> peerID = ENET_HOST_TO_NET_16 (currentPeer -> outgoingPeerID | host -> headerFlags);
+          
+        if(currentPeer -> outgoingPeerID >= 0xfff)
+        {
+          enet_uint16 * headerPeerID = (enet_uint16 *) & headerData [host -> buffers -> dataLength];
+          * headerPeerID = currentPeer -> outgoingPeerID;          
+          host -> buffers -> dataLength += sizeof(enet_uint16);
+          header -> peerID = ENET_HOST_TO_NET_16 (0xfff | host -> headerFlags);
+        }
+        else
+          header -> peerID = ENET_HOST_TO_NET_16 (currentPeer -> outgoingPeerID | host -> headerFlags);
 
         if (hasExtendedHeaders)
         {
