@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.1.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.0.0...v1.1.0) (2024-03-14)
+
+
+### 🚀 Features
+
+* add binding C# ([4461b70](https://github.com/corentin35000/Crzgames_RCENet/commit/4461b70ac699ac7def676789a81c5c53a5872891))
+* add features important ([0b6095b](https://github.com/corentin35000/Crzgames_RCENet/commit/0b6095b34d7dcaf6b7a93a8337a93581c4dcdfcb))
+* modify enet6 to rcenet for files sources and include ([e07f804](https://github.com/corentin35000/Crzgames_RCENet/commit/e07f8046e44d6f85850893e91fd984987398b68c))
+
+
+### 🐛 Bug Fixes
+
+* fixed CHANGELOG ([71e7a0a](https://github.com/corentin35000/Crzgames_RCENet/commit/71e7a0af68e662b72815795cf785b97deb25cc85))
+
+
+### 📚 Documentation
+
+* add comments for all files include, style JSDOC ([da61ba3](https://github.com/corentin35000/Crzgames_RCENet/commit/da61ba35479d5b942988482d3ebc83cdbe7ab241))
+* add one comment for comment binding ([b9f8644](https://github.com/corentin35000/Crzgames_RCENet/commit/b9f86445ea181482a79d840ece0d870366b74588))
+* update README.md ([1c6c45c](https://github.com/corentin35000/Crzgames_RCENet/commit/1c6c45ca9ce5ffe59e5a51a5ee76b802cedb7676))
+
 ## 1.0.0 (2024-03-13)
 
 
