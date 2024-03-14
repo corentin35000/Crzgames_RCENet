@@ -970,6 +970,8 @@ ENET_API size_t enet_range_coder_decompress (void *, const enet_uint8 *, size_t,
 extern size_t enet_protocol_command_size (enet_uint8);
 
 /** @defgroup Extended API for easier binding in other programming languages
+   For binding ENet to other programming languages, 
+   the following functions are provided to make it easier to use ENet in those languages.
     @{
 */
 
