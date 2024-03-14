@@ -55,15 +55,61 @@ extern ENetListIterator enet_list_move (ENetListIterator, void *, void *);
 
 extern size_t enet_list_size (ENetList *);
 
+/**
+ * @macro
+ * Renvoie l'itérateur pointant sur le premier élément de la liste.
+ * @param {ENetList*} list - La liste à traiter.
+ * @returns {ENetListNode*} Un pointeur vers le premier élément de la liste.
+ */
 #define enet_list_begin(list) ((list) -> sentinel.next)
+
+/**
+ * @macro
+ * Renvoie un itérateur pointant sur l'élément de fin de la liste (sentinelle).
+ * @param {ENetList*} list - La liste à traiter.
+ * @returns {ENetListNode*} Un pointeur vers la sentinelle de la liste.
+ */
 #define enet_list_end(list) (& (list) -> sentinel)
 
-#define enet_list_empty(list) (enet_list_begin (list) == enet_list_end (list))
+/**
+ * @macro
+ * Détermine si la liste est vide.
+ * @param {ENetList*} list - La liste à vérifier.
+ * @returns {int} Vrai (1) si la liste est vide, faux (0) sinon.
+ */
+#define enet_list_empty(list) (enet_list_begin(list) == enet_list_end(list))
 
+/**
+ * @macro
+ * Renvoie l'élément suivant dans la liste.
+ * @param {ENetListNode*} iterator - L'élément actuel.
+ * @returns {ENetListNode*} Un pointeur vers l'élément suivant dans la liste.
+ */
 #define enet_list_next(iterator) ((iterator) -> next)
+
+/**
+ * @macro
+ * Renvoie l'élément précédent dans la liste.
+ * @param {ENetListNode*} iterator - L'élément actuel.
+ * @returns {ENetListNode*} Un pointeur vers l'élément précédent dans la liste.
+ */
 #define enet_list_previous(iterator) ((iterator) -> previous)
 
+/**
+ * @macro
+ * Renvoie un pointeur vers le premier élément de la liste.
+ * @param {ENetList*} list - La liste à traiter.
+ * @returns {void*} Un pointeur vers le premier élément de la liste.
+ */
 #define enet_list_front(list) ((void *) (list) -> sentinel.next)
+
+/**
+ * @macro
+ * Renvoie un pointeur vers le dernier élément de la liste.
+ * @param {ENetList*} list - La liste à traiter.
+ * @returns {void*} Un pointeur vers le dernier élément de la liste.
+ */
 #define enet_list_back(list) ((void *) (list) -> sentinel.previous)
+
 
 #endif // RCENET_LIST_H
