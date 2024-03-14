@@ -1,5 +1,14 @@
 # Crzgames - RCENet
 
+## 📋 Great novelty compared to ENet Original
+- IPv6 / IPv4
+- Encrypt / Decrypt
+- Add ENET_EVENT_TYPE_DISCONNECT_TIMEOUT
+- And other improvements and fixes
+
+<br /><br /><br /><br />
+
+
 ## 🛠 Tech Stack
 - C (Language)
 - CI / CD (Github Actions)
@@ -34,10 +43,10 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 | **Windows-MSVC** | `.lib / .dll` | CL | static / shared |
 | **Windows-MinGW** | `.a` | GCC | static |
 | **macOS** | `.a / .dylib` | Clang | static / shared |
-| **Linux** | `.a / .so` | GCC | static / dynamic |
-| **Android** | `.a / .so` | NDK (Clang) | static / dynamic |
+| **Linux** | `.a / .so` | GCC | static / shared |
+| **Android** | `.a / .so` | NDK (Clang) | static / shared |
 | **iOS** | `.a` | Clang | static |
-| **BSD** | `.a / .so` | Clang | static / dynamic |
+| **BSD** | `.a / .so` | Clang | static / shared |
 | **Solaris** | `? / ?` | Clang | ? / ? |
 | **Xbox** |  |  |
 | **Nintendo Switch** |  |  |
