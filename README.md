@@ -1,5 +1,14 @@
 # Crzgames - RCENet
 
+## 📋 Great novelty compared to ENet Original
+- IPv6 / IPv4
+- Encrypt / Decrypt
+- Add ENET_EVENT_TYPE_DISCONNECT_TIMEOUT
+- And other improvements and fixes
+
+<br /><br /><br /><br />
+
+
 ## 🛠 Tech Stack
 - C (Language)
 - CI / CD (Github Actions)
