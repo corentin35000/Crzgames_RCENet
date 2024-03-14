@@ -904,19 +904,19 @@ enet_protocol_handle_acknowledge (ENetHost * host, ENetEvent * event, ENetPeer *
     {
        enet_peer_throttle (peer, roundTripTime);
 
-       peer -> roundTripTimeVariance -= peer -> roundTripTimeVariance / 4;
+       peer -> roundTripTimeVariance -= (peer -> roundTripTimeVariance + 3) / 4;
 
        if (roundTripTime >= peer -> roundTripTime)
        {
           enet_uint32 diff = roundTripTime - peer -> roundTripTime;
-          peer -> roundTripTimeVariance += diff / 4;
-          peer -> roundTripTime += diff / 8;
+          peer -> roundTripTimeVariance += (diff + 3) / 4;
+          peer -> roundTripTime += (diff + 7) / 8;
        }
        else
        {
           enet_uint32 diff = peer -> roundTripTime - roundTripTime;
-          peer -> roundTripTimeVariance += diff / 4;
-          peer -> roundTripTime -= diff / 8;
+          peer -> roundTripTimeVariance += (diff + 3) / 4;
+          peer -> roundTripTime -= (diff + 7) / 8;
        }
     }
     else
@@ -1580,7 +1580,7 @@ enet_protocol_check_outgoing_commands (ENetHost * host, ENetPeer * peer, ENetLis
           ++ outgoingCommand -> sendAttempts;
  
           if (outgoingCommand -> roundTripTimeout == 0)
-            outgoingCommand -> roundTripTimeout = peer -> roundTripTime + 4 * peer -> roundTripTimeVariance;
+            outgoingCommand -> roundTripTimeout = peer -> roundTripTime + 4 * ENET_MAX (1, peer -> roundTripTimeVariance);
 
           if (enet_list_empty (& peer -> sentReliableCommands))
             peer -> nextTimeout = host -> serviceTime + outgoingCommand -> roundTripTimeout;
