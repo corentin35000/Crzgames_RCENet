@@ -1430,6 +1430,7 @@ enet_protocol_check_timeouts (ENetHost * host, ENetPeer * peer, ENetEvent * even
 {
     ENetOutgoingCommand * outgoingCommand;
     ENetListIterator currentCommand, insertPosition, insertSendReliablePosition;
+    enet_uint32 roundTripTimeout;
 
     currentCommand = enet_list_begin (& peer -> sentReliableCommands);
     insertPosition = enet_list_begin (& peer -> outgoingCommands);
@@ -1460,7 +1461,12 @@ enet_protocol_check_timeouts (ENetHost * host, ENetPeer * peer, ENetEvent * even
 
        ++ peer -> packetsLost;
 
-       outgoingCommand -> roundTripTimeout *= 2;
+       roundTripTimeout = peer -> roundTripTime + ENET_MIN (peer -> roundTripTime, 4 * ENET_MAX (1, peer -> roundTripTimeVariance));
+       roundTripTimeout = ENET_MIN (roundTripTimeout, peer->timeoutMaximum / 5);
+       if (outgoingCommand -> sendAttempts < peer -> timeoutLimit)
+          outgoingCommand -> roundTripTimeout = roundTripTimeout * ENET_MAX (1, outgoingCommand -> sendAttempts);
+       else
+          outgoingCommand -> roundTripTimeout = roundTripTimeout * peer -> timeoutLimit;
 
        if (outgoingCommand -> packet != NULL)
        {
@@ -1579,8 +1585,10 @@ enet_protocol_check_outgoing_commands (ENetHost * host, ENetPeer * peer, ENetLis
 
           ++ outgoingCommand -> sendAttempts;
  
-          if (outgoingCommand -> roundTripTimeout == 0)
-            outgoingCommand -> roundTripTimeout = peer -> roundTripTime + 4 * ENET_MAX (1, peer -> roundTripTimeVariance);
+          if (outgoingCommand -> roundTripTimeout == 0) {
+             outgoingCommand -> roundTripTimeout = peer -> roundTripTime + ENET_MIN (peer -> roundTripTime, 4 * ENET_MAX (1, peer -> roundTripTimeVariance));
+             outgoingCommand -> roundTripTimeout = ENET_MIN (outgoingCommand -> roundTripTimeout, peer->timeoutMaximum / 5);
+          }
 
           if (enet_list_empty (& peer -> sentReliableCommands))
             peer -> nextTimeout = host -> serviceTime + outgoingCommand -> roundTripTimeout;
