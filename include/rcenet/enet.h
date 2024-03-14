@@ -1,49 +1,76 @@
 /** 
- @file  enet.h
- @brief ENet public header file
-*/
+ * @file  enet.h
+ * @brief En-tête public d'ENet, fournissant les interfaces principales de la bibliothèque.
+ *
+ * Ce fichier contient les définitions centrales utilisées par ENet, incluant les versions de la bibliothèque,
+ * les types de sockets, les options de socket, les structures d'adresse, et d'autres définitions essentielles
+ * pour initialiser et utiliser ENet dans des applications réseau.
+ */
+
 #ifndef RCENET_ENET_H
 #define RCENET_ENET_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
+// Inclusions et configurations basées sur la plateforme.
 #include <stdlib.h>
-
 #ifdef _WIN32
 #include "rcenet/win32.h"
 #else
 #include "rcenet/unix.h"
 #endif
 
+// Inclusions des composants internes d'ENet.
 #include "rcenet/types.h"
 #include "rcenet/protocol.h"
 #include "rcenet/list.h"
 #include "rcenet/callbacks.h"
 
+// Définitions de version d'ENet.
 #define ENET_VERSION_MAJOR 6
 #define ENET_VERSION_MINOR 1
 #define ENET_VERSION_PATCH 0
+// Macros pour la manipulation des numéros de version.
 #define ENET_VERSION_CREATE(major, minor, patch) (((major)<<16) | ((minor)<<8) | (patch))
 #define ENET_VERSION_GET_MAJOR(version) (((version)>>16)&0xFF)
 #define ENET_VERSION_GET_MINOR(version) (((version)>>8)&0xFF)
 #define ENET_VERSION_GET_PATCH(version) ((version)&0xFF)
 #define ENET_VERSION ENET_VERSION_CREATE(ENET_VERSION_MAJOR, ENET_VERSION_MINOR, ENET_VERSION_PATCH)
 
+// Définition du type de version.
 typedef enet_uint32 ENetVersion;
 
+// Pré-déclaration de structures.
 struct _ENetHost;
 struct _ENetEvent;
 struct _ENetPacket;
 
+/**
+ * Enumération des types de socket supportés par ENet.
+ * Ces types définissent le comportement et les caractéristiques des sockets utilisés dans les communications réseau.
+ * 
+ * @typedef {enum} _ENetSocketType
+ * @property {number} ENET_SOCKET_TYPE_STREAM - Socket de type flux (TCP), fournissant des connexions orientées connexion, fiables et en séquence.
+ * @property {number} ENET_SOCKET_TYPE_DATAGRAM - Socket de type datagramme (UDP), utilisé pour les transmissions de paquets sans connexion.
+ */
 typedef enum _ENetSocketType
 {
    ENET_SOCKET_TYPE_STREAM   = 1,
    ENET_SOCKET_TYPE_DATAGRAM = 2
 } ENetSocketType;
 
+/**
+ * Enumération des conditions d'attente pour les sockets.
+ * Ces constantes sont utilisées pour spécifier les opérations pour lesquelles un socket doit attendre lors d'une sélection.
+ * 
+ * @typedef {enum} _ENetSocketWait
+ * @property {number} ENET_SOCKET_WAIT_NONE - Aucune condition d'attente.
+ * @property {number} ENET_SOCKET_WAIT_SEND - Attendre que le socket soit prêt à envoyer des données.
+ * @property {number} ENET_SOCKET_WAIT_RECEIVE - Attendre que le socket soit prêt à recevoir des données.
+ * @property {number} ENET_SOCKET_WAIT_INTERRUPT - Attendre une interruption.
+ */
 typedef enum _ENetSocketWait
 {
    ENET_SOCKET_WAIT_NONE      = 0,
@@ -52,6 +79,23 @@ typedef enum _ENetSocketWait
    ENET_SOCKET_WAIT_INTERRUPT = (1 << 2)
 } ENetSocketWait;
 
+/**
+ * Enumération des options de socket.
+ * Ces options peuvent être utilisées pour configurer le comportement des sockets au niveau du système d'exploitation.
+ * 
+ * @typedef {enum} _ENetSocketOption
+ * @property {number} ENET_SOCKOPT_NONBLOCK - Activer le mode non bloquant pour le socket.
+ * @property {number} ENET_SOCKOPT_BROADCAST - Permettre l'envoi de paquets broadcast.
+ * @property {number} ENET_SOCKOPT_RCVBUF - Taille du buffer de réception.
+ * @property {number} ENET_SOCKOPT_SNDBUF - Taille du buffer d'envoi.
+ * @property {number} ENET_SOCKOPT_REUSEADDR - Autoriser la réutilisation des adresses locales.
+ * @property {number} ENET_SOCKOPT_RCVTIMEO - Délai d'attente pour la réception.
+ * @property {number} ENET_SOCKOPT_SNDTIMEO - Délai d'attente pour l'envoi.
+ * @property {number} ENET_SOCKOPT_ERROR - Obtenir le code d'erreur en attente sur le socket.
+ * @property {number} ENET_SOCKOPT_NODELAY - Désactiver l'algorithme de Nagle (pour les sockets TCP).
+ * @property {number} ENET_SOCKOPT_TTL - Définir la durée de vie des paquets IP.
+ * @property {number} ENET_SOCKOPT_IPV6ONLY - Socket IPv6 uniquement, sans prise en charge des adresses IPv4 mappées.
+ */
 typedef enum _ENetSocketOption
 {
    ENET_SOCKOPT_NONBLOCK  = 1,
@@ -67,6 +111,14 @@ typedef enum _ENetSocketOption
    ENET_SOCKOPT_IPV6ONLY  = 11
 } ENetSocketOption;
 
+/**
+ * Enumération des modes de fermeture de socket.
+ * 
+ * @typedef {enum} _ENetSocketShutdown
+ * @property {number} ENET_SOCKET_SHUTDOWN_READ - Ferme la réception sur le socket.
+ * @property {number} ENET_SOCKET_SHUTDOWN_WRITE - Ferme l'envoi sur le socket.
+ * @property {number} ENET_SOCKET_SHUTDOWN_READ_WRITE - Ferme à la fois la réception et l'envoi sur le socket.
+ */
 typedef enum _ENetSocketShutdown
 {
     ENET_SOCKET_SHUTDOWN_READ       = 0,
@@ -74,6 +126,14 @@ typedef enum _ENetSocketShutdown
     ENET_SOCKET_SHUTDOWN_READ_WRITE = 2
 } ENetSocketShutdown;
 
+/**
+ * Enumération des types d'adresse supportés par ENet.
+ * 
+ * @typedef {enum} _ENetAddressType
+ * @property {number} ENET_ADDRESS_TYPE_ANY - Adresse non spécifiée (peut être utilisée pour écouter sur toutes les adresses).
+ * @property {number} ENET_ADDRESS_TYPE_IPV4 - Utilise une adresse IPv4.
+ * @property {number} ENET_ADDRESS_TYPE_IPV6 - Utilise une adresse IPv6.
+ */
 typedef enum _ENetAddressType
 {
     ENET_ADDRESS_TYPE_ANY  = 0,
@@ -82,10 +142,14 @@ typedef enum _ENetAddressType
 } ENetAddressType;
 
 /**
- * Portable internet address structure. 
- *
- * The host must be specified in network byte-order, and the port must be in host 
- * byte-order.
+ * Structure représentant une adresse Internet portable.
+ * 
+ * L'hôte doit être spécifié dans l'ordre des octets réseau, et le port doit être dans l'ordre des octets hôte.
+ * 
+ * @typedef {struct} _ENetAddress
+ * @property {ENetAddressType} type - Le type d'adresse (IPv4, IPv6).
+ * @property {enet_uint16} port - Le port, en ordre des octets hôte.
+ * @property {union} host - L'adresse IP, en ordre des octets réseau. Utilise `v4` pour IPv4 ou `v6` pour IPv6.
  */
 typedef struct _ENetAddress
 {
@@ -98,17 +162,24 @@ typedef struct _ENetAddress
    } host;
 } ENetAddress;
 
+/**
+ * Définit la valeur du port utilisée pour spécifier n'importe quel port disponible lors de la création d'un hôte ENet.
+ * Utiliser cette constante permet à ENet de sélectionner automatiquement un port disponible pour l'hôte, 
+ * facilitant la configuration d'hôtes sans nécessiter la spécification d'un port spécifique.
+ */
 #define ENET_PORT_ANY       0
 
 /**
- * Packet flag bit constants.
+ * Drapeaux de paquet pour contrôler le comportement des paquets dans ENet.
+ * Ces drapeaux permettent de spécifier des caractéristiques importantes pour la livraison et le traitement des paquets.
  *
- * The host must be specified in network byte-order, and the port must be in
- * host byte-order. The constant ENET_HOST_ANY may be used to specify the
- * default server host.
- 
-   @sa ENetPacket
-*/
+ * @typedef {enum} _ENetPacketFlag
+ * @property {number} ENET_PACKET_FLAG_RELIABLE - Assure que le paquet doit être reçu par le destinataire. Des tentatives de renvoi seront effectuées jusqu'à la livraison du paquet.
+ * @property {number} ENET_PACKET_FLAG_UNSEQUENCED - Indique que le paquet ne sera pas séquencé avec d'autres paquets. Non pris en charge pour les paquets fiables.
+ * @property {number} ENET_PACKET_FLAG_NO_ALLOCATE - Signifie que le paquet n'allouera pas de données, l'utilisateur doit fournir la mémoire pour les données du paquet.
+ * @property {number} ENET_PACKET_FLAG_UNRELIABLE_FRAGMENT - Permet au paquet d'être fragmenté en utilisant des envois non fiables si sa taille dépasse l'unité de transmission maximale (MTU).
+ * @property {number} ENET_PACKET_FLAG_SENT - Indique si le paquet a été envoyé depuis toutes les files dans lesquelles il a été inséré.
+ */
 typedef enum _ENetPacketFlag
 {
    /** packet must be received by the target peer and resend attempts should be
@@ -128,44 +199,54 @@ typedef enum _ENetPacketFlag
    ENET_PACKET_FLAG_SENT = (1<<8)
 } ENetPacketFlag;
 
+/**
+ * Type de fonction callback appelée lorsqu'un paquet est accusé réception par le destinataire.
+ * Cette callback permet de gérer des actions spécifiques à la confirmation de réception d'un paquet.
+ * 
+ * @param packet Pointeur vers le paquet pour lequel l'accusé de réception a été reçu.
+ */
 typedef void (ENET_CALLBACK * ENetPacketAcknowledgedCallback) (struct _ENetPacket *);
+/**
+ * Type de fonction callback appelée lorsqu'un paquet est libéré.
+ * Cette callback permet de gérer des actions spécifiques lors de la libération de la mémoire d'un paquet, par exemple pour libérer des ressources allouées par l'utilisateur.
+ * 
+ * @param packet Pointeur vers le paquet à libérer.
+ */
 typedef void (ENET_CALLBACK * ENetPacketFreeCallback) (struct _ENetPacket *);
 
 /**
- * ENet packet structure.
+ * Structure représentant un paquet ENet.
+ * Ce paquet contient les données à envoyer ou reçues via le réseau.
  *
- * An ENet data packet that may be sent to or received from a peer. The shown 
- * fields should only be read and never modified. The data field contains the 
- * allocated data for the packet. The dataLength fields specifies the length 
- * of the allocated data.  The flags field is either 0 (specifying no flags), 
- * or a bitwise-or of any combination of the following flags:
- *
- *    ENET_PACKET_FLAG_RELIABLE - packet must be received by the target peer
- *    and resend attempts should be made until the packet is delivered
- *
- *    ENET_PACKET_FLAG_UNSEQUENCED - packet will not be sequenced with other packets 
- *    (not supported for reliable packets)
- *
- *    ENET_PACKET_FLAG_NO_ALLOCATE - packet will not allocate data, and user must supply it instead
- *
- *    ENET_PACKET_FLAG_UNRELIABLE_FRAGMENT - packet will be fragmented using unreliable
- *    (instead of reliable) sends if it exceeds the MTU
- *
- *    ENET_PACKET_FLAG_SENT - whether the packet has been sent from all queues it has been entered into
-   @sa ENetPacketFlag
+ * @property referenceCount - Compteur de références utilisé en interne par ENet pour la gestion de la mémoire du paquet.
+ * @property flags - Drapeaux du paquet, combinant les valeurs de _ENetPacketFlag pour spécifier le comportement du paquet.
+ * @property data - Pointeur vers les données allouées du paquet.
+ * @property dataLength - Longueur des données contenues dans le paquet.
+ * @property freeCallback - Fonction de rappel appelée lorsque le paquet n'est plus utilisé.
+ * @property userData - Données utilisateur pouvant être modifiées librement par l'application.
+ * @property remainingFragments - Nombre de fragments non acquittés par le destinataire. Lorsque ce nombre atteint 0, `acknowledgeCallback` est déclenché.
+ * @property acknowledgeCallback - Fonction de rappel appelée lorsque le paquet fiable a été acquitté par le destinataire.
  */
 typedef struct _ENetPacket
 {
-   size_t                         referenceCount;      /**< internal use only */
-   enet_uint32                    flags;               /**< bitwise-or of ENetPacketFlag constants */
-   enet_uint8 *                   data;                /**< allocated data for packet */
-   size_t                         dataLength;          /**< length of data */
-   ENetPacketFreeCallback         freeCallback;        /**< function to be called when the packet is no longer in use */
-   void *                         userData;            /**< application private data, may be freely modified */
-   enet_uint32                    remainingFragments;  /**< how many fragments were not acknowledged by the peer, when it reaches 0 acknowledgeCallback is triggered */
-   ENetPacketAcknowledgedCallback acknowledgeCallback; /**< function to be called when the reliable packet has been acknowledged by the peer */
+   size_t                         referenceCount;
+   enet_uint32                    flags;
+   enet_uint8 *                   data;
+   size_t                         dataLength;
+   ENetPacketFreeCallback         freeCallback;
+   void *                         userData;
+   enet_uint32                    remainingFragments;
+   ENetPacketAcknowledgedCallback acknowledgeCallback;
 } ENetPacket;
 
+/**
+ * Structure représentant un acquittement dans ENet.
+ * Un acquittement est envoyé pour confirmer la réception d'un paquet.
+ *
+ * @property acknowledgementList - Nœud dans la liste d'acquittements.
+ * @property sentTime - Le moment où le paquet correspondant a été envoyé.
+ * @property command - La commande protocolaire envoyée comme acquittement.
+ */
 typedef struct _ENetAcknowledgement
 {
    ENetListNode acknowledgementList;
@@ -173,6 +254,22 @@ typedef struct _ENetAcknowledgement
    ENetProtocol command;
 } ENetAcknowledgement;
 
+/**
+ * Structure pour une commande sortante dans ENet.
+ * Représente une action ou un paquet devant être envoyé à un pair.
+ *
+ * @property outgoingCommandList - Nœud dans la liste des commandes sortantes.
+ * @property reliableSequenceNumber - Numéro de séquence fiable pour le suivi des paquets.
+ * @property unreliableSequenceNumber - Numéro de séquence non fiable pour le suivi des paquets.
+ * @property sentTime - Le moment où la commande a été envoyée.
+ * @property roundTripTimeout - Délai avant considération de la perte de la commande.
+ * @property queueTime - Temps avant que la commande soit mise en file d'attente pour l'envoi.
+ * @property fragmentOffset - Décalage du fragment dans le paquet, si la commande est fragmentée.
+ * @property fragmentLength - Longueur du fragment de la commande.
+ * @property sendAttempts - Nombre de tentatives d'envoi de la commande.
+ * @property command - La commande protocolaire à envoyer.
+ * @property packet - Le paquet associé à la commande, le cas échéant.
+ */
 typedef struct _ENetOutgoingCommand
 {
    ENetListNode outgoingCommandList;
@@ -188,6 +285,19 @@ typedef struct _ENetOutgoingCommand
    ENetPacket * packet;
 } ENetOutgoingCommand;
 
+/**
+ * Structure pour une commande entrante dans ENet.
+ * Représente des données ou des actions reçues d'un pair.
+ *
+ * @property incomingCommandList - Nœud dans la liste des commandes entrantes.
+ * @property reliableSequenceNumber - Numéro de séquence fiable pour le suivi des paquets.
+ * @property unreliableSequenceNumber - Numéro de séquence non fiable pour le suivi des paquets.
+ * @property command - La commande protocolaire reçue.
+ * @property fragmentCount - Nombre total de fragments pour ce paquet.
+ * @property fragmentsRemaining - Nombre de fragments restants à recevoir.
+ * @property fragments - Tableau de bits pour le suivi des fragments reçus.
+ * @property packet - Le paquet associé à la commande, une fois tous les fragments reçus.
+ */
 typedef struct _ENetIncomingCommand
 {  
    ENetListNode     incomingCommandList;
@@ -200,6 +310,22 @@ typedef struct _ENetIncomingCommand
    ENetPacket *     packet;
 } ENetIncomingCommand;
 
+/**
+ * Enumération des états possibles d'un pair dans ENet.
+ * Ces états représentent le cycle de vie de la connexion d'un pair au réseau ENet.
+ *
+ * @typedef {enum} _ENetPeerState
+ * @property {number} ENET_PEER_STATE_DISCONNECTED - Le pair est déconnecté.
+ * @property {number} ENET_PEER_STATE_CONNECTING - Le pair est en cours de connexion.
+ * @property {number} ENET_PEER_STATE_ACKNOWLEDGING_CONNECT - Le pair est en train d'acquitter la connexion.
+ * @property {number} ENET_PEER_STATE_CONNECTION_PENDING - La connexion du pair est en attente.
+ * @property {number} ENET_PEER_STATE_CONNECTION_SUCCEEDED - La connexion du pair a réussi.
+ * @property {number} ENET_PEER_STATE_CONNECTED - Le pair est connecté.
+ * @property {number} ENET_PEER_STATE_DISCONNECT_LATER - Le pair sera déconnecté plus tard.
+ * @property {number} ENET_PEER_STATE_DISCONNECTING - Le pair est en cours de déconnexion.
+ * @property {number} ENET_PEER_STATE_ACKNOWLEDGING_DISCONNECT - Le pair est en train d'acquitter la déconnexion.
+ * @property {number} ENET_PEER_STATE_ZOMBIE - Le pair est dans un état zombie, en attente de nettoyage.
+ */
 typedef enum _ENetPeerState
 {
    ENET_PEER_STATE_DISCONNECTED                = 0,
@@ -214,10 +340,49 @@ typedef enum _ENetPeerState
    ENET_PEER_STATE_ZOMBIE                      = 9 
 } ENetPeerState;
 
+/**
+ * Définit les constantes de configuration pour les hôtes ENet. Ces valeurs régulent des aspects tels que les tailles des buffers,
+ * les intervalles pour le contrôle de bande passante, et les paramètres par défaut pour les unités de transmission maximale (MTU) et
+ * pour les tailles maximales de paquets et de données en attente.
+ */
 #ifndef ENET_BUFFER_MAXIMUM
 #define ENET_BUFFER_MAXIMUM (1 + 2 * ENET_PROTOCOL_MAXIMUM_PACKET_COMMANDS)
 #endif
 
+/**
+ * @enum
+ * Constantes de configuration pour les hôtes et pairs ENet.
+ * Ces valeurs définissent les paramètres par défaut et les limites pour la gestion de la bande passante,
+ * les tailles de paquets et les comportements de transmission.
+ * 
+ * @typedef {enum} _ENetPeerState
+ * @property {number} ENET_HOST_RECEIVE_BUFFER_SIZE - Définit la taille du buffer de réception pour l'hôte à 256 Ko (Kilooctets).
+ * @property {number} ENET_HOST_SEND_BUFFER_SIZE - Définit la taille du buffer d'envoi pour l'hôte à 256 Ko.
+ * @property {number} ENET_HOST_BANDWIDTH_THROTTLE_INTERVAL - Intervalle en millisecondes pour le calcul de la régulation de la bande passante.
+ * @property {number} ENET_HOST_DEFAULT_MTU - Taille par défaut de l'Unité de Transmission Maximale (MTU) à 1392 octets.
+ * @property {number} ENET_HOST_DEFAULT_MAXIMUM_PACKET_SIZE - Taille maximale par défaut d'un paquet à 32 Mo (Mégaoctets).
+ * @property {number} ENET_HOST_DEFAULT_MAXIMUM_WAITING_DATA - Quantité maximale par défaut de données en attente avant la suspension de l'envoi, fixée à 32 Mo.
+ * @property {number} ENET_PEER_DEFAULT_ROUND_TRIP_TIME - Temps d'aller-retour (RTT) par défaut utilisé pour les estimations de latence, fixé à 500 millisecondes.
+ * @property {number} ENET_PEER_DEFAULT_PACKET_THROTTLE - Taux de limitation de paquets par défaut, exprimé en pourcentage.
+ * @property {number} ENET_PEER_PACKET_THROTTLE_SCALE - Échelle utilisée pour le calcul de la limitation dynamique des paquets.
+ * @property {number} ENET_PEER_PACKET_THROTTLE_COUNTER - Compteur initial pour le calcul de la limitation des paquets.
+ * @property {number} ENET_PEER_PACKET_THROTTLE_ACCELERATION - Taux d'accélération de la limitation des paquets lors des transmissions réussies.
+ * @property {number} ENET_PEER_PACKET_THROTTLE_DECELERATION - Taux de décélération de la limitation des paquets lors des pertes de paquets.
+ * @property {number} ENET_PEER_PACKET_THROTTLE_INTERVAL - Intervalle de temps pour l'évaluation et l'ajustement de la limitation des paquets.
+ * @property {number} ENET_PEER_PACKET_LOSS_SCALE - Échelle utilisée pour le calcul de la perte de paquets.
+ * @property {number} ENET_PEER_PACKET_LOSS_INTERVAL - Intervalle de temps pour l'évaluation de la perte de paquets.
+ * @property {number} ENET_PEER_WINDOW_SIZE_SCALE - Facteur d'échelle pour la taille de la fenêtre de fiabilité.
+ * @property {number} ENET_PEER_TIMEOUT_LIMIT - Limite de temps avant considération comme déconnecté en cas de non-réponse.
+ * @property {number} ENET_PEER_TIMEOUT_MINIMUM - Temps minimum avant déclaration de déconnexion en cas de non-réponse.
+ * @property {number} ENET_PEER_TIMEOUT_MAXIMUM - Temps maximum avant déclaration de déconnexion en cas de non-réponse.
+ * @property {number} ENET_PEER_PING_INTERVAL - Intervalle de temps entre chaque ping automatique envoyé aux pairs.
+ * @property {number} ENET_PEER_UNSEQUENCED_WINDOWS - Nombre de fenêtres pour le suivi des paquets non séquencés.
+ * @property {number} ENET_PEER_UNSEQUENCED_WINDOW_SIZE - Taille d'une fenêtre pour le suivi des paquets non séquencés.
+ * @property {number} ENET_PEER_FREE_UNSEQUENCED_WINDOWS - Nombre de fenêtres non séquencées libres avant leur réinitialisation.
+ * @property {number} ENET_PEER_RELIABLE_WINDOWS - Nombre de fenêtres pour le suivi des paquets fiables.
+ * @property {number} ENET_PEER_RELIABLE_WINDOW_SIZE - Taille d'une fenêtre pour le suivi des paquets fiables.
+ * @property {number} ENET_PEER_FREE_RELIABLE_WINDOWS - Nombre de fenêtres fiables libres avant leur réinitialisation.
+ */
 enum
 {
    ENET_HOST_RECEIVE_BUFFER_SIZE          = 256 * 1024,
@@ -226,7 +391,6 @@ enum
    ENET_HOST_DEFAULT_MTU                  = 1392,
    ENET_HOST_DEFAULT_MAXIMUM_PACKET_SIZE  = 32 * 1024 * 1024,
    ENET_HOST_DEFAULT_MAXIMUM_WAITING_DATA = 32 * 1024 * 1024,
-
    ENET_PEER_DEFAULT_ROUND_TRIP_TIME      = 500,
    ENET_PEER_DEFAULT_PACKET_THROTTLE      = 32,
    ENET_PEER_PACKET_THROTTLE_SCALE        = 32,
@@ -249,6 +413,19 @@ enum
    ENET_PEER_FREE_RELIABLE_WINDOWS        = 8
 };
 
+/**
+ * Représente un canal de communication entre pairs dans ENet. Chaque canal maintient son propre séquençage de paquets fiables et non fiables.
+
+ * @typedef {struct} ENetChannel 
+ * @property {enet_uint16} outgoingReliableSequenceNumber - Numéro de séquence pour le prochain paquet fiable sortant.
+ * @property {enet_uint16} outgoingUnreliableSequenceNumber - Numéro de séquence pour le prochain paquet non fiable sortant.
+ * @property {enet_uint16} usedReliableWindows - Fenêtres fiables actuellement utilisées (pour le contrôle de flux et la retransmission).
+ * @property {enet_uint16[]} reliableWindows - État des fenêtres de séquence fiable pour la retransmission.
+ * @property {enet_uint16} incomingReliableSequenceNumber - Numéro de séquence du dernier paquet fiable reçu.
+ * @property {enet_uint16} incomingUnreliableSequenceNumber - Numéro de séquence du dernier paquet non fiable reçu.
+ * @property {ENetList} incomingReliableCommands - Liste des commandes fiables entrantes en attente d'être traitées.
+ * @property {ENetList} incomingUnreliableCommands - Liste des commandes non fiables entrantes en attente d'être traitées.
+ */
 typedef struct _ENetChannel
 {
    enet_uint16  outgoingReliableSequenceNumber;
@@ -261,6 +438,13 @@ typedef struct _ENetChannel
    ENetList     incomingUnreliableCommands;
 } ENetChannel;
 
+/**
+ * @enum _ENetPeerFlag
+ * Drapeaux utilisés pour contrôler l'état et le comportement des pairs ENet.
+ * 
+ * @property {number} ENET_PEER_FLAG_NEEDS_DISPATCH - Indique que le pair nécessite une expédition de messages en attente.
+ * @property {number} ENET_PEER_FLAG_CONTINUE_SENDING - Indique que le pair doit continuer à envoyer des paquets même après avoir atteint la limite de bande passante.
+ */
 typedef enum _ENetPeerFlag
 {
    ENET_PEER_FLAG_NEEDS_DISPATCH   = (1 << 0),
@@ -268,9 +452,69 @@ typedef enum _ENetPeerFlag
 } ENetPeerFlag;
 
 /**
- * An ENet peer which data packets may be sent or received from. 
- *
- * No fields should be modified unless otherwise specified. 
+ * @typedef {struct} ENetPeer
+ * Représente un pair distant avec lequel des paquets de données peuvent être échangés.
+ * 
+ * @property {ENetListNode} dispatchList - Utilisé en interne pour la gestion des messages.
+ * @property {struct _ENetHost *} host - Pointeur vers l'hôte associé à ce pair.
+ * @property {enet_uint16} outgoingPeerID - Identifiant du pair pour les connexions sortantes.
+ * @property {enet_uint16} incomingPeerID - Identifiant du pair pour les connexions entrantes.
+ * @property {enet_uint32} connectID - Identifiant unique de la connexion.
+ * @property {enet_uint8} outgoingSessionID - Identifiant de session pour les données sortantes.
+ * @property {enet_uint8} incomingSessionID - Identifiant de session pour les données entrantes.
+ * @property {ENetAddress} address - Adresse Internet du pair.
+ * @property {void *} data - Données privées de l'application, modifiables librement.
+ * @property {ENetPeerState} state - État actuel de la connexion du pair.
+ * @property {ENetChannel *} channels - Tableau des canaux de communication avec ce pair.
+ * @property {size_t} channelCount - Nombre de canaux alloués pour ce pair.
+ * @property {enet_uint32} incomingBandwidth - Bande passante entrante en octets par seconde.
+ * @property {enet_uint32} outgoingBandwidth - Bande passante sortante en octets par seconde.
+ * @property {enet_uint32} incomingBandwidthThrottleEpoch - Utilisé en interne pour le contrôle de la bande passante.
+ * @property {enet_uint32} outgoingBandwidthThrottleEpoch - Utilisé en interne pour le contrôle de la bande passante.
+ * @property {enet_uint32} incomingDataTotal - Total des données entrantes depuis la dernière évaluation.
+ * @property {enet_uint32} outgoingDataTotal - Total des données sortantes depuis la dernière évaluation.
+ * @property {enet_uint32} lastSendTime - Dernier moment où des données ont été envoyées.
+ * @property {enet_uint32} lastReceiveTime - Dernier moment où des données ont été reçues.
+ * @property {enet_uint32} nextTimeout - Moment du prochain délai d'attente pour le contrôle de la connexion.
+ * @property {enet_uint32} earliestTimeout - Plus proche délai d'attente pour le contrôle de la connexion.
+ * @property {enet_uint32} packetLossEpoch - Utilisé en interne pour le calcul de la perte de paquets.
+ * @property {enet_uint32} packetsSent - Nombre total de paquets envoyés.
+ * @property {enet_uint32} packetsLost - Nombre total de paquets perdus.
+ * @property {enet_uint32} packetLoss - Perte de paquets moyenne en tant que ratio.
+ * @property {enet_uint32} packetLossVariance - Variance de la perte de paquets.
+ * @property {enet_uint32} packetThrottle - Limite actuelle de la régulation des paquets.
+ * @property {enet_uint32} packetThrottleLimit - Limite maximale de la régulation des paquets.
+ * @property {enet_uint32} packetThrottleCounter - Compteur utilisé pour la régulation des paquets.
+ * @property {enet_uint32} packetThrottleEpoch - Dernière évaluation de la régulation des paquets.
+ * @property {enet_uint32} packetThrottleAcceleration - Accélération de la régulation des paquets lors des transmissions réussies.
+ * @property {enet_uint32} packetThrottleDeceleration - Décélération de la régulation des paquets lors des pertes.
+ * @property {enet_uint32} packetThrottleInterval - Intervalle d'évaluation de la régulation des paquets.
+ * @property {enet_uint32} pingInterval - Intervalle entre les pings automatiques envoyés à ce pair.
+ * @property {enet_uint32} timeoutLimit - Limite de temps avant que le pair soit considéré comme déconnecté.
+ * @property {enet_uint32} timeoutMinimum - Temps minimum avant déclaration de déconnexion.
+ * @property {enet_uint32} timeoutMaximum - Temps maximum avant déclaration de déconnexion.
+ * @property {enet_uint32} lastRoundTripTime - Dernier temps d'aller-retour mesuré.
+ * @property {enet_uint32} lowestRoundTripTime - Plus bas temps d'aller-retour mesuré.
+ * @property {enet_uint32} lastRoundTripTimeVariance - Variance du dernier temps d'aller-retour.
+ * @property {enet_uint32} highestRoundTripTimeVariance - Plus haute variance du temps d'aller-retour mesurée.
+ * @property {enet_uint32} roundTripTime - Temps d'aller-retour moyen.
+ * @property {enet_uint32} roundTripTimeVariance - Variance du temps d'aller-retour.
+ * @property {enet_uint32} mtu - Unité de transmission maximale pour ce pair.
+ * @property {enet_uint32} windowSize - Taille de la fenêtre de contrôle de flux.
+ * @property {enet_uint32} reliableDataInTransit - Quantité de données fiables en transit.
+ * @property {enet_uint16} outgoingReliableSequenceNumber - Numéro de séquence pour le prochain paquet fiable sortant.
+ * @property {ENetList} acknowledgements - Liste des accusés de réception à envoyer.
+ * @property {ENetList} sentReliableCommands - Liste des commandes fiables envoyées mais pas encore acquittées.
+ * @property {ENetList} outgoingSendReliableCommands - Liste des commandes fiables prêtes à être envoyées.
+ * @property {ENetList} outgoingCommands - Liste des commandes prêtes à être envoyées.
+ * @property {ENetList} dispatchedCommands - Liste des commandes déjà expédiées.
+ * @property {enet_uint16} flags - Drapeaux de comportement pour ce pair.
+ * @property {enet_uint16} reserved - Champ réservé pour un usage futur.
+ * @property {enet_uint16} incomingUnsequencedGroup - Groupe pour les paquets non séquencés entrants.
+ * @property {enet_uint16} outgoingUnsequencedGroup - Groupe pour les paquets non séquencés sortants.
+ * @property {enet_uint32[]} unsequencedWindow - Fenêtre pour le suivi des paquets non séquencés.
+ * @property {enet_uint32} eventData - Données d'événement associées à la dernière action de ce pair.
+ * @property {size_t} totalWaitingData - Quantité totale de données en attente d'être envoyées à ce pair.
  */
 typedef struct _ENetPeer
 { 
@@ -281,13 +525,13 @@ typedef struct _ENetPeer
    enet_uint32   connectID;
    enet_uint8    outgoingSessionID;
    enet_uint8    incomingSessionID;
-   ENetAddress   address;            /**< Internet address of the peer */
-   void *        data;               /**< Application private data, may be freely modified */
+   ENetAddress   address;
+   void *        data;
    ENetPeerState state;
    ENetChannel * channels;
-   size_t        channelCount;       /**< Number of channels allocated for communication with peer */
-   enet_uint32   incomingBandwidth;  /**< Downstream bandwidth of the client in bytes/second */
-   enet_uint32   outgoingBandwidth;  /**< Upstream bandwidth of the client in bytes/second */
+   size_t        channelCount;
+   enet_uint32   incomingBandwidth;
+   enet_uint32   outgoingBandwidth;
    enet_uint32   incomingBandwidthThrottleEpoch;
    enet_uint32   outgoingBandwidthThrottleEpoch;
    enet_uint32   incomingDataTotal;
@@ -299,7 +543,7 @@ typedef struct _ENetPeer
    enet_uint32   packetLossEpoch;
    enet_uint32   packetsSent;
    enet_uint32   packetsLost;
-   enet_uint32   packetLoss;          /**< mean packet loss of reliable packets as a ratio with respect to the constant ENET_PEER_PACKET_LOSS_SCALE */
+   enet_uint32   packetLoss;
    enet_uint32   packetLossVariance;
    enet_uint32   packetThrottle;
    enet_uint32   packetThrottleLimit;
@@ -316,7 +560,7 @@ typedef struct _ENetPeer
    enet_uint32   lowestRoundTripTime;
    enet_uint32   lastRoundTripTimeVariance;
    enet_uint32   highestRoundTripTimeVariance;
-   enet_uint32   roundTripTime;            /**< mean round trip time (RTT), in milliseconds, between sending a reliable packet and receiving its acknowledgement */
+   enet_uint32   roundTripTime;
    enet_uint32   roundTripTimeVariance;
    enet_uint32   mtu;
    enet_uint32   windowSize;
@@ -336,70 +580,135 @@ typedef struct _ENetPeer
    size_t        totalWaitingData;
 } ENetPeer;
 
-/** An ENet packet compressor for compressing UDP packets before socket sends or receives.
+/**
+ * @typedef {struct} ENetCompressor
+ * Structure pour la compression des paquets UDP avant leur envoi ou réception par le socket.
+ *
+ * @property {void*} context - Données de contexte pour le compresseur. Doit être non NULL.
+ * @property {function} compress - Fonction pour compresser des données. Prend un tableau de ENetBuffer comme entrée,
+ * contenant inLimit octets, compresse les données dans outData, et sort au maximum outLimit octets. Devrait retourner 0 en cas d'échec.
+ * @property {function} decompress - Fonction pour décompresser des données. Prend inData, contenant inLimit octets,
+ * décompresse les données dans outData, et sort au maximum outLimit octets. Devrait retourner 0 en cas d'échec.
+ * @property {function} destroy - Fonction appelée lorsque la compression est désactivée ou que l'hôte est détruit. Peut être NULL.
  */
 typedef struct _ENetCompressor
 {
-   /** Context data for the compressor. Must be non-NULL. */
    void * context;
-   /** Compresses from inBuffers[0:inBufferCount-1], containing inLimit bytes, to outData, outputting at most outLimit bytes. Should return 0 on failure. */
    size_t (ENET_CALLBACK * compress) (void * context, const ENetBuffer * inBuffers, size_t inBufferCount, size_t inLimit, enet_uint8 * outData, size_t outLimit);
-   /** Decompresses from inData, containing inLimit bytes, to outData, outputting at most outLimit bytes. Should return 0 on failure. */
    size_t (ENET_CALLBACK * decompress) (void * context, const enet_uint8 * inData, size_t inLimit, enet_uint8 * outData, size_t outLimit);
-   /** Destroys the context when compression is disabled or the host is destroyed. May be NULL. */
    void (ENET_CALLBACK * destroy) (void * context);
 } ENetCompressor;
 
-/** An ENet packet encryptor for encrypting UDP packets before socket sends or receives (happens before compression).
- * It's similar to ENetCompressor but receives the sender/receiver peer as a parameter and can produce a bigger packet on encryption
+/**
+ * @typedef {struct} ENetEncryptor
+ * Structure pour le chiffrement des paquets UDP avant leur envoi ou réception (se produit avant la compression).
+ * Similaire à ENetCompressor, mais reçoit également le pair expéditeur/récepteur comme paramètre et peut produire un paquet plus grand lors du chiffrement.
+ *
+ * @property {void*} context - Données de contexte pour l'encrypteur. Doit être non NULL.
+ * @property {function} encrypt - Fonction pour chiffrer des données. Prend un tableau de ENetBuffer comme entrée,
+ * contenant inLimit octets, chiffre les données dans outData, et sort au maximum outLimit octets. Devrait retourner 0 en cas d'échec.
+ * @property {function} decrypt - Fonction pour déchiffrer un paquet reçu du pair (peut être NULL si paquet de connexion),
+ * à partir de inData, contenant inLimit octets, déchiffre les données dans outData, et sort au maximum outLimit octets. Devrait retourner 0 en cas d'échec.
+ * @property {function} destroy - Fonction appelée lorsque le chiffrement est désactivé ou que l'hôte est détruit. Peut être NULL.
  */
 typedef struct _ENetEncryptor
 {
-   /** Context data for the encryptor. Must be non-NULL. */
    void * context;
-   /** Compresses from inBuffers[0:inBufferCount-1], containing inLimit bytes, to outData, outputting at most outLimit bytes. Should return 0 on failure. */
    size_t (ENET_CALLBACK * encrypt) (void * context, ENetPeer * peer, const ENetBuffer * inBuffers, size_t inBufferCount, size_t inLimit, enet_uint8 * outData, size_t outLimit);
-   /** Decompresses a packet received from peer (may be null if connection packet) from inData, containing inLimit bytes, to outData, outputting at most outLimit bytes. Should return 0 on failure. */
    size_t (ENET_CALLBACK * decrypt) (void * context, ENetPeer * peer, const enet_uint8 * inData, size_t inLimit, enet_uint8 * outData, size_t outLimit);
-   /** Destroys the context when encryption is disabled or the host is destroyed. May be NULL. */
    void (ENET_CALLBACK * destroy) (void * context);
 } ENetEncryptor;
 
-/** Callback that computes the checksum of the data held in buffers[0:bufferCount-1] */
+/**
+ * @callback ENetChecksumCallback
+ * Callback qui calcule le checksum des données contenues dans les buffers. Cette fonction est utilisée pour
+ * vérifier l'intégrité des données transmises.
+ *
+ * @param {ENetBuffer[]} buffers - Tableau des buffers contenant les données pour lesquelles calculer le checksum.
+ * @param {size_t} bufferCount - Nombre de buffers dans le tableau.
+ * @returns {enet_uint32} Le checksum calculé des données.
+ */
 typedef enet_uint32 (ENET_CALLBACK * ENetChecksumCallback) (const ENetBuffer * buffers, size_t bufferCount);
 
-/** Callback for intercepting received raw UDP packets. Should return 1 to intercept, 0 to ignore, or -1 to propagate an error. */
+/**
+ * @callback ENetInterceptCallback
+ * Callback pour intercepter les paquets UDP bruts reçus. Cette fonction permet d'inspecter, de modifier ou d'ignorer
+ * des paquets avant qu'ils soient traités par ENet.
+ *
+ * @param {struct _ENetHost*} host - L'hôte ENet recevant le paquet.
+ * @param {struct _ENetEvent*} event - L'événement ENet associé au paquet reçu.
+ * @returns {int} Doit retourner 1 pour intercepter le paquet, 0 pour l'ignorer, ou -1 pour propager une erreur.
+ */
 typedef int (ENET_CALLBACK * ENetInterceptCallback) (struct _ENetHost * host, struct _ENetEvent * event);
  
-/** An ENet host for communicating with peers.
-  *
-  * No fields should be modified unless otherwise stated.
-
-    @sa enet_host_create()
-    @sa enet_host_destroy()
-    @sa enet_host_connect()
-    @sa enet_host_service()
-    @sa enet_host_flush()
-    @sa enet_host_broadcast()
-    @sa enet_host_compress()
-    @sa enet_host_compress_with_range_coder()
-    @sa enet_host_channel_limit()
-    @sa enet_host_bandwidth_limit()
-    @sa enet_host_bandwidth_throttle()
-  */
+/**
+ * Représente un hôte ENet pour la communication avec les pairs. C'est le point central pour gérer les connexions réseau.
+ *
+ * IMPORTANT: Aucun champ ne doit être modifié sauf indication contraire.
+ *   @sa enet_host_create()
+ *   @sa enet_host_destroy()
+ *   @sa enet_host_connect()
+ *   @sa enet_host_service()
+ *   @sa enet_host_flush()
+ *   @sa enet_host_broadcast()
+ *   @sa enet_host_compress()
+ *   @sa enet_host_compress_with_range_coder()
+ *   @sa enet_host_channel_limit()
+ *   @sa enet_host_bandwidth_limit()
+ *   @sa enet_host_bandwidth_throttle()
+ * 
+ * @typedef {struct} ENetHost
+ * @property {ENetSocket} socket - Socket de l'hôte utilisé pour la communication UDP.
+ * @property {ENetAddress} address - Adresse Internet de l'hôte.
+ * @property {enet_uint32} incomingBandwidth - Bande passante descendante de l'hôte en octets par seconde.
+ * @property {enet_uint32} outgoingBandwidth - Bande passante montante de l'hôte en octets par seconde.
+ * @property {enet_uint32} bandwidthThrottleEpoch - Utilisé en interne pour le calcul de la limitation de la bande passante.
+ * @property {enet_uint32} mtu - Unité de transmission maximale pour les paquets envoyés par cet hôte.
+ * @property {enet_uint32} randomSeed - Graine aléatoire utilisée en interne par ENet.
+ * @property {int} recalculateBandwidthLimits - Indique si les limites de bande passante doivent être recalculées.
+ * @property {ENetPeer*} peers - Tableau de pairs alloués pour cet hôte.
+ * @property {size_t} peerCount - Nombre de pairs alloués pour cet hôte.
+ * @property {size_t} channelLimit - Limite maximale du nombre de canaux autorisés pour les pairs connectés.
+ * @property {enet_uint32} serviceTime - Horodatage du dernier appel à enet_host_service().
+ * @property {ENetList} dispatchQueue - File d'attente des événements à dispatcher vers l'utilisateur.
+ * @property {enet_uint32} totalQueued - Total des paquets en file d'attente pour l'envoi.
+ * @property {size_t} packetSize - Taille du dernier paquet envoyé ou reçu.
+ * @property {enet_uint16} headerFlags - Drapeaux d'en-tête pour les paquets envoyés.
+ * @property {ENetProtocol[]} commands - Tableau des commandes du protocole à envoyer.
+ * @property {size_t} commandCount - Nombre de commandes dans le tableau `commands`.
+ * @property {ENetBuffer[]} buffers - Tableau de buffers pour les données à envoyer.
+ * @property {size_t} bufferCount - Nombre de buffers utilisés.
+ * @property {ENetChecksumCallback} checksum - Callback pour le calcul de checksum des paquets.
+ * @property {ENetCompressor} compressor - Compresseur pour la compression des données des paquets.
+ * @property {enet_uint8[][]} packetData - Deux tableaux de données de paquets pour l'envoi et la réception.
+ * @property {ENetAddress} receivedAddress - Adresse de l'expéditeur du dernier paquet reçu.
+ * @property {enet_uint8*} receivedData - Données du dernier paquet reçu.
+ * @property {size_t} receivedDataLength - Longueur des données du dernier paquet reçu.
+ * @property {enet_uint32} totalSentData - Total des données envoyées.
+ * @property {enet_uint32} totalSentPackets - Total des paquets UDP envoyés.
+ * @property {enet_uint32} totalReceivedData - Total des données reçues.
+ * @property {enet_uint32} totalReceivedPackets - Total des paquets UDP reçus.
+ * @property {ENetInterceptCallback} intercept - Callback pour l'interception des paquets UDP bruts reçus.
+ * @property {size_t} connectedPeers - Nombre de pairs actuellement connectés.
+ * @property {size_t} bandwidthLimitedPeers - Nombre de pairs avec la bande passante limitée.
+ * @property {size_t} duplicatePeers - Nombre autorisé de pairs depuis des adresses IP dupliquées.
+ * @property {size_t} maximumPacketSize - Taille maximale autorisée des paquets pouvant être envoyés ou reçus.
+ * @property {size_t} maximumWaitingData - Quantité maximale agrégée de données qu'un pair peut utiliser en attente de la livraison des paquets.
+ * @property {ENetEncryptor} encryptor - Encrypteur pour le chiffrement des paquets UDP avant leur envoi ou réception.
+ */
 typedef struct _ENetHost
 {
    ENetSocket           socket;
-   ENetAddress          address;                     /**< Internet address of the host */
-   enet_uint32          incomingBandwidth;           /**< downstream bandwidth of the host */
-   enet_uint32          outgoingBandwidth;           /**< upstream bandwidth of the host */
+   ENetAddress          address;
+   enet_uint32          incomingBandwidth;
+   enet_uint32          outgoingBandwidth;
    enet_uint32          bandwidthThrottleEpoch;
    enet_uint32          mtu;
    enet_uint32          randomSeed;
    int                  recalculateBandwidthLimits;
-   ENetPeer *           peers;                       /**< array of peers allocated for this host */
-   size_t               peerCount;                   /**< number of peers allocated for this host */
-   size_t               channelLimit;                /**< maximum number of channels allowed for connected peers */
+   ENetPeer *           peers;
+   size_t               peerCount;
+   size_t               channelLimit;
    enet_uint32          serviceTime;
    ENetList             dispatchQueue;
    enet_uint32          totalQueued;
@@ -409,82 +718,63 @@ typedef struct _ENetHost
    size_t               commandCount;
    ENetBuffer           buffers [ENET_BUFFER_MAXIMUM];
    size_t               bufferCount;
-   ENetChecksumCallback checksum;                    /**< callback the user can set to enable packet checksums for this host */
+   ENetChecksumCallback checksum;
    ENetCompressor       compressor;
    enet_uint8           packetData [2][ENET_PROTOCOL_MAXIMUM_MTU];
    ENetAddress          receivedAddress;
    enet_uint8 *         receivedData;
    size_t               receivedDataLength;
-   enet_uint32          totalSentData;               /**< total data sent, user should reset to 0 as needed to prevent overflow */
-   enet_uint32          totalSentPackets;            /**< total UDP packets sent, user should reset to 0 as needed to prevent overflow */
-   enet_uint32          totalReceivedData;           /**< total data received, user should reset to 0 as needed to prevent overflow */
-   enet_uint32          totalReceivedPackets;        /**< total UDP packets received, user should reset to 0 as needed to prevent overflow */
-   ENetInterceptCallback intercept;                  /**< callback the user can set to intercept received raw UDP packets */
+   enet_uint32          totalSentData;
+   enet_uint32          totalSentPackets;
+   enet_uint32          totalReceivedData;
+   enet_uint32          totalReceivedPackets;
+   ENetInterceptCallback intercept;
    size_t               connectedPeers;
    size_t               bandwidthLimitedPeers;
-   size_t               duplicatePeers;              /**< optional number of allowed peers from duplicate IPs, defaults to ENET_PROTOCOL_MAXIMUM_PEER_ID */
-   size_t               maximumPacketSize;           /**< the maximum allowable packet size that may be sent or received on a peer */
-   size_t               maximumWaitingData;          /**< the maximum aggregate amount of buffer space a peer may use waiting for packets to be delivered */
+   size_t               duplicatePeers;
+   size_t               maximumPacketSize;
+   size_t               maximumWaitingData;
    /* rcenet fields start here */
    ENetEncryptor        encryptor;
 } ENetHost;
 
 /**
- * An ENet event type, as specified in @ref ENetEvent.
+ * Enumération des types d'événements dans ENet. Ces événements sont renvoyés par enet_host_service() et décrivent les différentes actions ou changements d'état qui peuvent survenir sur un hôte ou un pair.
+ 
+ * @typedef {enum} _ENetEventType
+ * @property {number} ENET_EVENT_TYPE_NONE - Aucun événement ne s'est produit dans le délai spécifié. Utilisé pour indiquer qu'aucune action ou requête n'a été reçue.
+ * @property {number} ENET_EVENT_TYPE_CONNECT - Un pair s'est connecté avec succès. Cet événement est généré après la complétion réussie d'une requête de connexion initiée par enet_host_connect(). Le champ peer contient le pair qui s'est connecté.
+ * @property {number} ENET_EVENT_TYPE_DISCONNECT - Un pair s'est déconnecté. Cet événement est généré lorsqu'une déconnexion initiée par enet_peer_disconnect() se termine avec succès. Le champ peer contient le pair qui s'est déconnecté. Le champ data contient des données fournies par l'utilisateur décrivant la déconnexion, ou 0 s'il n'y en a pas.
+ * @property {number} ENET_EVENT_TYPE_RECEIVE - Un paquet a été reçu d'un pair. Le champ peer spécifie le pair qui a envoyé le paquet. Le champ channelID spécifie le numéro de canal sur lequel le paquet a été reçu. Le champ packet contient le paquet qui a été reçu; ce paquet doit être détruit avec enet_packet_destroy après utilisation.
+ * @property {number} ENET_EVENT_TYPE_DISCONNECT_TIMEOUT - Un pair s'est déconnecté en raison d'un délai d'expiration. Cet événement est généré si un pair se déconnecte après un délai d'expiration, ou si une requête de connexion initiée par enet_host_connect() expire. Le champ peer contient le pair qui s'est déconnecté. Le champ data contient des données fournies par l'utilisateur décrivant la déconnexion, ou 0 s'il n'y en a pas.
  */
 typedef enum _ENetEventType
 {
-   /** no event occurred within the specified time limit */
    ENET_EVENT_TYPE_NONE       = 0,  
-
-   /** a connection request initiated by enet_host_connect has completed.  
-     * The peer field contains the peer which successfully connected. 
-     */
    ENET_EVENT_TYPE_CONNECT    = 1,  
-
-   /** a peer has disconnected.  This event is generated on a successful 
-     * completion of a disconnect initiated by enet_peer_disconnect. 
-     * The peer field contains the peer which disconnected. 
-     * The data field contains user supplied data describing the disconnection, 
-     * or 0, if none is available.
-     */
    ENET_EVENT_TYPE_DISCONNECT = 2,  
-
-   /** a packet has been received from a peer.  The peer field specifies the
-     * peer which sent the packet.  The channelID field specifies the channel
-     * number upon which the packet was received.  The packet field contains
-     * the packet that was received; this packet must be destroyed with
-     * enet_packet_destroy after use.
-     */
    ENET_EVENT_TYPE_RECEIVE    = 3,
-
-   /** a peer has timed out.  This event is generated if 
-     * a peer has timed out, or if a connection request intialized by 
-     * enet_host_connect has timed out.  The peer field contains the peer 
-     * which disconnected. The data field contains user supplied data 
-     * describing the disconnection, or 0, if none is available.
-     */
-   ENET_EVENT_TYPE_DISCONNECT_TIMEOUT = 4, 
-
+   ENET_EVENT_TYPE_DISCONNECT_TIMEOUT = 4,
 } ENetEventType;
 
 /**
- * An ENet event as returned by enet_host_service().
-   
-   @sa enet_host_service
+ * @typedef {struct} ENetEvent
+ * Représente un événement ENet tel que renvoyé par enet_host_service(). Cette structure contient toutes les informations nécessaires pour traiter l'événement, y compris le type d'événement, le pair concerné, et toute donnée ou paquet associé.
+ *
+ * @property {ENetEventType} type - Le type de l'événement. Décrit l'action ou le changement d'état qui s'est produit.
+ * @property {ENetPeer*} peer - Le pair qui a généré un événement de connexion, de déconnexion ou de réception. Null pour les événements ENET_EVENT_TYPE_NONE.
+ * @property {enet_uint8} channelID - Le canal sur le pair qui a généré l'événement, le cas échéant. Pertinent pour les événements de type ENET_EVENT_TYPE_RECEIVE.
+ * @property {enet_uint32} data - Données associées à l'événement, le cas échéant. Pour les événements de type ENET_EVENT_TYPE_DISCONNECT et ENET_EVENT_TYPE_DISCONNECT_TIMEOUT, cela peut contenir des données fournies par l'utilisateur lors de la déconnexion.
+ * @property {ENetPacket*} packet - Le paquet associé à l'événement, le cas échéant. Pertinent pour les événements de type ENET_EVENT_TYPE_RECEIVE. Le paquet doit être détruit avec enet_packet_destroy après utilisation.
  */
 typedef struct _ENetEvent 
 {
-   ENetEventType        type;      /**< type of the event */
-   ENetPeer *           peer;      /**< peer that generated a connect, disconnect or receive event */
-   enet_uint8           channelID; /**< channel on the peer that generated the event, if appropriate */
-   enet_uint32          data;      /**< data associated with the event, if appropriate */
-   ENetPacket *         packet;    /**< packet associated with the event, if appropriate */
+   ENetEventType        type;
+   ENetPeer *           peer;
+   enet_uint8           channelID;
+   enet_uint32          data;
+   ENetPacket *         packet;
 } ENetEvent;
-
-/** @defgroup global ENet global functions
-    @{ 
-*/
 
 /** 
   Initializes ENet globally.  Must be called prior to using any functions in
@@ -514,8 +804,6 @@ ENET_API void enet_deinitialize (void);
 */
 ENET_API ENetVersion enet_linked_version (void);
 
-/** @} */
-
 /** @defgroup private ENet private implementation functions */
 
 /**
@@ -529,7 +817,6 @@ ENET_API enet_uint32 enet_time_get (void);
 ENET_API void enet_time_set (enet_uint32);
 
 /** @defgroup socket ENet socket functions
-    @{
 */
 ENET_API ENetSocket enet_socket_create (ENetAddressType, ENetSocketType);
 ENET_API int        enet_socket_bind (ENetSocket, const ENetAddress *);
@@ -545,12 +832,6 @@ ENET_API int        enet_socket_get_option (ENetSocket, ENetSocketOption, int *)
 ENET_API int        enet_socket_shutdown (ENetSocket, ENetSocketShutdown);
 ENET_API void       enet_socket_destroy (ENetSocket);
 ENET_API int        enet_socketset_select (ENetSocket, ENetSocketSet *, ENetSocketSet *, enet_uint32);
-
-/** @} */
-
-/** @defgroup Address ENet address functions
-    @{
-*/
 
 /** Compares two addresses (only the host part)
     @param firstAddress first address to compare
@@ -637,8 +918,6 @@ ENET_API int enet_address_get_host (const ENetAddress * address, char * hostName
 ENET_API void enet_address_build_any(ENetAddress * address, ENetAddressType type);
 ENET_API void enet_address_build_loopback(ENetAddress * address, ENetAddressType type);
 ENET_API void enet_address_convert_ipv6(ENetAddress * address);
-
-/** @} */
 
 ENET_API ENetPacket * enet_packet_create (const void *, size_t, enet_uint32);
 ENET_API void         enet_packet_destroy (ENetPacket *);
@@ -731,5 +1010,4 @@ ENET_API void enet_peer_set_data(ENetPeer*, const void*);
 }
 #endif
 
-#endif /* RCENET_ENET_H */
-
+#endif // RCENET_ENET_H
