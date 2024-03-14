@@ -6,6 +6,7 @@
 - Add ENET_EVENT_TYPE_DISCONNECT_TIMEOUT
 - ENET_PROTOCOL_MAXIMUM_PEER_ID 4096 up to 65535 peers simultaneously by host
 - PRs for fixes that were never applied to the original ENet that are included in it
+- The protocol of the original ENet lib has been modified so will not work with the original protocol
 - And other improvements and fixes
 
 <br /><br /><br /><br />
