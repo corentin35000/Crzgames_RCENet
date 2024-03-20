@@ -19,6 +19,7 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 <br />
 
 ## 📦 RCENet Packages Distribution
+Binaries : https://github.com/corentin35000/Crzgames_RCENet/releases
 | Platform | Format | Compiler | Type |
 |----------|-----------|-------|------|
 | **Windows-MSVC** | `.lib / .dll` | CL | static / shared |
