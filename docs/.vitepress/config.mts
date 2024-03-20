@@ -28,6 +28,10 @@ export default defineConfig({
               text: 'RCENet API Reference',
               items: [
                 { text: 'rcenet', link: '/api/rcenet' },
+                { text: 'rcenet_host', link: '/api/rcenet_host' },
+                { text: 'rcenet_packet', link: '/api/rcenet_packet' },
+                { text: 'rcenet_peer', link: '/api/rcenet_peer' },
+                { text: 'rcenet_socket', link: '/api/rcenet_socket' },
               ]
             },
           ],
@@ -39,7 +43,8 @@ export default defineConfig({
                   text: 'Getting Started', 
                   items: [
                     { text: 'Prerequisites', link: '/guides/getting-started/prerequisites' },
-                    { text: 'Quick Start', link: '/guides/getting-started/quick-start' }
+                    { text: 'Quick Start', link: '/guides/getting-started/quick-start' },
+                    { text: 'Features', link: '/guides/getting-started/features' }
                   ] 
                 },
                 { text: 'Distribution', link: '/guides/distribution' },
@@ -71,6 +76,10 @@ export default defineConfig({
               text: 'Référence de l\'API RCENet',
               items: [
                 { text: 'rcenet', link: '/fr/api/rcenet' },
+                { text: 'rcenet_host', link: '/fr/api/rcenet_host' },
+                { text: 'rcenet_packet', link: '/fr/api/rcenet_packet' },
+                { text: 'rcenet_peer', link: '/fr/api/rcenet_peer' },
+                { text: 'rcenet_socket', link: '/fr/api/rcenet_socket' },
               ]
             },
           ],
@@ -82,7 +91,8 @@ export default defineConfig({
                   text: 'Commencer', 
                   items: [
                     { text: 'Conditions préalables', link: '/fr/guides/getting-started/prerequisites' },
-                    { text: 'Démarrage rapide', link: '/fr/guides/getting-started/quick-start' }
+                    { text: 'Démarrage rapide', link: '/fr/guides/getting-started/demarage-rapide' },
+                    { text: 'Fonctionnalités', link: '/fr/guides/getting-started/fonctionnalites' },
                   ] 
                 },
                 { text: 'Distribution', link: '/fr/guides/distribution' },
