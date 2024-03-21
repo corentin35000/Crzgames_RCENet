@@ -1,8 +1,8 @@
-# Quick Start
+# 🚀 Quick Start
 
 This guide will help you set up a basic project structure.
 
-## Project Structure
+## 📂 Project Structure
 
 - `client.c`
 - `server.c`

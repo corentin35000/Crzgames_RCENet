@@ -1,6 +1,6 @@
-# Prerequisites
+# 📋 Prerequisites
 
-Bienvenue sur la librairie RCENet ! 
+Welcome to the setup guide for the RCENet library. This guide will walk you through the steps to set up your development environment across various platforms.
 
 ## 🛠 Tech Stack
 - C (Language)
@@ -9,7 +9,7 @@ Bienvenue sur la librairie RCENet !
 
 <br /><br />
 
-## Setup Environment RCENet
+## ⚙️ Setup Environment RCENet
 ### Clone the projet
 ```bash
 git clone git@github.com:corentin35000/Crzgames_RCENet.git

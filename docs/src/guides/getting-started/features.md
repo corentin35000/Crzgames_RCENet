@@ -1,4 +1,4 @@
-# Features and Architecture
+# 📋 Features and Architecture
 
 The combined use of UDP and TCP in Cube could have potentially benefited from their respective features, but the resulting mix of protocols still left much to be desired. TCP lacked multiple streams of communication without having to open numerous sockets and complicated packet delineation due to its buffering behavior. UDP lacked sequencing, connection management, bandwidth resource management, and imposed limitations on packet size. Significant investment was required to integrate these two protocols, and the end result was inferior in terms of features and performance compared to the uniform protocol presented by RCENet.
 
