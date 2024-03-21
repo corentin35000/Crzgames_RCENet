@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.2.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.1.0...v1.2.0) (2024-03-14)
+
+
+### 🚀 Features
+
+* Increasing ENET_PROTOCOL_MAXIMUM_PEER_ID beyond 4096 to 65535 ([50611a4](https://github.com/corentin35000/Crzgames_RCENet/commit/50611a4d7b3fd59a16e101bfb234c91539f593aa))
+
+
+### 🐛 Bug Fixes
+
+* fix SRTT calculations when RTT &lt; 8 ms and SRTT &gt;= 8 ms ([2b51f2b](https://github.com/corentin35000/Crzgames_RCENet/commit/2b51f2bd696ff64beab06f080c2a7ef895889b5f))
+* RTO limit being exceeded during exponential backoff ([57bc6f2](https://github.com/corentin35000/Crzgames_RCENet/commit/57bc6f276933ed5a4aed1025a390821128f3151c))
+
+
+### 📚 Documentation
+
+* add new comment in list.h ([84d56f0](https://github.com/corentin35000/Crzgames_RCENet/commit/84d56f066a901f134b9161e530097c66828d4001))
+* remove comments ([4fa9f0c](https://github.com/corentin35000/Crzgames_RCENet/commit/4fa9f0c1ec85c3a6e5cff0ccf7a58dcdb7f53297))
+
 ## [1.1.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.0.0...v1.1.0) (2024-03-14)
 
 
