@@ -10,7 +10,6 @@
 - New API
 - Addition of a lot of comments in the sources and includes, a JSDOC style
 - The protocol of the original ENet lib has been modified so will not work with the original protocol
-- Add binding C#
 - Other improvements and fixes
 
 <br /><br /><br /><br />
