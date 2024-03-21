@@ -28,6 +28,7 @@ export default defineConfig({
               text: 'RCENet API Reference',
               items: [
                 { text: 'rcenet', link: '/api/rcenet' },
+                { text: 'rcenet_address', link: '/api/rcenet_address' },
                 { text: 'rcenet_host', link: '/api/rcenet_host' },
                 { text: 'rcenet_packet', link: '/api/rcenet_packet' },
                 { text: 'rcenet_peer', link: '/api/rcenet_peer' },
@@ -76,6 +77,7 @@ export default defineConfig({
               text: 'Référence de l\'API RCENet',
               items: [
                 { text: 'rcenet', link: '/fr/api/rcenet' },
+                { text: 'rcenet_address', link: '/fr/api/rcenet_address' },
                 { text: 'rcenet_host', link: '/fr/api/rcenet_host' },
                 { text: 'rcenet_packet', link: '/fr/api/rcenet_packet' },
                 { text: 'rcenet_peer', link: '/fr/api/rcenet_peer' },
