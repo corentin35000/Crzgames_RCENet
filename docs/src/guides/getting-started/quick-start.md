@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 
     /* Create a non-listening host using enet_host_create */
     /* Note we create a host using the same address family we resolved earlier */
-    clientHost = enet_host_create(address.type, NULL, 1, 2, 0, 0);
+    clientHost = enet_host_create(address.type, NULL, 1, 255, 0, 0);
     if (clientHost == NULL)
     {
         fprintf(stderr, "An error occured while trying to create an ENet6 server host\n");
@@ -242,7 +242,7 @@ int main(int argc, char **argv)
 
     /* Create a host using enet_host_create, address type has to match the address,  */
     /* except for the combination IPv6 + Any which enables dual stack (IPv6 socket allowing IPv4 connection)  */
-    serverHost = enet_host_create(ENET_ADDRESS_TYPE_ANY, &address, 32, 2, 0, 0);
+    serverHost = enet_host_create(ENET_ADDRESS_TYPE_ANY, &address, 32, 255, 0, 0);
     if (serverHost == NULL)
     {
         fprintf(stderr, "An error occured while trying to create an ENet6 server host\n");
