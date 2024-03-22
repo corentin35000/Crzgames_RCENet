@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.3.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.2.0...v1.3.0) (2024-03-22)
+
+
+### 🚀 Features
+
+* deleted binding cs ([3c0f715](https://github.com/corentin35000/Crzgames_RCENet/commit/3c0f715f8d3501413ac02038b0657512c62a83a3))
+
+
+### 🧹 Chores
+
+* upgrade dependencies vitepress v1.0.1 ! ([e964334](https://github.com/corentin35000/Crzgames_RCENet/commit/e9643348e58d3438455044fd32f2b47c3f15d40a))
+
+
+### 📚 Documentation
+
+* add api in documentation for module : address, socket, host and general ([09187da](https://github.com/corentin35000/Crzgames_RCENet/commit/09187daca6ab5482635c95b002be99f8a4a129d2))
+* add espace ([2e6f90b](https://github.com/corentin35000/Crzgames_RCENet/commit/2e6f90bf08c0d6b21dabe0dcdb821f580aec7aa2))
+* add icons in pages ([39c0897](https://github.com/corentin35000/Crzgames_RCENet/commit/39c0897c0779c2f8902fe7e34934ac4fca85902c))
+* add module rcenet_packet for doc ([8222ff8](https://github.com/corentin35000/Crzgames_RCENet/commit/8222ff8fb5e7ee1900e243dc98e4f00789449e3d))
+* add new doc for module rcenet_peer ([60f61e5](https://github.com/corentin35000/Crzgames_RCENet/commit/60f61e5035c8015858eba07a065fa061a5ae0fa5))
+* improvement documentation for rcenet_host ([8999cdf](https://github.com/corentin35000/Crzgames_RCENet/commit/8999cdf5eb007778cf434c20b6ff678f51fcbb28))
+* improvement module host ([c0fb861](https://github.com/corentin35000/Crzgames_RCENet/commit/c0fb8616f736b771a18ad601ad59b1889900e6dd))
+* rename subtitle site ([2094163](https://github.com/corentin35000/Crzgames_RCENet/commit/20941638b553d215d296bfbfa7dce11d5da3b546))
+* update documentation RCENet ([87925f6](https://github.com/corentin35000/Crzgames_RCENet/commit/87925f60aec96a6a508514c14732bf91a17ca414))
+* update README.md ([2caf94d](https://github.com/corentin35000/Crzgames_RCENet/commit/2caf94db8cfb8cea06a80c83b2842e17822260f6))
+* update value count channel ([c02f0d4](https://github.com/corentin35000/Crzgames_RCENet/commit/c02f0d4ba6db22536472ae42f8ab5d5e0acc0f50))
+
 ## [1.2.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.1.0...v1.2.0) (2024-03-14)
 
 
