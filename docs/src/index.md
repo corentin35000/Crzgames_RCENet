@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: RCENet
-  text: A fork of ENet
+  text: An improved fork of ENet
   tagline: Reliable UDP networking library.
   image:
     src: ./images/logo.png

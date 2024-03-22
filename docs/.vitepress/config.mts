@@ -12,7 +12,7 @@ export default defineConfig({
   locales: {
     // Config for Language = EN (default language)
     root: {
-      description: "A fork of ENet",
+      description: "An improved fork of ENet",
       label: 'English',
       lang: 'en',
       themeConfig: {
@@ -60,7 +60,7 @@ export default defineConfig({
 
     // Config for Language = FR
     fr: {
-      description: "Un fork de ENet",
+      description: "Un fork de ENet améliorer",
       label: 'Français',
       lang: 'fr',
       link: '/fr/',
