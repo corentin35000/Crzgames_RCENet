@@ -100,141 +100,239 @@ typedef struct _ENetHost {
 
 ### Host Management
 
-- **`enet_host_create`**  
-  _Creates an ENet host with specified parameters._
-  ```c
-  ENET_API ENetHost * enet_host_create (ENetAddressType type, const ENetAddress *address, size_t peerCount, size_t channelLimit, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);
-  ```
+### `enet_host_create`
 
-<br />
+_Creates an ENet host for communicating over the network. The host can act as a server, client, or both._
 
-- **`enet_host_destroy`**  
-  _Destroys the specified host, disconnecting any connected peers._
-  ```c
-  ENET_API void enet_host_destroy (ENetHost *host);
-  ```
+```c
+ENET_API ENetHost * enet_host_create (ENetAddressType type, const ENetAddress *address, size_t peerCount, size_t channelLimit, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);
+```
 
-<br />
+- **Parameters:**
+  - `type`: The type of address (IPv4, IPv6) the host will use.
+  - `address`: The local address to bind the host to. Use NULL for an unspecified address.
+  - `peerCount`: The maximum number of peers that the host should support.
+  - `channelLimit`: The maximum number of channels per peer.
+  - `incomingBandwidth`: The incoming bandwidth of the host in bytes/second.
+  - `outgoingBandwidth`: The outgoing bandwidth of the host in bytes/second.
 
-- **`enet_host_connect`**  
-  _Initiates a connection to a foreign host._
-  ```c
-  ENET_API ENetPeer * enet_host_connect (ENetHost *host, const ENetAddress *address, size_t channelCount, enet_uint32 data);
-  ```
-
-<br />
-
-- **`enet_host_service`**  
-  _Dispatches queued events and sends or receives packets._
-  ```c
-  ENET_API int enet_host_service (ENetHost *host, ENetEvent *event, enet_uint32 timeout);
-  ```
-
-<br />
-
-- **`enet_host_flush`**  
-  _Sends any queued packets on the host immediately._
-  ```c
-  ENET_API void enet_host_flush (ENetHost *host);
-  ```
-
-<br />
-
-- **`enet_host_broadcast`**  
-  _Broadcasts a packet to all connected peers._
-  ```c
-  ENET_API void enet_host_broadcast (ENetHost *host, enet_uint8 channelID, ENetPacket *packet);
-  ```
-
-<br />
-
-- **`enet_host_compress`**  
-  _Enables packet compression using the specified compression callbacks._
-  ```c
-  ENET_API void enet_host_compress (ENetHost *host, const ENetCompressor *compressor);
-  ```
-
-<br />
-
-- **`enet_host_channel_limit`**  
-  _Limits the maximum number of channels allowed for future connections._
-  ```c
-  ENET_API void enet_host_channel_limit (ENetHost *host, size_t channelLimit);
-  ```
-
-<br />
-
-- **`enet_host_bandwidth_limit`**  
-  _Limits the incoming and outgoing bandwidth of the host._
-  ```c
-  ENET_API void enet_host_bandwidth_limit (ENetHost *host, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);
-  ```
+- **Returns:** A pointer to the newly created `ENetHost`, or NULL on failure.
 
 <br /><br />
 
-### Statistics and Configuration
+### `enet_host_destroy`
 
-- **`enet_host_get_peers_count`**  
-  _Returns the number of connected peers._
-  ```c
-  ENET_API enet_uint32 enet_host_get_peers_count(const ENetHost *host);
-  ```
+_Destroys the specified host, disconnecting any connected peers._
 
-<br />
+```c
+ENET_API void enet_host_destroy (ENetHost *host);
+```
 
-- **`enet_host_get_packets_sent`**  
-  _Returns the number of packets sent by the host._
-  ```c
-  ENET_API enet_uint32 enet_host_get_packets_sent(const ENetHost *host);
-  ```
+- **Parameters:**
+  - `host`: The host to destroy.
 
-<br />
+<br /><br />
 
-- **`enet_host_get_packets_received`**  
-  _Returns the number of packets received by the host._
-  ```c
-  ENET_API enet_uint32 enet_host_get_packets_received(const ENetHost *host);
-  ```
+### `enet_host_connect`
 
-<br />
+_Initiates a connection to a foreign host._
 
-- **`enet_host_get_bytes_sent`**  
-  _Returns the total number of bytes sent by the host._
-  ```c
-  ENET_API enet_uint32 enet_host_get_bytes_sent(const ENetHost *host);
-  ```
+```c
+ENET_API ENetPeer * enet_host_connect (ENetHost *host, const ENetAddress *address, size_t channelCount, enet_uint32 data);
+```
 
-<br />
+- **Parameters:**
+  - `host`: The local host attempting to initiate the connection.
+  - `address`: The address of the foreign host to connect to.
+  - `channelCount`: The number of channels to allocate for the connection.
+  - `data`: User data supplied to the connection attempt.
 
-- **`enet_host_get_bytes_received`**  
-  _Returns the total number of bytes received by the host._
-  ```c
-  ENET_API enet_uint32 enet_host_get_bytes_received(const ENetHost *host);
-  ```
+- **Returns:** A pointer to an `ENetPeer` representing the connection, or NULL on failure.
 
-<br />
+<br /><br />
 
-- **`enet_host_set_max_duplicate_peers`**  
-  _Sets the maximum number of allowed peers with the same IP address._
-  ```c
-  ENET_API void enet_host_set_max_duplicate_peers(ENetHost *host, enet_uint16 number);
-  ```
+### `enet_host_service`
 
-<br />
+_Dispatches queued events and sends or receives packets._
 
-- **`enet_host_set_intercept_callback`**  
-  _Sets a callback function for intercepting received packets._
-  ```c
-  ENET_API void enet_host_set_intercept_callback(ENetHost *host, ENetInterceptCallback callback);
-  ```
+```c
+ENET_API int enet_host_service (ENetHost *host, ENetEvent *event, enet_uint32 timeout);
+```
 
-<br />
+- **Parameters:**
+  - `host`: The host to service.
+  - `event`: Pointer to an `ENetEvent` structure where the event (if any) will be placed.
+  - `timeout`: The number of milliseconds to wait for an event. A value of 0 will return immediately.
 
-- **`enet_host_set_checksum_callback`**  
-  _Sets a callback function for computing packet checksums._
-  ```c
-  ENET_API void enet_host_set_checksum_callback(ENetHost *host, ENetChecksumCallback callback);
-  ```
+- **Returns:** > 0 if an event was dispatched, 0 if no events occurred, < 0 on failure.
+
+<br /><br />
+
+### `enet_host_flush`
+
+_Sends any queued packets on the host immediately._
+
+```c
+ENET_API void enet_host_flush (ENetHost *host);
+```
+
+- **Parameters:**
+  - `host`: The host whose packet queue will be flushed.
+
+
+<br /><br />
+
+### `enet_host_broadcast`
+
+_Broadcasts a packet to all connected peers._
+
+```c
+ENET_API void enet_host_broadcast (ENetHost *host, enet_uint8 channelID, ENetPacket *packet);
+```
+
+- **Parameters:**
+  - `host`: The host from which the packet will be broadcasted.
+  - `channelID`: The channel ID on which the packet will be sent.
+  - `packet`: The packet to broadcast.
+
+<br /><br />
+
+### `enet_host_compress`
+
+_Enables packet compression using the specified compression callbacks._
+
+```c
+ENET_API void enet_host_compress (ENetHost *host, const ENetCompressor *compressor);
+```
+
+- **Parameters:**
+  - `host`: The host for which to enable compression.
+  - `compressor`: A pointer to the compression callbacks to use.
+
+<br /><br />
+
+### `enet_host_channel_limit`
+
+_Limits the maximum number of channels allowed for future connections._
+
+```c
+ENET_API void enet_host_channel_limit (ENetHost *host, size_t channelLimit);
+```
+
+- **Parameters:**
+  - `host`: The host for which to set the channel limit.
+  - `channelLimit`: The maximum number of channels.
+
+<br /><br />
+
+### `enet_host_bandwidth_limit`
+
+_Limits the incoming and outgoing bandwidth of the host._
+
+```c
+ENET_API void enet_host_bandwidth_limit (ENetHost *host, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);
+```
+
+- **Parameters:**
+  - `host`: The host for which to set bandwidth limits.
+  - `incomingBandwidth`: The maximum incoming bandwidth in bytes/second.
+  - `outgoingBandwidth`: The maximum outgoing bandwidth in bytes/second.
+
+<br /><br />
+
+## Statistics and Configuration
+
+### `enet_host_get_peers_count`
+
+_Returns the number of connected peers._
+
+```c
+ENET_API enet_uint32 enet_host_get_peers_count(const ENetHost *host);
+```
+
+<br /><br />
+
+### `enet_host_get_packets_sent`
+
+_Returns the number of packets sent by the host._
+
+```c
+ENET_API enet_uint32 enet_host_get_packets_sent(const ENetHost *host);
+```
+
+<br /><br />
+
+### `enet_host_get_packets_received`
+
+_Returns the number of packets received by the host._
+
+```c
+ENET_API enet_uint32 enet_host_get_packets_received(const ENetHost *host);
+```
+
+<br /><br />
+
+### `enet_host_get_bytes_sent`
+
+_Returns the total number of bytes sent by the host._
+
+```c
+ENET_API enet_uint32 enet_host_get_bytes_sent(const ENetHost *host);
+```
+
+<br /><br />
+
+### `enet_host_get_bytes_received`
+
+_Returns the total number of bytes received by the host._
+
+```c
+ENET_API enet_uint32 enet_host_get_bytes_received(const ENetHost *host);
+```
+
+<br /><br />
+
+### `enet_host_set_max_duplicate_peers`
+
+_Sets the maximum number of allowed peers with the same IP address._
+
+```c
+ENET_API void enet_host_set_max_duplicate_peers(ENetHost *host, enet_uint16 number);
+```
+
+- **Parameters:**
+  - `host`: The host for which to set the maximum number of duplicate peers.
+  - `number`: The maximum number of duplicate peers allowed.
+
+<br /><br />
+
+### `enet_host_set_intercept_callback`
+
+_Sets a callback function for intercepting received packets._
+
+```c
+ENET_API void enet_host_set_intercept_callback(ENetHost *host, ENetInterceptCallback callback);
+```
+
+- **Parameters:**
+  - `host`: The host for which to set the intercept callback.
+  - `callback`: The callback function to be used for intercepting packets.
+
+<br /><br />
+
+### `enet_host_set_checksum_callback`
+
+_Sets a callback function for computing packet checksums._
+
+```c
+ENET_API void enet_host_set_checksum_callback(ENetHost *host, ENetChecksumCallback callback);
+```
+
+- **Parameters:**
+  - `host`: The host for which to set the checksum callback.
+  - `callback`: The callback function to be used for computing packet checksums.
+
+<br /><br />
 
 ### `enet_host_create`
 
