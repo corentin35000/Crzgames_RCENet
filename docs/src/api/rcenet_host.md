@@ -144,6 +144,9 @@ typedef struct _ENetHost {
 } ENetHost;
 ```
 
+<br /><br />
+
+
 ## Compression and Encryption
 
 ### `ENetCompressor`
