@@ -131,7 +131,7 @@ Parses a string IP address and sets the address object.
   - `address`: Pointer to the address object to be set.
   - `hostName`: IP address in string format.
 
-- **Returns**: `0` on success, `<0` on failure.
+- **Returns**: `0` on success, `< 0` on failure.
 
 <br /><br />
 
@@ -149,7 +149,7 @@ Resolves a hostname to an IP address and stores it in an address object.
   - `type`: Type of the address (IPv4 or IPv6).
   - `hostName`: Hostname to resolve.
 
-- **Returns**: `0` on success, `<0` on failure.
+- **Returns**: `0` on success, `< 0` on failure.
 
 <br /><br />
 
@@ -167,7 +167,7 @@ Retrieves the printable IP address from an address object.
   - `hostName`: Buffer to store the printable IP address.
   - `nameLength`: Length of the buffer.
 
-- **Returns**: `0` on success, `<0` on failure.
+- **Returns**: `0` on success, `< 0` on failure.
 
 <br /><br />
 
@@ -185,7 +185,7 @@ Performs a reverse lookup of the IP address to find the hostname.
   - `hostName`: Buffer to store the hostname.
   - `nameLength`: Length of the buffer.
 
-- **Returns**: `0` on success, `<0` on failure.
+- **Returns**: `0` on success, `< 0` on failure.
 
 <br /><br />
 
