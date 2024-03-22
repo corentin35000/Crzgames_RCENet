@@ -16,6 +16,51 @@ Peers represent the other endpoints in a networked environment with which a host
 
 Represents a network peer, a remote endpoint with which data packets can be exchanged.
 
+- **Fields:**
+    - `dispatchList`: Internally used for queuing events for this peer.
+    - `host`: The host object this peer is associated with.
+    - `outgoingPeerID`/`incomingPeerID`: Identifiers used for distinguishing this peer in outgoing/incoming connections.
+    - `connectID`: A unique identifier for the connection to this peer.
+    - `outgoingSessionID`/`incomingSessionID`: Session identifiers for tracking session changes.
+    - `address`: The network address of the peer.
+    - `data`: User-defined data associated with the peer, can be used to store application-specific information.
+    - `state`: The current state of the peer (e.g., connected, disconnecting, etc.).
+    - `channels`: An array of channels over which data is sent and received. Channels provide separate streams of communication.
+    - `channelCount`: The number of channels allocated for this peer.
+    - `incomingBandwidth`/`outgoingBandwidth`: The configured incoming/outgoing bandwidth limits for this peer.
+    - `incomingBandwidthThrottleEpoch`/`outgoingBandwidthThrottleEpoch`: Used internally to manage bandwidth throttling.
+    - `incomingDataTotal`/`outgoingDataTotal`: The total amount of incoming/outgoing data since the last reset or initialization.
+    - `lastSendTime`/`lastReceiveTime`: Timestamps of the last send/receive operations.
+    - `nextTimeout`/`earliestTimeout`: Used internally to manage connection timeouts and retransmissions.
+    - `packetLossEpoch`: Used internally for calculating packet loss over time.
+    - `packetsSent`/`packetsLost`: Counters for the total number of packets sent and lost.
+    - `packetLoss`/`packetLossVariance`: Measures of packet loss ratio and its variance.
+    - `packetThrottle`: The current packet throttle value, affecting data transmission rate.
+    - `packetThrottleLimit`/`packetThrottleCounter`: Control the throttling mechanism.
+    - `packetThrottleEpoch`: Timestamp for the last throttle evaluation.
+    - `packetThrottleAcceleration`/`Deceleration`: Controls how quickly the throttle value changes.
+    - `packetThrottleInterval`: Time interval for packet throttle evaluations.
+    - `pingInterval`: Frequency at which ping messages are sent to keep the connection alive.
+    - `timeoutLimit`/`Minimum`/`Maximum`: Configuration for connection timeout thresholds.
+    - `lastRoundTripTime`/`lowestRoundTripTime`/`Variance`: Statistics on the round-trip time (RTT) for packets to this peer.
+    - `roundTripTime`/`roundTripTimeVariance`: Average RTT and its variance.
+    - `mtu`: Maximum transmission unit size, impacting the size of packets sent.
+    - `windowSize`: Flow control window size for reliable packet delivery.
+    - `reliableDataInTransit`: Amount of reliable data that has been sent but not yet acknowledged.
+    - `outgoingReliableSequenceNumber`: Sequence number for the next reliable packet to be sent.
+    - `ENetList acknowledgements`: A list of acknowledgements to be sent. This list contains acknowledgements for packets that have been received and acknowledged by this peer.
+    - `ENetList sentReliableCommands`: A list of reliable commands that have been sent but not yet acknowledged. This ensures reliable delivery of packets.
+    - `ENetList outgoingSendReliableCommands`: A list of reliable commands that are ready to be sent. These commands are queued for sending in a reliable manner.
+    - `ENetList outgoingCommands`: A list of commands that are ready to be sent, including both reliable and unreliable commands.
+    - `ENetList dispatchedCommands`: A list of commands that have been dispatched. This list is used for managing commands that have been processed and are awaiting further action, such as acknowledgement.
+    - `enet_uint16 flags`: Flags for behavior control of the peer. This includes flags like `ENET_PEER_FLAG_NEEDS_DISPATCH` and `ENET_PEER_FLAG_CONTINUE_SENDING`, which control the peer's behavior regarding message dispatch and sending packets.
+    - `enet_uint16 reserved`: A reserved field for future use, ensuring compatibility with future versions of the protocol or library extensions.
+    - `enet_uint16 incomingUnsequencedGroup`: Used to track incoming unsequenced packets. This field is part of managing packets that are sent without a specific order.
+    - `enet_uint16 outgoingUnsequencedGroup`: Similar to the incoming unsequenced group but for outgoing packets. It tracks the group number for unsequenced packets that are sent.
+    - `enet_uint32 unsequencedWindow[ENET_PEER_UNSEQUENCED_WINDOW_SIZE / 32]`: A window used to track received unsequenced packets. This array helps in managing and filtering out duplicate unsequenced packets that may be received.
+    - `enet_uint32 eventData`: This field is used to store custom event data that can be associated with specific actions or triggers in the network communication.
+    - `size_t totalWaitingData`: Represents the total amount of data that is waiting to be sent to this peer. This includes all queued packets and commands that have not yet been transmitted.
+
 ```c
 typedef struct _ENetPeer { 
    ENetListNode dispatchList;
@@ -80,50 +125,6 @@ typedef struct _ENetPeer {
    size_t        totalWaitingData;
 } ENetPeer;
 ```
-
-- `dispatchList`: Internally used for queuing events for this peer.
-- `host`: The host object this peer is associated with.
-- `outgoingPeerID`/`incomingPeerID`: Identifiers used for distinguishing this peer in outgoing/incoming connections.
-- `connectID`: A unique identifier for the connection to this peer.
-- `outgoingSessionID`/`incomingSessionID`: Session identifiers for tracking session changes.
-- `address`: The network address of the peer.
-- `data`: User-defined data associated with the peer, can be used to store application-specific information.
-- `state`: The current state of the peer (e.g., connected, disconnecting, etc.).
-- `channels`: An array of channels over which data is sent and received. Channels provide separate streams of communication.
-- `channelCount`: The number of channels allocated for this peer.
-- `incomingBandwidth`/`outgoingBandwidth`: The configured incoming/outgoing bandwidth limits for this peer.
-- `incomingBandwidthThrottleEpoch`/`outgoingBandwidthThrottleEpoch`: Used internally to manage bandwidth throttling.
-- `incomingDataTotal`/`outgoingDataTotal`: The total amount of incoming/outgoing data since the last reset or initialization.
-- `lastSendTime`/`lastReceiveTime`: Timestamps of the last send/receive operations.
-- `nextTimeout`/`earliestTimeout`: Used internally to manage connection timeouts and retransmissions.
-- `packetLossEpoch`: Used internally for calculating packet loss over time.
-- `packetsSent`/`packetsLost`: Counters for the total number of packets sent and lost.
-- `packetLoss`/`packetLossVariance`: Measures of packet loss ratio and its variance.
-- `packetThrottle`: The current packet throttle value, affecting data transmission rate.
-- `packetThrottleLimit`/`packetThrottleCounter`: Control the throttling mechanism.
-- `packetThrottleEpoch`: Timestamp for the last throttle evaluation.
-- `packetThrottleAcceleration`/`Deceleration`: Controls how quickly the throttle value changes.
-- `packetThrottleInterval`: Time interval for packet throttle evaluations.
-- `pingInterval`: Frequency at which ping messages are sent to keep the connection alive.
-- `timeoutLimit`/`Minimum`/`Maximum`: Configuration for connection timeout thresholds.
-- `lastRoundTripTime`/`lowestRoundTripTime`/`Variance`: Statistics on the round-trip time (RTT) for packets to this peer.
-- `roundTripTime`/`roundTripTimeVariance`: Average RTT and its variance.
-- `mtu`: Maximum transmission unit size, impacting the size of packets sent.
-- `windowSize`: Flow control window size for reliable packet delivery.
-- `reliableDataInTransit`: Amount of reliable data that has been sent but not yet acknowledged.
-- `outgoingReliableSequenceNumber`: Sequence number for the next reliable packet to be sent.
-- `ENetList acknowledgements`: A list of acknowledgements to be sent. This list contains acknowledgements for packets that have been received and acknowledged by this peer.
-- `ENetList sentReliableCommands`: A list of reliable commands that have been sent but not yet acknowledged. This ensures reliable delivery of packets.
-- `ENetList outgoingSendReliableCommands`: A list of reliable commands that are ready to be sent. These commands are queued for sending in a reliable manner.
-- `ENetList outgoingCommands`: A list of commands that are ready to be sent, including both reliable and unreliable commands.
-- `ENetList dispatchedCommands`: A list of commands that have been dispatched. This list is used for managing commands that have been processed and are awaiting further action, such as acknowledgement.
-- `enet_uint16 flags`: Flags for behavior control of the peer. This includes flags like `ENET_PEER_FLAG_NEEDS_DISPATCH` and `ENET_PEER_FLAG_CONTINUE_SENDING`, which control the peer's behavior regarding message dispatch and sending packets.
-- `enet_uint16 reserved`: A reserved field for future use, ensuring compatibility with future versions of the protocol or library extensions.
-- `enet_uint16 incomingUnsequencedGroup`: Used to track incoming unsequenced packets. This field is part of managing packets that are sent without a specific order.
-- `enet_uint16 outgoingUnsequencedGroup`: Similar to the incoming unsequenced group but for outgoing packets. It tracks the group number for unsequenced packets that are sent.
-- `enet_uint32 unsequencedWindow[ENET_PEER_UNSEQUENCED_WINDOW_SIZE / 32]`: A window used to track received unsequenced packets. This array helps in managing and filtering out duplicate unsequenced packets that may be received.
-- `enet_uint32 eventData`: This field is used to store custom event data that can be associated with specific actions or triggers in the network communication.
-- `size_t totalWaitingData`: Represents the total amount of data that is waiting to be sent to this peer. This includes all queued packets and commands that have not yet been transmitted.
 
 This section covers the initial set of fields in the `ENetPeer` structure. The subsequent parts will delve into the remaining fields, explaining their purposes and how they contribute to the management of network peers.
 
