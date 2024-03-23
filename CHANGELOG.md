@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.1](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.3.0...v1.3.1) (2024-03-23)
+
+
+### 📚 Documentation
+
+* add &lt;br /&gt; ([2d9de7a](https://github.com/corentin35000/Crzgames_RCENet/commit/2d9de7a6749808754bfb283cb433337834d57105))
+* add in config .mts for new routes ([d2b3191](https://github.com/corentin35000/Crzgames_RCENet/commit/d2b3191e0643870961d437a0e05a1f3ef1bca975))
+* add new module rcenet_protocol ([476611c](https://github.com/corentin35000/Crzgames_RCENet/commit/476611c586f5321494c730b1d87909f183c4a46b))
+* add new module rcenet_range in doc ([6a6adeb](https://github.com/corentin35000/Crzgames_RCENet/commit/6a6adebcc85d342b267676ec9c70738b562f729c))
+* improvement socket, peer and host in doc ([e5af05a](https://github.com/corentin35000/Crzgames_RCENet/commit/e5af05ac0ab61d74c4ad459f43654638f27767ca))
+* improvement struct enetpeer doc ([9a0de9f](https://github.com/corentin35000/Crzgames_RCENet/commit/9a0de9f084f374b31ec668201471165ecdddf4c2))
+
 ## [1.3.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.2.0...v1.3.0) (2024-03-22)
 
 
