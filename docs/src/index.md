@@ -38,7 +38,7 @@ features:
 
   - icon: '🌐'
     title: Multiplatform Support
-    details: Supports multiple operating systems, including Windows, Linux, macOS, iOS, and Android, making your project accessible on a wide range of devices.
+    details: Supports multiple operating systems, including Solaris, BSD, Windows, Linux, macOS, iOS, and Android, making your project accessible on a wide range of devices.
 
   - icon: '💡'
     title: Extensible and Customizable
