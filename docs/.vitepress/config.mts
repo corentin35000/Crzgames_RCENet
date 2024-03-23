@@ -84,10 +84,10 @@ export default defineConfig({
                 { text: 'rcenet_host', link: '/fr/api/rcenet_host' },
                 { text: 'rcenet_packet', link: '/fr/api/rcenet_packet' },
                 { text: 'rcenet_peer', link: '/fr/api/rcenet_peer' },
-                { text: 'rcenet_protocol', link: '/api/rcenet_protocol' },
-                { text: 'rcenet_range', link: '/api/rcenet_range' },
+                { text: 'rcenet_protocol', link: '/fr/api/rcenet_protocol' },
+                { text: 'rcenet_range', link: '/fr/api/rcenet_range' },
                 { text: 'rcenet_socket', link: '/fr/api/rcenet_socket' },
-                { text: 'rcenet_time', link: '/api/rcenet_time' },
+                { text: 'rcenet_time', link: '/fr/api/rcenet_time' },
               ]
             },
           ],
