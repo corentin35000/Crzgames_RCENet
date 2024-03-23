@@ -35,6 +35,7 @@ export default defineConfig({
                 { text: 'rcenet_protocol', link: '/api/rcenet_protocol' },
                 { text: 'rcenet_range', link: '/api/rcenet_range' },
                 { text: 'rcenet_socket', link: '/api/rcenet_socket' },
+                { text: 'rcenet_time', link: '/api/rcenet_time' },
               ]
             },
           ],
@@ -86,6 +87,7 @@ export default defineConfig({
                 { text: 'rcenet_protocol', link: '/api/rcenet_protocol' },
                 { text: 'rcenet_range', link: '/api/rcenet_range' },
                 { text: 'rcenet_socket', link: '/fr/api/rcenet_socket' },
+                { text: 'rcenet_time', link: '/api/rcenet_time' },
               ]
             },
           ],
