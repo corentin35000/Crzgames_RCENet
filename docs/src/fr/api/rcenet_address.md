@@ -1,4 +1,3 @@
-
 # RCENet Address API Documentation
 
 Welcome to the RCENet Address API documentation. This section provides a comprehensive guide to managing network addresses with RCENet, covering essential functions and structures for IP address manipulation and interaction within the RCENet library.
@@ -7,7 +6,10 @@ Welcome to the RCENet Address API documentation. This section provides a compreh
 
 The RCENet library simplifies network programming by abstracting complex networking operations, including address management. This document focuses on the `ENetAddress` structure and associated functions, which play a critical role in network communication by representing network endpoints.
 
-## Structures
+<br /><br />
+
+
+## Structure
 
 ### `ENetAddress`
 
@@ -29,56 +31,164 @@ typedef struct _ENetAddress {
 } ENetAddress;
 ```
 
+<br /><br />
+
+
 ## Functions
 
-### Address Comparison and Validation
+### Comparison and Validation Functions
+<br />
 
-- **`enet_address_equal_host`**  
-  _Compares the host part of two addresses._
-  - **Parameters:** Two `ENetAddress` pointers for comparison.
-  - **Returns:** `1` if equal, `0` otherwise.
+#### `enet_address_equal_host`
+Compares the host part of two addresses to determine if they are equal.
 
-- **`enet_address_equal`**  
-  _Compares two addresses including their ports._
-  - **Parameters:** Two `ENetAddress` pointers for comparison.
-  - **Returns:** `1` if equal, `0` otherwise.
+- **Prototype**:
+  ```c
+  ENET_API int enet_address_equal_host(const ENetAddress * firstAddress, const ENetAddress * secondAddress);
+  ```
 
-- **`enet_address_is_any`**  
-  _Checks if an address is a wildcard (ANY) address._
-  - **Parameters:** `ENetAddress` pointer.
-  - **Returns:** `1` if it is an ANY address, `0` otherwise.
+- **Parameters**:
+  - `firstAddress`: Pointer to the first address to compare.
+  - `secondAddress`: Pointer to the second address to compare.
 
-- **`enet_address_is_broadcast`**  
-  _Determines if an address is a broadcast address._
-  - **Parameters:** `ENetAddress` pointer.
-  - **Returns:** `1` if broadcast, `0` otherwise.
+- **Returns**: `1` if the host parts are equal, `0` otherwise.
 
-- **`enet_address_is_loopback`**  
-  _Checks if an address is a loopback address._
-  - **Parameters:** `ENetAddress` pointer.
-  - **Returns:** `1` if loopback, `0` otherwise.
+<br /><br />
 
-### Address Resolution and Conversion
+#### `enet_address_equal`
+Compares two addresses, including their ports, to determine if they are equal.
 
-- **`enet_address_set_host_ip`**  
-  _Parses a string IP address into an `ENetAddress` structure._
-  - **Parameters:** `ENetAddress` pointer and a string containing the IP address.
-  - **Returns:** `0` on success, `<0` on failure.
+- **Prototype**:
+  ```c
+  ENET_API int enet_address_equal(const ENetAddress * firstAddress, const ENetAddress * secondAddress);
+  ```
 
-- **`enet_address_set_host`**  
-  _Resolves a hostname to an IP address and stores it in an `ENetAddress` structure._
-  - **Parameters:** `ENetAddress` pointer and a hostname string.
-  - **Returns:** `0` on success, `<0` on failure.
+- **Parameters**:
+  - `firstAddress`: Pointer to the first address to compare.
+  - `secondAddress`: Pointer to the second address to compare.
 
-- **`enet_address_get_host_ip`**  
-  _Retrieves the printable IP address from an `ENetAddress` structure._
-  - **Parameters:** `ENetAddress` pointer and a buffer for storing the resulting string.
-  - **Returns:** `0` on success, `<0` on failure.
+- **Returns**: `1` if both the host parts and the ports are equal, `0` otherwise.
 
-- **`enet_address_get_host`**  
-  _Performs a reverse lookup of the IP address in an `ENetAddress` structure._
-  - **Parameters:** `ENetAddress` pointer and a buffer for storing the resulting hostname.
-  - **Returns:** `0` on success, `<0` on failure.
+<br /><br />
+
+#### `enet_address_is_any`
+Checks if an address is the special "any" address, which listens on all interfaces.
+
+- **Prototype**:
+  ```c
+  ENET_API int enet_address_is_any(const ENetAddress * address);
+  ```
+
+- **Parameters**:
+  - `address`: Pointer to the address to check.
+
+- **Returns**: `1` if the address is the "any" address, `0` otherwise.
+
+<br /><br />
+
+#### `enet_address_is_broadcast`
+Determines if an address is a broadcast address.
+
+- **Prototype**:
+  ```c
+  ENET_API int enet_address_is_broadcast(const ENetAddress * address);
+  ```
+
+- **Parameters**:
+  - `address`: Pointer to the address to check.
+
+- **Returns**: `1` if the address is a broadcast address, `0` otherwise.
+
+<br /><br />
+
+#### `enet_address_is_loopback`
+Checks if an address is a loopback address.
+
+- **Prototype**:
+  ```c
+  ENET_API int enet_address_is_loopback(const ENetAddress * address);
+  ```
+
+- **Parameters**:
+  - `address`: Pointer to the address to check.
+
+- **Returns**: `1` if the address is a loopback address, `0` otherwise.
+
+<br /><br />
+
+### Resolution and Conversion Functions
+<br />
+
+#### `enet_address_set_host_ip`
+Parses a string IP address and sets the address object.
+
+- **Prototype**:
+  ```c
+  ENET_API int enet_address_set_host_ip(ENetAddress * address, const char * hostName);
+  ```
+
+- **Parameters**:
+  - `address`: Pointer to the address object to be set.
+  - `hostName`: IP address in string format.
+
+- **Returns**: `0` on success, `< 0` on failure.
+
+<br /><br />
+
+
+#### `enet_address_set_host`
+Resolves a hostname to an IP address and stores it in an address object.
+
+- **Prototype**:
+  ```c
+  ENET_API int enet_address_set_host(ENetAddress * address, ENetAddressType type, const char * hostName);
+  ```
+
+- **Parameters**:
+  - `address`: Pointer to the address object to be set.
+  - `type`: Type of the address (IPv4 or IPv6).
+  - `hostName`: Hostname to resolve.
+
+- **Returns**: `0` on success, `< 0` on failure.
+
+<br /><br />
+
+
+#### `enet_address_get_host_ip`
+Retrieves the printable IP address from an address object.
+
+- **Prototype**:
+  ```c
+  ENET_API int enet_address_get_host_ip(const ENetAddress * address, char * hostName, size_t nameLength);
+  ```
+
+- **Parameters**:
+  - `address`: Pointer to the address object.
+  - `hostName`: Buffer to store the printable IP address.
+  - `nameLength`: Length of the buffer.
+
+- **Returns**: `0` on success, `< 0` on failure.
+
+<br /><br />
+
+
+#### `enet_address_get_host`
+Performs a reverse lookup of the IP address to find the hostname.
+
+- **Prototype**:
+  ```c
+  ENET_API int enet_address_get_host(const ENetAddress * address, char * hostName, size_t nameLength);
+  ```
+
+- **Parameters**:
+  - `address`: Pointer to the address object.
+  - `hostName`: Buffer to store the hostname.
+  - `nameLength`: Length of the buffer.
+
+- **Returns**: `0` on success, `< 0` on failure.
+
+<br /><br />
+
 
 ## Conclusion
 
