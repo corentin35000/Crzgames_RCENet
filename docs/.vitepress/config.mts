@@ -32,6 +32,8 @@ export default defineConfig({
                 { text: 'rcenet_host', link: '/api/rcenet_host' },
                 { text: 'rcenet_packet', link: '/api/rcenet_packet' },
                 { text: 'rcenet_peer', link: '/api/rcenet_peer' },
+                { text: 'rcenet_protocol', link: '/api/rcenet_protocol' },
+                { text: 'rcenet_range', link: '/api/rcenet_range' },
                 { text: 'rcenet_socket', link: '/api/rcenet_socket' },
               ]
             },
@@ -81,6 +83,8 @@ export default defineConfig({
                 { text: 'rcenet_host', link: '/fr/api/rcenet_host' },
                 { text: 'rcenet_packet', link: '/fr/api/rcenet_packet' },
                 { text: 'rcenet_peer', link: '/fr/api/rcenet_peer' },
+                { text: 'rcenet_protocol', link: '/api/rcenet_protocol' },
+                { text: 'rcenet_range', link: '/api/rcenet_range' },
                 { text: 'rcenet_socket', link: '/fr/api/rcenet_socket' },
               ]
             },
