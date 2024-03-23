@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.2](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.3.1...v1.3.2) (2024-03-23)
+
+
+### 📚 Documentation
+
+* add files for lang fr for api ([66bae96](https://github.com/corentin35000/Crzgames_RCENet/commit/66bae9650eb9b6bf882ae19ee348b6359a4bade2))
+* add module rcenet_time ([0458615](https://github.com/corentin35000/Crzgames_RCENet/commit/0458615a9b44657c12e49e350dbe9eb9b028078d))
+* update index.md for new platforms ([3f82565](https://github.com/corentin35000/Crzgames_RCENet/commit/3f8256581c4ab6092dfa4732b58b50414081b84a))
+
 ## [1.3.1](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.3.0...v1.3.1) (2024-03-23)
 
 
