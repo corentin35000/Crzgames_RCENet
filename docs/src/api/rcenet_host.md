@@ -510,3 +510,34 @@ ENET_API void enet_host_set_checksum_callback(ENetHost *host, ENetChecksumCallba
 - **Parameters:**
   - `host`: The host for which to set the checksum callback.
   - `callback`: The callback function to be used for computing packet checksums.
+
+<br /><br />
+
+### `enet_host_random_seed`
+
+_Generates a random seed for initializing the random number generator._
+
+```c
+extern enet_uint32 enet_host_random_seed(void);
+```
+
+- **Returns:** A `enet_uint32` value representing the random seed.
+
+This function is typically called at the start of an application to ensure that subsequent calls to random number generation functions within RCENet produce unique sequences of numbers based on this initial seed.
+
+<br /><br />
+
+### `enet_host_random`
+
+_Generates a random number using the host's random number generator._
+
+```c
+extern enet_uint32 enet_host_random(ENetHost *host);
+```
+
+- **Parameters:**
+  - `host`: Pointer to the `ENetHost` instance.
+  
+- **Returns:** A `enet_uint32` random number.
+
+This function leverages the internal random number generator of a given `ENetHost` to produce a random number. It can be used for various purposes within the networked application, such as generating unique identifiers or selecting random elements from a set.

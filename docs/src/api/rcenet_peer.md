@@ -10,7 +10,7 @@ Peers represent the other endpoints in a networked environment with which a host
 <br /><br />
 
 
-## Structure
+## Structures
 
 ### `ENetPeer`
 
@@ -127,6 +127,89 @@ typedef struct _ENetPeer {
 ```
 
 This section covers the initial set of fields in the `ENetPeer` structure. The subsequent parts will delve into the remaining fields, explaining their purposes and how they contribute to the management of network peers.
+
+<br /><br />
+
+### `ENetAcknowledgement`
+
+Represents an acknowledgement in ENet, sent to confirm the receipt of a packet.
+
+- **Fields:**
+    - `acknowledgementList`: Node in the list of acknowledgements.
+    - `sentTime`: The time when the corresponding packet was sent.
+    - `command`: The protocol command sent as an acknowledgement.
+
+```c
+typedef struct _ENetAcknowledgement {
+   ENetListNode acknowledgementList;
+   enet_uint32  sentTime;
+   ENetProtocol command;
+} ENetAcknowledgement;
+```
+
+<br /><br />
+
+### `ENetOutgoingCommand`
+
+Represents an outgoing command in ENet, a packet or action to be sent to a peer.
+
+- **Fields:**
+    - `outgoingCommandList`: Node in the list of outgoing commands.
+    - `reliableSequenceNumber`: Reliable sequence number for tracking packets.
+    - `unreliableSequenceNumber`: Unreliable sequence number for tracking packets.
+    - `sentTime`: The time when the command was sent.
+    - `roundTripTimeout`: Timeout before considering the command lost.
+    - `queueTime`: Time before the command is queued for sending.
+    - `fragmentOffset`: Offset of the fragment in the packet, if the command is fragmented.
+    - `fragmentLength`: Length of the command's fragment.
+    - `sendAttempts`: Number of attempts to send the command.
+    - `command`: The protocol command to be sent.
+    - `packet`: The packet associated with the command, if any.
+
+```c
+typedef struct _ENetOutgoingCommand {
+   ENetListNode outgoingCommandList;
+   enet_uint16  reliableSequenceNumber;
+   enet_uint16  unreliableSequenceNumber;
+   enet_uint32  sentTime;
+   enet_uint32  roundTripTimeout;
+   enet_uint32  queueTime;
+   enet_uint32  fragmentOffset;
+   enet_uint16  fragmentLength;
+   enet_uint16  sendAttempts;
+   ENetProtocol command;
+   ENetPacket * packet;
+} ENetOutgoingCommand;
+```
+
+<br /><br />
+
+### `ENetIncomingCommand`
+
+Represents an incoming command in ENet, data or actions received from a peer.
+
+- **Fields:**
+    - `incomingCommandList`: Node in the list of incoming commands.
+    - `reliableSequenceNumber`: Reliable sequence number for tracking packets.
+    - `unreliableSequenceNumber`: Unreliable sequence number for tracking packets.
+    - `command`: The received protocol command.
+    - `fragmentCount`: Total number of fragments for this packet.
+    - `fragmentsRemaining`: Number of remaining fragments to receive.
+    - `fragments`: Bitfield for tracking received fragments.
+    - `packet`: The packet associated with the command, once all fragments are received.
+
+```c
+typedef struct _ENetIncomingCommand {
+   ENetListNode     incomingCommandList;
+   enet_uint16      reliableSequenceNumber;
+   enet_uint16      unreliableSequenceNumber;
+   ENetProtocol     command;
+   enet_uint32      fragmentCount;
+   enet_uint32      fragmentsRemaining;
+   enet_uint32 *    fragments;
+   ENetPacket *     packet;
+} ENetIncomingCommand;
+```
 
 <br /><br />
 
@@ -505,3 +588,187 @@ ENET_API void enet_peer_throttle_configure(ENetPeer *peer, enet_uint32 interval,
   - `interval`: The time window over which the throttle conditions are measured.
   - `acceleration`: The rate at which the packet throttle value is increased when conditions allow.
   - `deceleration`: The rate at which the packet throttle value is decreased when conditions require.
+
+<br /><br />
+
+### `enet_peer_reset_queues`
+
+_Resets the packet queues for a peer._
+
+```c
+extern void enet_peer_reset_queues(ENetPeer *peer);
+```
+
+- **Description**: This function clears all packet queues associated with the peer, effectively resetting its communication state.
+- **Parameters**:
+  - `peer`: Pointer to the peer whose packet queues are to be reset.
+
+<br /><br />
+
+### `enet_peer_has_outgoing_commands`
+
+_Checks if there are outgoing commands that need to be sent to a peer._
+
+```c
+extern int enet_peer_has_outgoing_commands(ENetPeer *peer);
+```
+
+- **Description**: Determines whether there are any commands in the outgoing queue that have not yet been sent to the peer. This is useful for deciding whether to flush the host or continue accumulating commands.
+- **Parameters**:
+  - `peer`: Pointer to the peer being checked for outgoing commands.
+- **Returns**: `1` if there are outgoing commands, `0` otherwise.
+
+<br /><br />
+
+### `enet_peer_setup_outgoing_command`
+
+_Prepare an outgoing command to be sent to a peer._
+
+```c
+extern void enet_peer_setup_outgoing_command (ENetPeer *peer, ENetOutgoingCommand *command);
+```
+
+- **Parameters:**
+  - `peer`: The peer to which the command is to be sent.
+  - `command`: The outgoing command to be set up.
+
+- **Example Usage:**
+  ```c
+  ENetOutgoingCommand command;
+  // Initialize command...
+  enet_peer_setup_outgoing_command(peer, &command);
+  ```
+
+<br /><br />
+
+### `enet_peer_queue_outgoing_command`
+
+_Queue an outgoing command for transmission to a peer._
+
+```c
+extern ENetOutgoingCommand * enet_peer_queue_outgoing_command (ENetPeer *peer, const ENetProtocol *protocol, ENetPacket *packet, enet_uint32 offset, enet_uint16 length);
+```
+
+- **Parameters:**
+  - `peer`: The peer to which the command will be sent.
+  - `protocol`: The protocol command to be sent.
+  - `packet`: The packet to be sent with the command.
+  - `offset`: The offset within the packet where the command starts.
+  - `length`: The length of the command data.
+
+- **Example Usage:**
+  ```c
+  ENetPacket *packet = enet_packet_create(data, length, ENET_PACKET_FLAG_RELIABLE);
+  enet_peer_queue_outgoing_command(peer, &protocol, packet, 0, packet->dataLength);
+  ```
+
+<br /><br />
+
+### `enet_peer_queue_incoming_command`
+
+_Queue an incoming command received from a peer._
+
+```c
+extern ENetIncomingCommand * enet_peer_queue_incoming_command (ENetPeer *peer, const ENetProtocol *protocol, const void *data, size_t dataLength, enet_uint32 flags, enet_uint32 fragmentCount);
+```
+
+- **Parameters:**
+  - `peer`: The peer from which the command was received.
+  - `protocol`: The protocol command received.
+  - `data`: The command data received.
+  - `dataLength`: The length of the command data.
+  - `flags`: The flags associated with the incoming command.
+  - `fragmentCount`: The number of fragments for the command.
+
+- **Example Usage:**
+  ```c
+  enet_peer_queue_incoming_command(peer, &protocol, receivedData, dataLength, flags, fragmentCount);
+  ```
+
+<br /><br />
+
+### `enet_peer_queue_acknowledgement`
+
+_Queue an acknowledgement for a received command._
+
+```c
+extern ENetAcknowledgement * enet_peer_queue_acknowledgement (ENetPeer *peer, const ENetProtocol *protocol, enet_uint16 sentTime);
+```
+
+- **Parameters:**
+  - `peer`: The peer for which the acknowledgement is being queued.
+  - `protocol`: The protocol command being acknowledged.
+  - `sentTime`: The time the command was sent.
+
+- **Example Usage:**
+  ```c
+  enet_peer_queue_acknowledgement(peer, &protocol, sentTime);
+  ```
+
+<br /><br />
+
+### `enet_peer_dispatch_incoming_unreliable_commands`
+
+_Dispatch all incoming unreliable commands for a peer._
+
+```c
+extern void enet_peer_dispatch_incoming_unreliable_commands (ENetPeer *peer, ENetChannel *channel, ENetIncomingCommand *command);
+```
+
+- **Parameters:**
+  - `peer`: The peer for which the commands are being dispatched.
+  - `channel`: The channel on which the commands were received.
+  - `command`: The first command in the queue of incoming unreliable commands.
+
+- **Example Usage:**
+  ```c
+  enet_peer_dispatch_incoming_unreliable_commands(peer, &channel, &command);
+  ```
+
+<br /><br />
+
+### `enet_peer_dispatch_incoming_reliable_commands`
+
+_Dispatch all incoming reliable commands for a peer._
+
+```c
+extern void enet_peer_dispatch_incoming_reliable_commands (ENetPeer *peer, ENetChannel *channel, ENetIncomingCommand *command);
+```
+
+- **Parameters:**
+  - `peer`: The peer for which the commands are being dispatched.
+  - `channel`: The channel on which the commands were received.
+  - `command`: The first command in the queue of incoming reliable commands.
+
+- **Example Usage:**
+  ```c
+  enet_peer_dispatch_incoming_reliable_commands(peer, &channel, &command);
+  ```
+
+<br /><br />
+
+#### `enet_peer_on_connect`
+
+_Handles the event of a peer connecting._
+
+```c
+extern void enet_peer_on_connect(ENetPeer *peer);
+```
+
+- **Description**: This function is called when a peer successfully connects. It is responsible for initializing any state specific to the new connection.
+- **Parameters**:
+  - `peer`: Pointer to the peer that has just connected.
+
+<br /><br />
+
+#### `enet_peer_on_disconnect`
+
+_Handles the event of a peer disconnecting._
+
+```c
+extern void enet_peer_on_disconnect(ENetPeer *peer);
+```
+
+- **Description**: Invoked when a peer disconnects or is disconnected. It cleans up the peer's state and prepares it for potential re-use.
+- **Parameters**:
+  - `peer`: Pointer to the peer that is disconnecting.

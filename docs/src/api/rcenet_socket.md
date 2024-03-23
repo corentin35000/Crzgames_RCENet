@@ -27,7 +27,7 @@ typedef enum _ENetSocketType
 } ENetSocketType;
 ```
 
-<br />
+<br /><br />
 
 ### `ENetSocketWait`
 
@@ -49,7 +49,7 @@ typedef enum _ENetSocketWait
 } ENetSocketWait;
 ```
 
-<br />
+<br /><br />
 
 ### `ENetSocketOption`
 
@@ -85,7 +85,7 @@ typedef enum _ENetSocketOption
 } ENetSocketOption;
 ```
 
-<br />
+<br /><br />
 
 ### `ENetSocketShutdown`
 
@@ -125,7 +125,7 @@ Creates a socket of the specified type.
   - `socketType`: The type of socket to create (STREAM for TCP, DATAGRAM for UDP).
 - **Returns**: A handle to the newly created socket, or `ENET_SOCKET_NULL` on failure.
 
-<br />
+<br /><br />
 
 ### `enet_socket_bind`
 
@@ -140,7 +140,7 @@ Binds a socket to a local address.
   - `address`: The local address to bind the socket to.
 - **Returns**: `0` on success, `< 0` on failure.
 
-<br />
+<br /><br />
 
 ### `enet_socket_listen`
 
