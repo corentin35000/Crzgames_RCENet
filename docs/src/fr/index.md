@@ -38,7 +38,7 @@ features:
 
   - icon: '🌐'
     title: Support Multiplateforme
-    details: Compatible avec de multiples systèmes d'exploitation, incluant Windows, Linux, macOS, iOS et Android, rendant votre projet accessible sur une vaste gamme d'appareils.
+    details: Compatible avec de multiples systèmes d'exploitation, incluant Solaris, BSD, Windows, Linux, macOS, iOS et Android, rendant votre projet accessible sur une vaste gamme d'appareils.
 
   - icon: '💡'
     title: Extensible et Personnalisable
