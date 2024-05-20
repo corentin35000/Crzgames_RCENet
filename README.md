@@ -2,12 +2,14 @@
 
 ## 📋 Great novelty compared to ENet Original
 - IPv6 / IPv4
-- Encrypt / Decrypt
+- Encrypt / Decrypt (ENetEncryptor)
 - Add ENET_EVENT_TYPE_DISCONNECT_TIMEOUT
 - ENET_PROTOCOL_MAXIMUM_PEER_ID 4096 replace to 65535 peers simultaneously by host
 - PRs for fixes that were never applied to the original ENet that are included in it
+- New documentation with Vitepress
+- New API
+- Addition of a lot of comments in the sources and includes, a JSDOC style
 - The protocol of the original ENet lib has been modified so will not work with the original protocol
-- Add binding C#
 - Other improvements and fixes
 
 <br /><br /><br /><br />

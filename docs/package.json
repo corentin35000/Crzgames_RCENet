@@ -8,7 +8,11 @@
     "preview": "vitepress preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "vitepress": "^1.2.0"
+=======
+    "vitepress": "^1.0.1"
+>>>>>>> 7cddb821e383b005a9f97434d68b885589bc0a09
   },
   "engines": {
     "node": ">=18"

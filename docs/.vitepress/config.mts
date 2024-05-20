@@ -12,7 +12,7 @@ export default defineConfig({
   locales: {
     // Config for Language = EN (default language)
     root: {
-      description: "A fork of ENet",
+      description: "An improved fork of ENet",
       label: 'English',
       lang: 'en',
       themeConfig: {
@@ -28,6 +28,14 @@ export default defineConfig({
               text: 'RCENet API Reference',
               items: [
                 { text: 'rcenet', link: '/api/rcenet' },
+                { text: 'rcenet_address', link: '/api/rcenet_address' },
+                { text: 'rcenet_host', link: '/api/rcenet_host' },
+                { text: 'rcenet_packet', link: '/api/rcenet_packet' },
+                { text: 'rcenet_peer', link: '/api/rcenet_peer' },
+                { text: 'rcenet_protocol', link: '/api/rcenet_protocol' },
+                { text: 'rcenet_range', link: '/api/rcenet_range' },
+                { text: 'rcenet_socket', link: '/api/rcenet_socket' },
+                { text: 'rcenet_time', link: '/api/rcenet_time' },
               ]
             },
           ],
@@ -39,7 +47,8 @@ export default defineConfig({
                   text: 'Getting Started', 
                   items: [
                     { text: 'Prerequisites', link: '/guides/getting-started/prerequisites' },
-                    { text: 'Quick Start', link: '/guides/getting-started/quick-start' }
+                    { text: 'Quick Start', link: '/guides/getting-started/quick-start' },
+                    { text: 'Features', link: '/guides/getting-started/features' }
                   ] 
                 },
                 { text: 'Distribution', link: '/guides/distribution' },
@@ -54,7 +63,7 @@ export default defineConfig({
 
     // Config for Language = FR
     fr: {
-      description: "Un fork de ENet",
+      description: "Un fork de ENet améliorer",
       label: 'Français',
       lang: 'fr',
       link: '/fr/',
@@ -71,6 +80,14 @@ export default defineConfig({
               text: 'Référence de l\'API RCENet',
               items: [
                 { text: 'rcenet', link: '/fr/api/rcenet' },
+                { text: 'rcenet_address', link: '/fr/api/rcenet_address' },
+                { text: 'rcenet_host', link: '/fr/api/rcenet_host' },
+                { text: 'rcenet_packet', link: '/fr/api/rcenet_packet' },
+                { text: 'rcenet_peer', link: '/fr/api/rcenet_peer' },
+                { text: 'rcenet_protocol', link: '/fr/api/rcenet_protocol' },
+                { text: 'rcenet_range', link: '/fr/api/rcenet_range' },
+                { text: 'rcenet_socket', link: '/fr/api/rcenet_socket' },
+                { text: 'rcenet_time', link: '/fr/api/rcenet_time' },
               ]
             },
           ],
@@ -82,7 +99,8 @@ export default defineConfig({
                   text: 'Commencer', 
                   items: [
                     { text: 'Conditions préalables', link: '/fr/guides/getting-started/prerequisites' },
-                    { text: 'Démarrage rapide', link: '/fr/guides/getting-started/quick-start' }
+                    { text: 'Démarrage rapide', link: '/fr/guides/getting-started/demarage-rapide' },
+                    { text: 'Fonctionnalités', link: '/fr/guides/getting-started/fonctionnalites' },
                   ] 
                 },
                 { text: 'Distribution', link: '/fr/guides/distribution' },

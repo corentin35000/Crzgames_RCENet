@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: RCENet
-  text: A fork of ENet
+  text: An improved fork of ENet
   tagline: Reliable UDP networking library.
   image:
     src: ./images/logo.png
@@ -21,26 +21,38 @@ hero:
 
 features:
   - icon: '🚀'
-    title: Exceptional Performance
-    details: Engineered in pure C for maximum efficiency, RC2D delivers top-tier performance across all platforms, enabling you to fully leverage your hardware capabilities.
-  
-  - icon: '🌍'
-    title: Cross-Platform Compatibility
-    details: With native support for iOS, Android, Windows, macOS, and Linux, RC2D simplifies the development of games accessible on a wide range of devices.
-  
+    title: High Performance
+    details: RCENet is engineered to deliver low-latency network communication, ideal for multiplayer games and applications requiring real-time data exchange.
+
+  - icon: '🛡️'
+    title: Reliability and Security
+    details: Provides features for packet loss retransmission, message sequencing, and packet fragmentation, ensuring reliable and secure data transmission.
+
+  - icon: '⚙️'
+    title: Easy Integration
+    details: Easy to integrate into any project thanks to its straightforward API and comprehensive documentation, making network development accessible for developers.
+
+  - icon: '🔄'
+    title: Network Adaptability
+    details: Capable of dynamically adapting to changing network conditions to optimize connection quality and minimize packet loss.
+
+  - icon: '🌐'
+    title: Multiplatform Support
+    details: Supports multiple operating systems, including Solaris, BSD, Windows, Linux, macOS, iOS, and Android, making your project accessible on a wide range of devices.
+
+  - icon: '💡'
+    title: Extensible and Customizable
+    details: Thanks to its modular architecture, RCENet allows for easy customization and extension to meet the specific needs of your project.
+
+  - icon: '📦'
+    title: Lightweight and Efficient
+    details: Designed to be minimalist and efficient, RCENet does not impose heavy dependencies or significant overhead on your project.
+
   - icon: '🔒'
-    title: Resource Security and Optimization
-    details: Through our proprietary RRES file format, your resources are not only compressed for reduced load times but also encrypted for enhanced security.
-  
-  - icon: '🔌'
-    title: Easy Integration and Extensibility
-    details: RC2D is designed to be easily extensible, allowing developers to add custom features or integrate third-party libraries effortlessly.
-  
-  - icon: '📚'
-    title: Comprehensive Documentation
-    details: Get started quickly with detailed guides and benefit from the support of a passionate developer community and technical experts.
-  
-  - icon: '📱'
-    title: Optimized Performance for Mobile
-    details: RC2D prioritizes optimal code execution and resource management, ensuring that games run smoothly on mobile devices without compromising on battery life. This focus on performance optimization allows for an enhanced gaming experience, even on resource-constrained platforms.
+    title: Encryption Support
+    details: Supports data encryption, enabling secure communication between clients and servers to protect sensitive exchanges.
+
+  - icon: '🔧'
+    title: Flow Control Customization
+    details: Allows for fine-grained flow control, giving developers the ability to fine-tune network behavior according to application requirements.
 ---

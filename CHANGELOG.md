@@ -1,5 +1,72 @@
 # Changelog
 
+## [1.3.2](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.3.1...v1.3.2) (2024-03-23)
+
+
+### 📚 Documentation
+
+* add files for lang fr for api ([66bae96](https://github.com/corentin35000/Crzgames_RCENet/commit/66bae9650eb9b6bf882ae19ee348b6359a4bade2))
+* add module rcenet_time ([0458615](https://github.com/corentin35000/Crzgames_RCENet/commit/0458615a9b44657c12e49e350dbe9eb9b028078d))
+* update index.md for new platforms ([3f82565](https://github.com/corentin35000/Crzgames_RCENet/commit/3f8256581c4ab6092dfa4732b58b50414081b84a))
+
+## [1.3.1](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.3.0...v1.3.1) (2024-03-23)
+
+
+### 📚 Documentation
+
+* add &lt;br /&gt; ([2d9de7a](https://github.com/corentin35000/Crzgames_RCENet/commit/2d9de7a6749808754bfb283cb433337834d57105))
+* add in config .mts for new routes ([d2b3191](https://github.com/corentin35000/Crzgames_RCENet/commit/d2b3191e0643870961d437a0e05a1f3ef1bca975))
+* add new module rcenet_protocol ([476611c](https://github.com/corentin35000/Crzgames_RCENet/commit/476611c586f5321494c730b1d87909f183c4a46b))
+* add new module rcenet_range in doc ([6a6adeb](https://github.com/corentin35000/Crzgames_RCENet/commit/6a6adebcc85d342b267676ec9c70738b562f729c))
+* improvement socket, peer and host in doc ([e5af05a](https://github.com/corentin35000/Crzgames_RCENet/commit/e5af05ac0ab61d74c4ad459f43654638f27767ca))
+* improvement struct enetpeer doc ([9a0de9f](https://github.com/corentin35000/Crzgames_RCENet/commit/9a0de9f084f374b31ec668201471165ecdddf4c2))
+
+## [1.3.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.2.0...v1.3.0) (2024-03-22)
+
+
+### 🚀 Features
+
+* deleted binding cs ([3c0f715](https://github.com/corentin35000/Crzgames_RCENet/commit/3c0f715f8d3501413ac02038b0657512c62a83a3))
+
+
+### 🧹 Chores
+
+* upgrade dependencies vitepress v1.0.1 ! ([e964334](https://github.com/corentin35000/Crzgames_RCENet/commit/e9643348e58d3438455044fd32f2b47c3f15d40a))
+
+
+### 📚 Documentation
+
+* add api in documentation for module : address, socket, host and general ([09187da](https://github.com/corentin35000/Crzgames_RCENet/commit/09187daca6ab5482635c95b002be99f8a4a129d2))
+* add espace ([2e6f90b](https://github.com/corentin35000/Crzgames_RCENet/commit/2e6f90bf08c0d6b21dabe0dcdb821f580aec7aa2))
+* add icons in pages ([39c0897](https://github.com/corentin35000/Crzgames_RCENet/commit/39c0897c0779c2f8902fe7e34934ac4fca85902c))
+* add module rcenet_packet for doc ([8222ff8](https://github.com/corentin35000/Crzgames_RCENet/commit/8222ff8fb5e7ee1900e243dc98e4f00789449e3d))
+* add new doc for module rcenet_peer ([60f61e5](https://github.com/corentin35000/Crzgames_RCENet/commit/60f61e5035c8015858eba07a065fa061a5ae0fa5))
+* improvement documentation for rcenet_host ([8999cdf](https://github.com/corentin35000/Crzgames_RCENet/commit/8999cdf5eb007778cf434c20b6ff678f51fcbb28))
+* improvement module host ([c0fb861](https://github.com/corentin35000/Crzgames_RCENet/commit/c0fb8616f736b771a18ad601ad59b1889900e6dd))
+* rename subtitle site ([2094163](https://github.com/corentin35000/Crzgames_RCENet/commit/20941638b553d215d296bfbfa7dce11d5da3b546))
+* update documentation RCENet ([87925f6](https://github.com/corentin35000/Crzgames_RCENet/commit/87925f60aec96a6a508514c14732bf91a17ca414))
+* update README.md ([2caf94d](https://github.com/corentin35000/Crzgames_RCENet/commit/2caf94db8cfb8cea06a80c83b2842e17822260f6))
+* update value count channel ([c02f0d4](https://github.com/corentin35000/Crzgames_RCENet/commit/c02f0d4ba6db22536472ae42f8ab5d5e0acc0f50))
+
+## [1.2.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.1.0...v1.2.0) (2024-03-14)
+
+
+### 🚀 Features
+
+* Increasing ENET_PROTOCOL_MAXIMUM_PEER_ID beyond 4096 to 65535 ([50611a4](https://github.com/corentin35000/Crzgames_RCENet/commit/50611a4d7b3fd59a16e101bfb234c91539f593aa))
+
+
+### 🐛 Bug Fixes
+
+* fix SRTT calculations when RTT &lt; 8 ms and SRTT &gt;= 8 ms ([2b51f2b](https://github.com/corentin35000/Crzgames_RCENet/commit/2b51f2bd696ff64beab06f080c2a7ef895889b5f))
+* RTO limit being exceeded during exponential backoff ([57bc6f2](https://github.com/corentin35000/Crzgames_RCENet/commit/57bc6f276933ed5a4aed1025a390821128f3151c))
+
+
+### 📚 Documentation
+
+* add new comment in list.h ([84d56f0](https://github.com/corentin35000/Crzgames_RCENet/commit/84d56f066a901f134b9161e530097c66828d4001))
+* remove comments ([4fa9f0c](https://github.com/corentin35000/Crzgames_RCENet/commit/4fa9f0c1ec85c3a6e5cff0ccf7a58dcdb7f53297))
+
 ## [1.1.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.0.0...v1.1.0) (2024-03-14)
 
 

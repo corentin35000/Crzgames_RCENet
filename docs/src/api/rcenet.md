@@ -1,57 +1,80 @@
+# RCENet General API Documentation
 
-# RC2D General API Documentation
+Welcome to the RCENet General API documentation. This section provides detailed information about the general functions available in RCENet for initializing and managing the library's global state, as well as querying version information.
 
-Welcome to the RC2D General API documentation. This section introduces the core functionalities and the main entry point for the RC2D game engine, encompassing game loop management, event handling, and callback registration.
+## Overview
 
-## Structures
-
-### `RC2D_Callbacks`
-
-Defines a comprehensive set of callbacks for game loop events, input handling, and other game-related events, allowing for a high degree of interaction and control within the game environment.
-
-- **Fields:**
-  - `void (*rc2d_load)(void);`: Invoked at the start of the application to load resources.
-  - `void (*rc2d_unload)(void);`: Invoked when the application is closing to clean up resources.
-  - `void (*rc2d_update)(double dt);`: Called every frame, with `dt` representing the time since the last update, for game logic.
-  - `void (*rc2d_draw)(void);`: Called every frame to render the game.
-  - `void (*rc2d_keypressed)(const char* key, bool isrepeat);`: Triggered when a keyboard key is pressed.
-  - `void (*rc2d_keyreleased)(const char* key);`: Triggered when a keyboard key is released.
-  - `void (*rc2d_mousemoved)(int x, int y);`: Invoked when the mouse moves.
-  - `void (*rc2d_mousepressed)(int x, int y, const char* button, int presses);`: Invoked when a mouse button is pressed.
-  - `void (*rc2d_mousereleased)(int x, int y, const char* button, int presses);`: Invoked when a mouse button is released.
-  - `void (*rc2d_wheelmoved)(const char* scroll);`: Triggered when the mouse wheel is scrolled.
-  - `void (*rc2d_gamepadpressed)(SDL_JoystickID joystick, Uint8 button);`: Invoked when a gamepad button is pressed.
-  - `void (*rc2d_gamepadreleased)(SDL_JoystickID joystick, Uint8 button);`: Invoked when a gamepad button is released.
-  - `void (*rc2d_joystickpressed)(SDL_JoystickID joystick, Uint8 button);`: Triggered when a joystick button is pressed.
-  - `void (*rc2d_joystickreleased)(SDL_JoystickID joystick, Uint8 button);`: Triggered when a joystick button is released.
-  - `void (*rc2d_joystickadded)(Sint32 joystick);`: Invoked when a joystick is connected.
-  - `void (*rc2d_joystickremoved)(Sint32 joystick);`: Invoked when a joystick is disconnected.
-  - `void (*rc2d_dropfile)(const char* pathFile);`: Triggered when a file is dropped onto the game window.
-  - Additional callbacks for text drop, drop begin, and drop complete events.
+Before utilizing any of the functions or features provided by RCENet for network communication, the library must be properly initialized. This documentation covers the necessary steps to initialize and deinitialize RCENet, along with how to override default callbacks and check the library version.
 
 <br /><br />
 
-## API Functions
 
-### `rc2d_run`
+## Functions
 
-Initializes and starts the game loop, utilizing user-defined callbacks for game events.
+### Initialization and Deinitialization
+<br />
 
-- **Parameters:**
-  - `RC2D_Callbacks* callbacksUser`: Pointer to a structure containing user-defined callback functions.
+#### `enet_initialize`
+_Initializes ENet globally. Must be called before using any functions in ENet._
 
-```c
-int rc2d_run(RC2D_Callbacks* callbacksUser);
-```
+- **Prototype**:
+  ```c
+  ENET_API int enet_initialize(void);
+  ```
 
-### `rc2d_quit`
+- **Parameters**: None.
 
-Gracefully shuts down the game engine, cleaning up resources.
+- **Returns**: `0` on success, `< 0` on failure. Indicates whether ENet was initialized successfully.
 
-```c
-void rc2d_quit(void);
-```
+<br /><br />
+
+#### `enet_initialize_with_callbacks`
+_Initializes ENet globally with user-overridden callbacks. This function should be called instead of `enet_initialize()` if custom callbacks are needed._
+
+- **Prototype**:
+  ```c
+  ENET_API int enet_initialize_with_callbacks(ENetVersion version, const ENetCallbacks *inits);
+  ```
+
+- **Parameters**:
+  - `version`: The constant `ENET_VERSION` should be supplied to ensure compatibility.
+  - `inits`: A pointer to an `ENetCallbacks` structure that allows the user to override certain internal functions. Any `NULL` callbacks will use ENet's defaults.
+
+- **Returns**: `0` on success, `< 0` on failure. It allows for more granular initialization based on user needs.
+
+<br /><br />
+
+#### `enet_deinitialize`
+_Shuts down ENet globally. Should be called when a program that has initialized ENet exits._
+
+- **Prototype**:
+  ```c
+  ENET_API void enet_deinitialize(void);
+  ```
+
+- **Parameters**: None.
+
+- **Action**: Cleans up global ENet resources. It is crucial to call this function to avoid resource leaks.
+
+<br /><br />
+
+### Version Information
+<br />
+
+#### `enet_linked_version`
+_Returns the version number of the linked ENet library._
+
+- **Prototype**:
+  ```c
+  ENET_API ENetVersion enet_linked_version(void);
+  ```
+
+- **Parameters**: None.
+
+- **Returns**: The version number of the ENet library. This can be useful for debugging or ensuring compatibility with certain library versions.
+
+<br /><br />
 
 ## Conclusion
 
-This documentation provides an overview of the RC2D General API, which is at the heart of game development with the RC2D game engine. Utilize the `rc2d_run` function to kickstart your game loop and register necessary callbacks for handling game events. For more detailed information or assistance, please refer to the specific module documentation within the RC2D game engine framework or consult the RC2D support resources.
+The RCENet General API plays a crucial role in the initialization and management of the ENet library's overall operation. Proper initialization is essential for the successful use of the library's network communication features. For further information or assistance, please refer to the official RCENet documentation or the ENet programming guide.
