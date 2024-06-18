@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.4.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.3.2...v1.4.0) (2024-06-18)
+
+
+### 🚀 Features
+
+* Create dependabot.yml ([a330e11](https://github.com/corentin35000/Crzgames_RCENet/commit/a330e11904c3f5d2de4a5d20b3a1e2105a838104))
+* modify EINTR for lib original ([e4b95cc](https://github.com/corentin35000/Crzgames_RCENet/commit/e4b95cc6b499af05fe839cd096dd3730e904646d))
+* moved dependantbot ([602506f](https://github.com/corentin35000/Crzgames_RCENet/commit/602506f8b757714ca084e7a3d4319df26747a897))
+
+
+### 🐛 Bug Fixes
+
+* fixed undefined behaviour with signed left shift in fragment calculations ([f2193b5](https://github.com/corentin35000/Crzgames_RCENet/commit/f2193b545309a39a32a61bb5f11245ed6a618a72))
+
+
+### 🧹 Chores
+
+* updating dependencies vitepress for docs ([b7b499b](https://github.com/corentin35000/Crzgames_RCENet/commit/b7b499b7bdb4ea91d8d5018e7b20133430f09509))
+
+
+### 📚 Documentation
+
+* fixed path for lang fr ([7cddb82](https://github.com/corentin35000/Crzgames_RCENet/commit/7cddb821e383b005a9f97434d68b885589bc0a09))
+
 ## [1.3.2](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.3.1...v1.3.2) (2024-03-23)
 
 
