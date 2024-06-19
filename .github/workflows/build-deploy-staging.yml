@@ -51,7 +51,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies for architecture i386 - Linux / BSD
-        if: ${{ matrix.config.platform == 'linux' && matrix.config.arch == 'i386' }}
+        if: ${{ (matrix.config.platform == 'linux' || matrix.config.platform == 'bsd') && matrix.config.arch == 'i386' }}
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
