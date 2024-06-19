@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.5.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.4.0...v1.5.0) (2024-06-19)
+
+
+### 🚀 Features
+
+* up version ndk, up version xcode and add architectures linux x86 and bsd x86 ([0014423](https://github.com/corentin35000/Crzgames_RCENet/commit/00144238764a6fe520322cb5e7fa9573c0d09385))
+
+
+### 🐛 Bug Fixes
+
+* add step for install  dependencies for i386 linux and bsd in ci ([20f1d34](https://github.com/corentin35000/Crzgames_RCENet/commit/20f1d34ef42c2986dc1c8f9b4741392f33e0d822))
+* revert commits ([c1ef0ff](https://github.com/corentin35000/Crzgames_RCENet/commit/c1ef0fff940cd181b7049d2f1bd32c7dabe85083))
+
+
+### 🔧 Continuous Integration
+
+* test ([4be4202](https://github.com/corentin35000/Crzgames_RCENet/commit/4be4202807e38739d3485d0432b946da7128314d))
+
 ## [1.4.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.3.2...v1.4.0) (2024-06-18)
 
 
