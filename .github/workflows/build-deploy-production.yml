@@ -17,6 +17,8 @@ jobs:
         config:
         - { runner: ubuntu-latest,  platform: bsd,                                 arch: x86_64, kind: shared }
         - { runner: ubuntu-latest,  platform: bsd,                                 arch: x86_64, kind: static }
+        - { runner: ubuntu-latest,  platform: bsd,                                 arch: i386, kind: shared }
+        - { runner: ubuntu-latest,  platform: bsd,                                 arch: i386, kind: static }
         - { runner: windows-latest, platform: windows,                             arch: x86, kind: shared }   # Windows MSVC
         - { runner: windows-latest, platform: windows,                             arch: x86, kind: static }   # Windows MSVC
         - { runner: windows-latest, platform: windows,                             arch: x64, kind: shared }   # Windows MSVC
@@ -27,6 +29,8 @@ jobs:
         - { runner: windows-latest, platform: mingw,                               arch: x86_64, msys_arch: x86_64, msys_msystem: mingw64, kind: static } # Windows MinGW
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: shared }
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: static }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: shared }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: static }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86, kind: shared }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86, kind: static }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86_64, kind: shared }
@@ -51,7 +55,7 @@ jobs:
         if: matrix.config.runner == 'macos-14'
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '15.2.0'
+          xcode-version: '15.4.0'
 
       - name: Determine SDK Path and set SDKROOT - macOS / iOS
         if: matrix.config.runner == 'macos-14'
@@ -74,7 +78,7 @@ jobs:
         id: setup-ndk
         uses: nttld/setup-ndk@v1
         with:
-          ndk-version: r26c
+          ndk-version: r26d
           link-to-sdk: true
           add-to-path: true
 
@@ -143,11 +147,11 @@ jobs:
           # Création de dossiers de destination basique
           mkdir -p android/{arm64-v8a,armeabi-v7a,x86,x86_64}/{shared,static}
           mkdir -p mingw/{x86_64,i386}/static
-          mkdir -p bsd/x86_64/{shared,static}
+          mkdir -p bsd/{x86_64,i386}/{shared,static}
           mkdir -p windows/{x64,x86,arm64}/{shared,static}
           mkdir -p macos/x86_64-arm64/{shared,static}
           mkdir -p ios/{arm64-arm64e-iphoneos,x86_64-arm64-iphonesimulator}/static
-          mkdir -p linux/x86_64/{shared,static}
+          mkdir -p linux/{x86_64,i386}/{shared,static}
 
           # Organize Android artifacts
           mv librcenet-android-arm64-v8a--release-static/lib/*.a android/arm64-v8a/static/
@@ -168,6 +172,8 @@ jobs:
           # Organize BSD artifacts
           mv librcenet-bsd-x86_64--release-static/lib/*.a bsd/x86_64/static/
           mv librcenet-bsd-x86_64--release-shared/lib/*.so bsd/x86_64/shared/
+          mv librcenet-bsd-i386--release-static/lib/*.a bsd/i386/static/
+          mv librcenet-bsd-i386--release-shared/lib/*.so bsd/i386/shared/
           tar -czvf librcenet-bsd.tar.gz bsd/
 
           # Organize Windows artifacts
@@ -192,6 +198,8 @@ jobs:
           # Organize Linux artifacts
           mv librcenet-linux-x86_64--release-static/lib/*.a linux/x86_64/static/
           mv librcenet-linux-x86_64--release-shared/lib/*.so linux/x86_64/shared/
+          mv librcenet-linux-i386--release-static/lib/*.a linux/i386/static/
+          mv librcenet-linux-i386--release-shared/lib/*.so linux/i386/shared/
           tar -czvf librcenet-linux.tar.gz linux/
 
           # Organize Include artifacts
