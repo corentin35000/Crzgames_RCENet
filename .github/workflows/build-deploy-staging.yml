@@ -17,8 +17,6 @@ jobs:
         config:
         - { runner: ubuntu-latest,  platform: bsd,                                 arch: x86_64, kind: shared }
         - { runner: ubuntu-latest,  platform: bsd,                                 arch: x86_64, kind: static }
-        - { runner: ubuntu-latest,  platform: bsd,                                 arch: i386, kind: shared }
-        - { runner: ubuntu-latest,  platform: bsd,                                 arch: i386, kind: static }
         - { runner: windows-latest, platform: windows,                             arch: x86, kind: shared }   # Windows MSVC
         - { runner: windows-latest, platform: windows,                             arch: x86, kind: static }   # Windows MSVC
         - { runner: windows-latest, platform: windows,                             arch: x64, kind: shared }   # Windows MSVC
@@ -29,8 +27,6 @@ jobs:
         - { runner: windows-latest, platform: mingw,                               arch: x86_64, msys_arch: x86_64, msys_msystem: mingw64, kind: static } # Windows MinGW
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: shared }
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: static }
-        - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: shared }
-        - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: static }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86, kind: shared }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86, kind: static }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86_64, kind: shared }
@@ -49,13 +45,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Install dependencies for architecture i386 - Linux / BSD
-        if: ${{ (matrix.config.platform == 'linux' || matrix.config.platform == 'bsd') && matrix.config.arch == 'i386' }}
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-          sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386
 
       - name: Setup new version xCode and Setup Command Line Tools - macOS / iOS
         # Doc : https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md

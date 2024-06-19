@@ -18,12 +18,6 @@ end
 
 set_project("rcenet")
 
--- Configuration spécifique pour i386 sur Linux et BSD
-if is_plat("linux", "bsd") and is_arch("i386") then
-    add_cxflags("-m32", {force = true})
-    add_ldflags("-m32", {force = true})
-end
-
 if not is_plat("windows", "mingw") then
     -- detect features on Unix platforms
     option("fcntl", { cincludes = {"fcntl.h", "unistd.h"}, cfuncs = "fcntl", defines = "HAS_FCNTL=1"})

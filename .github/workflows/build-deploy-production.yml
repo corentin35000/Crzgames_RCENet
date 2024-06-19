@@ -147,11 +147,11 @@ jobs:
           # Création de dossiers de destination basique
           mkdir -p android/{arm64-v8a,armeabi-v7a,x86,x86_64}/{shared,static}
           mkdir -p mingw/{x86_64,i386}/static
-          mkdir -p bsd/{x86_64,i386}/{shared,static}
+          mkdir -p bsd/x86_64/{shared,static}
           mkdir -p windows/{x64,x86,arm64}/{shared,static}
           mkdir -p macos/x86_64-arm64/{shared,static}
           mkdir -p ios/{arm64-arm64e-iphoneos,x86_64-arm64-iphonesimulator}/static
-          mkdir -p linux/{x86_64,i386}/{shared,static}
+          mkdir -p linux/x86_64/{shared,static}
 
           # Organize Android artifacts
           mv librcenet-android-arm64-v8a--release-static/lib/*.a android/arm64-v8a/static/
@@ -172,8 +172,6 @@ jobs:
           # Organize BSD artifacts
           mv librcenet-bsd-x86_64--release-static/lib/*.a bsd/x86_64/static/
           mv librcenet-bsd-x86_64--release-shared/lib/*.so bsd/x86_64/shared/
-          mv librcenet-bsd-i386--release-static/lib/*.a bsd/i386/static/
-          mv librcenet-bsd-i386--release-shared/lib/*.so bsd/i386/shared/
           tar -czvf librcenet-bsd.tar.gz bsd/
 
           # Organize Windows artifacts
@@ -198,8 +196,6 @@ jobs:
           # Organize Linux artifacts
           mv librcenet-linux-x86_64--release-static/lib/*.a linux/x86_64/static/
           mv librcenet-linux-x86_64--release-shared/lib/*.so linux/x86_64/shared/
-          mv librcenet-linux-i386--release-static/lib/*.a linux/i386/static/
-          mv librcenet-linux-i386--release-shared/lib/*.so linux/i386/shared/
           tar -czvf librcenet-linux.tar.gz linux/
 
           # Organize Include artifacts
