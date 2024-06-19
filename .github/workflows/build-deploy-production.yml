@@ -17,8 +17,6 @@ jobs:
         config:
         - { runner: ubuntu-latest,  platform: bsd,                                 arch: x86_64, kind: shared }
         - { runner: ubuntu-latest,  platform: bsd,                                 arch: x86_64, kind: static }
-        - { runner: ubuntu-latest,  platform: bsd,                                 arch: i386, kind: shared }
-        - { runner: ubuntu-latest,  platform: bsd,                                 arch: i386, kind: static }
         - { runner: windows-latest, platform: windows,                             arch: x86, kind: shared }   # Windows MSVC
         - { runner: windows-latest, platform: windows,                             arch: x86, kind: static }   # Windows MSVC
         - { runner: windows-latest, platform: windows,                             arch: x64, kind: shared }   # Windows MSVC
@@ -29,8 +27,6 @@ jobs:
         - { runner: windows-latest, platform: mingw,                               arch: x86_64, msys_arch: x86_64, msys_msystem: mingw64, kind: static } # Windows MinGW
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: shared }
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: static }
-        - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: shared }
-        - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: static }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86, kind: shared }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86, kind: static }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86_64, kind: shared }
