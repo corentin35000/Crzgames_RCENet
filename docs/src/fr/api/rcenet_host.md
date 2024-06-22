@@ -234,9 +234,9 @@ ENET_API ENetHost * enet_host_create (ENetAddressType type, const ENetAddress *a
   - `address`: The local address to bind the host to. Use NULL for an unspecified address.
   - `peerCount`: The maximum number of peers that the host should support. The maximum is 65535 clients, can be used with the macro: ENET_PROTOCOL_MAXIMUM_PEER_ID
   - `channelLimit`: The maximum number of channels allowed; if 0, then this is equivalent to ENET_PROTOCOL_MAXIMUM_CHANNEL_COUNT (255).
-  - `incomingBandwidth`: The incoming bandwidth of the host in bytes/second.
-  - `outgoingBandwidth`: The outgoing bandwidth of the host in bytes/second.
-
+  - `incomingBandwidth`: The incoming bandwidth of the host in bytes/second. If 0, ENet will assume unlimited bandwidth.
+  - `outgoingBandwidth`: The outgoing bandwidth of the host in bytes/second. If 0, ENet will assume unlimited bandwidth.
+  
 - **Returns:** A pointer to the newly created `ENetHost`, or NULL on failure.
 
 <br /><br />
