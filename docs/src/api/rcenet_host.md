@@ -232,7 +232,7 @@ ENET_API ENetHost * enet_host_create (ENetAddressType type, const ENetAddress *a
 - **Parameters:**
   - `type`: The type of address (IPv4, IPv6) the host will use.
   - `address`: The local address to bind the host to. Use NULL for an unspecified address.
-  - `peerCount`: The maximum number of peers that the host should support. If 0, then this is equivalent to ENET_PROTOCOL_MAXIMUM_PEER_ID (65535).
+  - `peerCount`: The maximum number of peers that the host should support.
   - `channelLimit`: The maximum number of channels allowed; if 0, then this is equivalent to ENET_PROTOCOL_MAXIMUM_CHANNEL_COUNT (255).
   - `incomingBandwidth`: The incoming bandwidth of the host in bytes/second.
   - `outgoingBandwidth`: The outgoing bandwidth of the host in bytes/second.
