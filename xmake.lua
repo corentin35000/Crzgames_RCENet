@@ -7,6 +7,16 @@ if is_plat("windows") then
     -- /W4 : Niveau d'avertissement 4 (equivalent a -Wextra en C)
     -- /permissive- : Bien que principalement un drapeau C++, peut aider à identifier des constructions ambigües
     add_cxflags("/W3", "/W4", "/permissive-", {force = true}) -- Niveaux d'avertissement et mode strict
+
+    -- Utiliser /MT pour la version Release
+    if is_mode("release") then
+        set_runtimes("MD")
+    end
+
+    -- Utiliser /MTd pour la version Debug
+    if is_mode("debug") then
+        set_runtimes("MDd")
+    end
 else
     -- Configuration pour Unix-like
     -- -Wall : Active tous les avertissements de base
