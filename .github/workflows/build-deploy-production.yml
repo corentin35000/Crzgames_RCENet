@@ -198,7 +198,7 @@ jobs:
           tar -czvf include.tar.gz include/
 
       - name: Deploy assets binaries RCENet - Release Github
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             librcenet-android.zip
@@ -231,7 +231,7 @@ jobs:
         working-directory: ./docs
 
       - name: Deploy files website static for docs API RCENet
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.O2SWITCH_FTP_HOST }}
           username: ${{ secrets.O2SWITCH_FTP_USERNAME }}
