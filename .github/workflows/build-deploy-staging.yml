@@ -120,6 +120,27 @@ jobs:
           xmake install -v -o rcenet/
           ls -l -R rcenet/
 
+      - name: Create fatlib universal - macOS
+        if: ${{ matrix.config.sdk == 'macosx' }}
+        run: |
+          mkdir -p rcenet/universal/${{ matrix.config.kind }}
+          lipo -create rcenet/x86_64/${{ matrix.config.kind }}/librcenet.a rcenet/arm64/${{ matrix.config.kind }}/librcenet.a -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
+          rm -rf rcenet/x86_64 rcenet/arm64
+
+      - name: Create fatlib universal - iOS (iphoneos)
+        if: ${{ matrix.config.sdk == 'iphoneos' }}
+        run: |
+          mkdir -p rcenet/universal/${{ matrix.config.kind }}
+          lipo -create rcenet/arm64/${{ matrix.config.kind }}/librcenet.a rcenet/arm64e/${{ matrix.config.kind }}/librcenet.a -output rcenet/arm64-arm64e/${{ matrix.config.kind }}/librcenet.a
+          rm -rf rcenet/arm64 rcenet/arm64e
+
+      - name: Create fatlib universal - iOS (iphonesimulator)
+        if: ${{ matrix.config.sdk == 'iphonesimulator' }}
+        run: |
+          mkdir -p rcenet/universal/${{ matrix.config.kind }}
+          lipo -create rcenet/x86_64/${{ matrix.config.kind }}/librcenet.a rcenet/arm64/${{ matrix.config.kind }}/librcenet.a -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
+          rm -rf rcenet/x86_64 rcenet/arm64
+
       - name: Upload artifacts Binary RCENet
         uses: actions/upload-artifact@v4
         with:
