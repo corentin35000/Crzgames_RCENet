@@ -35,10 +35,10 @@ jobs:
         - { runner: ubuntu-latest,  platform: android,                             arch: armeabi-v7a, kind: static  }
         - { runner: ubuntu-latest,  platform: android,                             arch: arm64-v8a, kind: shared }
         - { runner: ubuntu-latest,  platform: android,                             arch: arm64-v8a, kind: static }
-        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: shared }
-        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: static }
-        - { runner: macos-14,       platform: ios,           sdk: iphoneos,        arch: "arm64,arm64e", kind: static }
-        - { runner: macos-14,       platform: ios,           sdk: iphonesimulator, arch: "x86_64,arm64", kind: static }
+        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: shared, target_minver=11.0 }
+        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: static, target_minver=11.0 }
+        - { runner: macos-14,       platform: ios,           sdk: iphoneos,        arch: "arm64,arm64e", kind: static, target_minver=12.0 }
+        - { runner: macos-14,       platform: ios,           sdk: iphonesimulator, arch: "x86_64,arm64", kind: static, target_minver=12.0 }
         mode: [debug]  # Rajouter : release (si besoin)
     name: ${{ matrix.config.platform }}-${{ matrix.config.arch }}-${{ matrix.config.sdk }}-${{ matrix.mode }}-${{ matrix.config.kind }}
     runs-on: ${{ matrix.config.runner }}
@@ -99,18 +99,17 @@ jobs:
 
       - name: Configure project with xMake - macOS
         if: ${{ matrix.config.sdk == 'macosx' }}
-        run: |
-          xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - iOS (iphoneos)
         if: ${{ matrix.config.sdk == 'iphoneos' }}
         # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework ou .a
-        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - iOS (iphonesimulator)
         if: ${{ matrix.config.sdk == 'iphonesimulator' }}
         # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework ou .a
-        run: xmake m package --plat=iphoneos --arch=${{ matrix.config.arch }} -f "--appledev=simulator --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        run: xmake m package --plat=iphoneos --arch=${{ matrix.config.arch }} -f "--appledev=simulator --target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Build project with xMake
         run: xmake
