@@ -55,8 +55,10 @@ jobs:
         - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: static }
         - { runner: macos-14,       platform: ios,           sdk: iphoneos,        arch: "arm64,arm64e", kind: static }
         - { runner: macos-14,       platform: ios,           sdk: iphonesimulator, arch: "x86_64,arm64", kind: static }
-        - { runner: macos-14,       platform: appletvos,     sdk: appletvos,       arch: "armv7,arm64,i386,x86_64", kind: static }
-        - { runner: macos-14,       platform: applexros,     sdk: xros,            arch: "arm64,x86_64", kind: static }
+        - { runner: macos-14,       platform: tvos,          sdk: appletvos,       arch: "arm64,x86_64", kind: static }
+        - { runner: macos-14,       platform: tvos,          sdk: appletvsimulator,arch: "arm64,x86_64", kind: static }
+        - { runner: macos-14,       platform: xros,          sdk: xros,            arch: "arm64,x86_64", kind: static }
+        - { runner: macos-14,       platform: xros,          sdk: xrossimulator,   arch: "arm64,x86_64", kind: static }
         mode: [debug]  # Rajouter : release (si besoin)
     name: ${{ matrix.config.platform }}-${{ matrix.config.arch }}-${{ matrix.config.sdk }}-${{ matrix.mode }}-${{ matrix.config.kind }}
     runs-on: ${{ matrix.config.runner }}
@@ -82,14 +84,14 @@ jobs:
             mingw-w64-${{ matrix.config.msys_arch }}-xmake
           update: true
 
-      - name: Setup new version xCode and Setup Command Line Tools - macOS / iOS
+      - name: Setup new version xCode and Setup Command Line Tools - macOS / iOS / tvOS / xrOS
         # Doc : https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md
         if: matrix.config.runner == 'macos-14'
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '15.4.0'
 
-      - name: Determine SDK Path and set SDKROOT - macOS / iOS
+      - name: Determine SDK Path and set SDKROOT - macOS / iOS / tvOS / xrOS
         if: matrix.config.runner == 'macos-14'
         run: |
           sdk="${{ matrix.config.sdk }}"
@@ -125,9 +127,29 @@ jobs:
           # à partir de l'API/SDK 23 d'Android ça sera compatible pour NEON et SANS NEON
           xmake config --ndk=${{ steps.setup-ndk.outputs.ndk-path }} --ndk_sdkver=23 --plat=${{ matrix.config.platform }} --arch=${{ matrix.config.arch }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes
 
-      - name: Configure project with xMake - macOS / tvOS / xrOS
-        if: ${{ matrix.config.sdk == 'macosx' || matrix.config.sdk == 'appletvos' || matrix.config.sdk == 'applexros' }}
+      - name: Configure project with xMake - macOS
+        if: ${{ matrix.config.sdk == 'macosx' }}
         run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=11.0 --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+
+      - name: Configure project with xMake - tvOS (appletvos)
+        if: ${{ matrix.config.sdk == 'appletvos' }}
+        # Pas de library shared pour tvOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
+        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=11.0 --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+
+      - name: Configure project with xMake - tvOS (appletvsimulator)
+        if: ${{ matrix.config.sdk == 'appletvsimulator' }}
+        # Pas de library shared pour tvOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
+        run: xmake m package --plat=appletvos --arch=${{ matrix.config.arch }} -f "--appledev=simulator --target_minver=11.0 --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+
+      - name: Configure project with xMake - xROS (xros)
+        if: ${{ matrix.config.sdk == 'xros' }}
+        # Pas de library shared pour tvOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
+        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+
+      - name: Configure project with xMake - xROS (xrossimulator)
+        if: ${{ matrix.config.sdk == 'xrossimulator' }}
+        # Pas de library shared pour tvOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
+        run: xmake m package --plat=xros --arch=${{ matrix.config.arch }} -f "--appledev=simulator --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - iOS (iphoneos)
         if: ${{ matrix.config.sdk == 'iphoneos' }}
