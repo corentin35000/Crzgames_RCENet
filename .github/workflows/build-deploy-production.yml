@@ -17,16 +17,32 @@ jobs:
         config:
         - { runner: ubuntu-latest,  platform: bsd,                                 arch: x86_64, kind: shared }
         - { runner: ubuntu-latest,  platform: bsd,                                 arch: x86_64, kind: static }
-        - { runner: windows-latest, platform: windows,                             arch: x86, kind: shared }   # Windows MSVC
-        - { runner: windows-latest, platform: windows,                             arch: x86, kind: static }   # Windows MSVC
-        - { runner: windows-latest, platform: windows,                             arch: x64, kind: shared }   # Windows MSVC
-        - { runner: windows-latest, platform: windows,                             arch: x64, kind: static }   # Windows MSVC
-        - { runner: windows-latest, platform: windows,                             arch: arm64, kind: shared } # Windows MSVC
-        - { runner: windows-latest, platform: windows,                             arch: arm64, kind: static } # Windows MSVC
-        - { runner: windows-latest, platform: mingw,                               arch: i386, msys_arch: i686, msys_msystem: mingw32, kind: static } # Windows MinGW
+        - { runner: ubuntu-latest,  platform: bsd,                                 arch: i386, kind: shared }
+        - { runner: ubuntu-latest,  platform: bsd,                                 arch: i386, kind: static }
+        - { runner: windows-latest, platform: windows,                             arch: x86, kind: shared }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: x86, kind: static }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: x64, kind: shared }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: x64, kind: static }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm, kind: shared }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm, kind: static }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm64, kind: shared }   # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm64, kind: static }   # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm64ec, kind: shared } # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm64ec, kind: static } # Windows MSVC
+        - { runner: windows-latest, platform: mingw,                               arch: i386, msys_arch: i686, msys_msystem: mingw32, kind: static }     # Windows MinGW
         - { runner: windows-latest, platform: mingw,                               arch: x86_64, msys_arch: x86_64, msys_msystem: mingw64, kind: static } # Windows MinGW
+        - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: shared }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: static }
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: shared }
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: static }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: arm, kind: shared }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: arm, kind: static }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: arm64, kind: shared }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: arm64, kind: static }
+        - { runner: ubuntu-latest,  platform: haiku,                               arch: i386, kind: shared }
+        - { runner: ubuntu-latest,  platform: haiku,                               arch: i386, kind: static }
+        - { runner: ubuntu-latest,  platform: haiku,                               arch: x86_64, kind: shared }
+        - { runner: ubuntu-latest,  platform: haiku,                               arch: x86_64, kind: static }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86, kind: shared }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86, kind: static }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86_64, kind: shared }
@@ -35,16 +51,34 @@ jobs:
         - { runner: ubuntu-latest,  platform: android,                             arch: armeabi-v7a, kind: static  }
         - { runner: ubuntu-latest,  platform: android,                             arch: arm64-v8a, kind: shared }
         - { runner: ubuntu-latest,  platform: android,                             arch: arm64-v8a, kind: static }
-        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: shared, target_minver=11.0 }
-        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: static, target_minver=11.0 }
-        - { runner: macos-14,       platform: ios,           sdk: iphoneos,        arch: "arm64,arm64e", kind: static, target_minver=12.0 }
-        - { runner: macos-14,       platform: ios,           sdk: iphonesimulator, arch: "x86_64,arm64", kind: static, target_minver=12.0 }
-        mode: [release]  # Rajouter : debug (si besoin)
+        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: shared }
+        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: static }
+        - { runner: macos-14,       platform: ios,           sdk: iphoneos,        arch: "arm64,arm64e", kind: static }
+        - { runner: macos-14,       platform: ios,           sdk: iphonesimulator, arch: "x86_64,arm64", kind: static }
+        mode: [debug]  # Rajouter : release (si besoin)
     name: ${{ matrix.config.platform }}-${{ matrix.config.arch }}-${{ matrix.config.sdk }}-${{ matrix.mode }}-${{ matrix.config.kind }}
     runs-on: ${{ matrix.config.runner }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup dependencies i386 - Linux / BSD
+        if: ${{ matrix.config.arch == 'i386' && (matrix.config.platform == 'linux' || matrix.config.platform == 'bsd') }}
+        run: sudo apt-get update && sudo apt-get install -y gcc-multilib g++-multilib
+
+      - name: Setup MSys2 - MinGW
+        if: ${{ matrix.config.platform == 'mingw' }}
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{ matrix.config.msys_msystem }}
+          install: >-
+            base-devel 
+            git 
+            unzip 
+            p7zip 
+            mingw-w64-${{ matrix.config.msys_arch }}-toolchain 
+            mingw-w64-${{ matrix.config.msys_arch }}-xmake
+          update: true
 
       - name: Setup new version xCode and Setup Command Line Tools - macOS / iOS
         # Doc : https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md
@@ -60,14 +94,6 @@ jobs:
           SDKROOT=$(xcrun --sdk $sdk --show-sdk-path)
           echo "SDKROOT=$SDKROOT" >> $GITHUB_ENV
           echo "Using SDK: $sdk"
-
-      - name: Setup MSys2 - MinGW
-        if: ${{ matrix.config.platform == 'mingw' }}
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: ${{ matrix.config.msys_msystem }}
-          install: base-devel git unzip p7zip mingw-w64-${{ matrix.config.msys_arch }}-toolchain mingw-w64-${{ matrix.config.msys_arch }}-xmake
-          update: true
 
       - name: Setup NDK latest LTS - Android
         if: ${{ matrix.config.platform == 'android' }}
@@ -99,17 +125,17 @@ jobs:
 
       - name: Configure project with xMake - macOS
         if: ${{ matrix.config.sdk == 'macosx' }}
-        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=11.0 --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - iOS (iphoneos)
         if: ${{ matrix.config.sdk == 'iphoneos' }}
-        # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework ou .a
-        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
+        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=12.0 --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - iOS (iphonesimulator)
         if: ${{ matrix.config.sdk == 'iphonesimulator' }}
-        # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework ou .a
-        run: xmake m package --plat=iphoneos --arch=${{ matrix.config.arch }} -f "--appledev=simulator --target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
+        run: xmake m package --plat=iphoneos --arch=${{ matrix.config.arch }} -f "--appledev=simulator --target_minver=12.0 --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Build project with xMake
         run: xmake
@@ -142,11 +168,19 @@ jobs:
           # Création de dossiers de destination basique
           mkdir -p android/{arm64-v8a,armeabi-v7a,x86,x86_64}/{shared,static}
           mkdir -p mingw/{x86_64,i386}/static
-          mkdir -p bsd/x86_64/{shared,static}
-          mkdir -p windows/{x64,x86,arm64}/{shared,static}
+          mkdir -p bsd/{x86_64,i386}/{shared,static}
+          mkdir -p windows/{x64,x86,arm,arm64,arm64ec}/{shared,static}
           mkdir -p macos/x86_64-arm64/{shared,static}
           mkdir -p ios/{arm64-arm64e-iphoneos,x86_64-arm64-iphonesimulator}/static
-          mkdir -p linux/x86_64/{shared,static}
+          mkdir -p linux/{x86_64,i386,arm,arm64}/{shared,static}
+          mkdir -p haiku/{x86_64,i386}/{shared,static}
+
+          # Organize Haiku artifacts
+          mv librcenet-haiku-x86_64--release-static/lib/*.a haiku/x86_64/static/
+          mv librcenet-haiku-i386--release-static/lib/*.a haiku/i386/static/
+          mv librcenet-haiku-x86_64--release-shared/lib/*.so haiku/x86_64/shared/
+          mv librcenet-haiku-i386--release-shared/lib/*.so haiku/i386/shared/
+          zip -r librcenet-haiku.zip haiku/
 
           # Organize Android artifacts
           mv librcenet-android-arm64-v8a--release-static/lib/*.a android/arm64-v8a/static/
@@ -167,15 +201,21 @@ jobs:
           # Organize BSD artifacts
           mv librcenet-bsd-x86_64--release-static/lib/*.a bsd/x86_64/static/
           mv librcenet-bsd-x86_64--release-shared/lib/*.so bsd/x86_64/shared/
+          mv librcenet-bsd-i386--release-static/lib/*.a bsd/i386/static/
+          mv librcenet-bsd-i386--release-shared/lib/*.so bsd/i386/shared/
           tar -czvf librcenet-bsd.tar.gz bsd/
 
           # Organize Windows artifacts
           mv librcenet-windows-x64--release-shared/bin/*.dll windows/x64/shared/
           mv librcenet-windows-x86--release-shared/bin/*.dll windows/x86/shared/
+          mv librcenet-windows-arm--release-shared/bin/*.dll windows/arm/shared/
           mv librcenet-windows-arm64--release-shared/bin/*.dll windows/arm64/shared/
+          mv librcenet-windows-arm64ec--release-shared/bin/*.dll windows/arm64ec/shared/
           mv librcenet-windows-x64--release-static/lib/*.lib windows/x64/static/
           mv librcenet-windows-x86--release-static/lib/*.lib windows/x86/static/
+          mv librcenet-windows-arm--release-static/lib/*.lib windows/arm/static/
           mv librcenet-windows-arm64--release-static/lib//*.lib windows/arm64/static/
+          mv librcenet-windows-arm64ec--release-static/lib/*.lib windows/arm64ec/static/
           zip -r librcenet-windows.zip windows/
 
           # Organize macOS artifacts
@@ -189,8 +229,14 @@ jobs:
           tar -czvf librcenet-ios.tar.gz ios/
 
           # Organize Linux artifacts
+          mv librcenet-linux-x86--release-static/lib/*.a linux/i386/static/
+          mv librcenet-linux-x86--release-shared/lib/*.so linux/i386/shared/
           mv librcenet-linux-x86_64--release-static/lib/*.a linux/x86_64/static/
           mv librcenet-linux-x86_64--release-shared/lib/*.so linux/x86_64/shared/
+          mv librcenet-linux-arm--release-static/lib/*.a linux/arm/static/
+          mv librcenet-linux-arm--release-shared/lib/*.so linux/arm/shared/
+          mv librcenet-linux-arm64--release-static/lib/*.a linux/arm64/static/
+          mv librcenet-linux-arm64--release-shared/lib/*.so linux/arm64/shared/
           tar -czvf librcenet-linux.tar.gz linux/
 
           # Organize Include artifacts
@@ -207,6 +253,7 @@ jobs:
             librcenet-ios.tar.gz
             librcenet-linux.tar.gz
             librcenet-bsd.tar.gz
+            librcenet-haiku.zip
             include.tar.gz
 
   build_deploy_website:
