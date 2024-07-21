@@ -54,6 +54,7 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 | **Android** | `.a / .so` | NDK (Clang) | static / shared |
 | **iOS** | `.a` | Clang | static |
 | **BSD** | `.a / .so` | Clang | static / shared |
+| **Haiku** | `.a / .so` | Clang | static / shared |
 | **Solaris** | `? / ?` | Clang | ? / ? |
 | **Xbox** |  |  |
 | **Nintendo Switch** |  |  |
