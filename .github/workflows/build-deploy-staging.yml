@@ -17,16 +17,32 @@ jobs:
         config:
         - { runner: ubuntu-latest,  platform: bsd,                                 arch: x86_64, kind: shared }
         - { runner: ubuntu-latest,  platform: bsd,                                 arch: x86_64, kind: static }
-        - { runner: windows-latest, platform: windows,                             arch: x86, kind: shared }   # Windows MSVC
-        - { runner: windows-latest, platform: windows,                             arch: x86, kind: static }   # Windows MSVC
-        - { runner: windows-latest, platform: windows,                             arch: x64, kind: shared }   # Windows MSVC
-        - { runner: windows-latest, platform: windows,                             arch: x64, kind: static }   # Windows MSVC
-        - { runner: windows-latest, platform: windows,                             arch: arm64, kind: shared } # Windows MSVC
-        - { runner: windows-latest, platform: windows,                             arch: arm64, kind: static } # Windows MSVC
+        - { runner: ubuntu-latest,  platform: bsd,                                 arch: i386, kind: shared }
+        - { runner: ubuntu-latest,  platform: bsd,                                 arch: i386, kind: static }
+        - { runner: windows-latest, platform: windows,                             arch: x86, kind: shared }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: x86, kind: static }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: x64, kind: shared }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: x64, kind: static }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm, kind: shared }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm, kind: static }     # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm64, kind: shared }   # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm64, kind: static }   # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm64ec, kind: shared } # Windows MSVC
+        - { runner: windows-latest, platform: windows,                             arch: arm64ec, kind: static } # Windows MSVC
         - { runner: windows-latest, platform: mingw,                               arch: i386, msys_arch: i686, msys_msystem: mingw32, kind: static } # Windows MinGW
         - { runner: windows-latest, platform: mingw,                               arch: x86_64, msys_arch: x86_64, msys_msystem: mingw64, kind: static } # Windows MinGW
+        - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: shared }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: static }
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: shared }
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: static }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: arm, kind: shared }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: arm, kind: static }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: arm64, kind: shared }
+        - { runner: ubuntu-latest,  platform: linux,                               arch: arm64, kind: static }
+        - { runner: ubuntu-latest,  platform: haiku,                               arch: i386, kind: shared }
+        - { runner: ubuntu-latest,  platform: haiku,                               arch: i386, kind: static }
+        - { runner: ubuntu-latest,  platform: haiku,                               arch: x86_64, kind: shared }
+        - { runner: ubuntu-latest,  platform: haiku,                               arch: x86_64, kind: static }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86, kind: shared }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86, kind: static }
         - { runner: ubuntu-latest,  platform: android,                             arch: x86_64, kind: shared }
