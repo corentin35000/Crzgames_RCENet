@@ -36,6 +36,7 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 | **iOS** | arm64 / arm64e (iphoneos) - arm64 / x86_64 (iphonesimulator) | iOS 12.0+ | ✓ |
 | **BSD** | x86 / x86_64 | glibc ?+ | ✓ |
 | **Solaris** | x86 / x86_64 | glibc ?+ | ✓ |
+| **Haiku** | x86 / x86_64 | glibc ?+ | ✓ |
 | **Xbox** | x64 | Xbox One+ |  |
 | **Nintendo Switch** | arm64 | Nintendo Switch+ |  |
 | **Playstation** | x64 | Playstation4+ |  |
