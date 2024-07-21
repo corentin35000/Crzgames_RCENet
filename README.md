@@ -29,7 +29,7 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 
 | Platform | Architectures | System Version | Compatible |
 |----------|---------------|----------------|------------|
-| **Windows** | x64 / x86 / arm / arm64 / arm64ec | Windows Vista+  | ✓          |
+| **Windows** | x86 / x64 / / arm / arm64 / arm64ec | Windows Vista+  | ✓          |
 | **macOS** | Intel x86_64 / Apple Silicon arm64 | macOS 11.0+ | ✓ |
 | **Linux** | x86 / x86_64 / arm / arm64 | glibc ?+ | ✓ |
 | **Android** | arm64-v8a / armeabi-v7a / x86_64 / x86 | Android 6.0+ | ✓ |
