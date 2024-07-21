@@ -29,16 +29,17 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 
 | Platform | Architectures | System Version | Compatible |
 |----------|---------------|----------------|------------|
-| **Windows** | x86 / x64 / arm / arm64 / arm64ec | Windows Vista+  | ✓          |
+| **Windows-MSVC** | x86 / x64 / arm / arm64 / arm64ec | Windows Vista+  | ✓          |
+| **Windows-MinGW** | x86 / x64 | Windows Vista+  | ✓          |
 | **macOS** | Intel x86_64 / Apple Silicon arm64 | macOS 11.0+ | ✓ |
 | **visionOS** | x86_64 / arm64 | visionOS 1.2+ | ✓ |
 | **tvOS** | x86_64 / arm64 | tvOS 12.0+ | ✓ |
-| **Linux** | x86 / x86_64 / arm / arm64 | glibc ?+ | ✓ |
 | **Android** | arm64-v8a / armeabi-v7a / x86_64 / x86 | Android 6.0+ | ✓ |
 | **iOS** | arm64 / arm64e (iphoneos) - arm64 / x86_64 (iphonesimulator) | iOS 12.0+ | ✓ |
 | **BSD** | x86 / x86_64 | glibc ?+ | ✓ |
-| **Solaris** | x86 / x86_64 | glibc ?+ | ✓ |
+| **Linux** | x86 / x86_64 / arm / arm64 | glibc ?+ | ✓ |
 | **Haiku** | x86 / x86_64 | glibc ?+ | ✓ |
+| **Solaris** | x86 / x86_64 | glibc ?+ | ✓ |
 | **Xbox** | x64 | Xbox One+ |  |
 | **Nintendo Switch** | arm64 | Nintendo Switch+ |  |
 | **Playstation** | x64 | Playstation4+ |  |
@@ -54,9 +55,9 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 | **macOS** | `.a / .dylib` | Clang | static / shared |
 | **visionOS** | `.a` | Clang | static |
 | **tvOS** | `.a` | Clang | static |
-| **Linux** | `.a / .so` | GCC | static / shared |
 | **Android** | `.a / .so` | NDK (Clang) | static / shared |
 | **iOS** | `.a` | Clang | static |
+| **Linux** | `.a / .so` | GCC | static / shared |
 | **BSD** | `.a / .so` | Clang | static / shared |
 | **Haiku** | `.a / .so` | Clang | static / shared |
 | **Solaris** | `? / ?` | Clang | ? / ? |
