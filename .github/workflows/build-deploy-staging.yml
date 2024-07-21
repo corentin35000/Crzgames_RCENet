@@ -62,6 +62,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup dependencies i386 - Linux / BSD
+        if: ${{ matrix.config.arch == 'i386' && (matrix.config.platform == 'linux' || matrix.config.platform == 'bsd') }}
+        run: sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386 gcc-multilib g++-multilib
+
       - name: Setup new version xCode and Setup Command Line Tools - macOS / iOS
         # Doc : https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md
         if: matrix.config.runner == 'macos-14'
