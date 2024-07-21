@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.6.1...v1.6.2) (2024-07-21)
+
+
+### Bug Fixes
+
+* test ([a7e52c4](https://github.com/corentin35000/Crzgames_RCENet/commit/a7e52c45d0a33885833dba83960d1b30730966e1))
+
 ## [1.6.1](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.6.0...v1.6.1) (2024-07-21)
 
 
