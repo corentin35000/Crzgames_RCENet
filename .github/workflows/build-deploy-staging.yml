@@ -135,12 +135,12 @@ jobs:
       - name: Configure project with xMake - tvOS (appletvos)
         if: ${{ matrix.config.sdk == 'appletvos' }}
         # Pas de library shared pour tvOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
-        run: xmake m package --plat=appletvos --arch=${{ matrix.config.arch }} -f "--target_minver=12.0 --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        run: xmake m package --plat=appletvos --arch=${{ matrix.config.arch }} -f "--mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - tvOS (appletvsimulator)
         if: ${{ matrix.config.sdk == 'appletvsimulator' }}
         # Pas de library shared pour tvOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
-        run: xmake m package --plat=appletvos --arch=${{ matrix.config.arch }} -f "--target_minver=12.0 --appledev=simulator --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        run: xmake m package --plat=appletvos --arch=${{ matrix.config.arch }} -f "--appledev=simulator --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - xROS (xros)
         if: ${{ matrix.config.sdk == 'xros' }}
