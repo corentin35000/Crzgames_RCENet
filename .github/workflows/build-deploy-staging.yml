@@ -125,17 +125,17 @@ jobs:
 
       - name: Configure project with xMake - macOS
         if: ${{ matrix.config.sdk == 'macosx' }}
-        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=11.0 --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - iOS (iphoneos)
         if: ${{ matrix.config.sdk == 'iphoneos' }}
         # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
-        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=12.0 --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - iOS (iphonesimulator)
         if: ${{ matrix.config.sdk == 'iphonesimulator' }}
         # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
-        run: xmake m package --plat=iphoneos --arch=${{ matrix.config.arch }} -f "--appledev=simulator --target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        run: xmake m package --plat=iphoneos --arch=${{ matrix.config.arch }} -f "--appledev=simulator --target_minver=12.0 --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Build project with xMake
         run: xmake
