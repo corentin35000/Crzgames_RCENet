@@ -31,8 +31,6 @@ jobs:
         - { runner: windows-latest, platform: windows,                             arch: arm64ec, kind: static } # Windows MSVC
         - { runner: windows-latest, platform: mingw,                               arch: i386, msys_arch: i686, msys_msystem: mingw32, kind: static }     # Windows MinGW
         - { runner: windows-latest, platform: mingw,                               arch: x86_64, msys_arch: x86_64, msys_msystem: mingw64, kind: static } # Windows MinGW
-        - { runner: windows-latest, platform: mingw,                               arch: arm, msys_arch: arm, msys_msystem: mingw32, kind: static }       # Windows MinGW
-        - { runner: windows-latest, platform: mingw,                               arch: arm64, msys_arch: aarch64, msys_msystem: mingw64, kind: static } # Windows MinGW
         - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: shared }
         - { runner: ubuntu-latest,  platform: linux,                               arch: i386, kind: static }
         - { runner: ubuntu-latest,  platform: linux,                               arch: x86_64, kind: shared }
@@ -68,21 +66,8 @@ jobs:
         if: ${{ matrix.config.arch == 'i386' && (matrix.config.platform == 'linux' || matrix.config.platform == 'bsd') }}
         run: sudo apt-get update && sudo apt-get install -y gcc-multilib g++-multilib
 
-      - name: Setup dependencies for ARM - MinGW
-        if: ${{ matrix.config.arch == 'arm' && matrix.config.platform == 'mingw' }}
-        run: |
-          pacman -Suy
-          pacman -S mingw-w64-clang-arm-clang
-
-      - name: Setup dependencies for ARM64 - MinGW
-        if: ${{ matrix.config.arch == 'arm64' && matrix.config.platform == 'mingw' }}
-        run: |
-          clangarm64.exe
-          pacman -Suy
-          pacman -S mingw-w64-clang-aarch64-clang
-
       - name: Setup MSys2 - MinGW
-        if: ${{ matrix.config.platform == 'mingw' && matrix.config.arch != 'arm' && matrix.config.arch != 'arm64' }}
+        if: ${{ matrix.config.platform == 'mingw' }}
         uses: msys2/setup-msys2@v2
         with:
           msystem: ${{ matrix.config.msys_msystem }}
@@ -144,12 +129,12 @@ jobs:
 
       - name: Configure project with xMake - iOS (iphoneos)
         if: ${{ matrix.config.sdk == 'iphoneos' }}
-        # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework ou .a
+        # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
         run: xmake m package --plat=${{ matrix.config.sdk }} --arch=${{ matrix.config.arch }} -f "--target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - iOS (iphonesimulator)
         if: ${{ matrix.config.sdk == 'iphonesimulator' }}
-        # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework ou .a
+        # Pas de library shared pour iOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
         run: xmake m package --plat=iphoneos --arch=${{ matrix.config.arch }} -f "--appledev=simulator --target_minver=${{ matrix.config.target_minver }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Build project with xMake
@@ -161,7 +146,14 @@ jobs:
           xmake install -v -o rcenet/
           ls -l -R rcenet/
 
-      - name: Create fatlib universal - macOS
+      - name: Create fatlib universal (dynamic) - macOS
+        if: ${{ matrix.config.sdk == 'macosx' }}
+        run: |
+          mkdir -p rcenet/x86_64-arm64/${{ matrix.config.kind }}
+          lipo -create rcenet/x86_64/${{ matrix.config.kind }}/librcenet.dylib rcenet/arm64/${{ matrix.config.kind }}/librcenet.dylib -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.dylib
+          rm -rf rcenet/x86_64 rcenet/arm64
+
+      - name: Create fatlib universal (static) - macOS
         if: ${{ matrix.config.sdk == 'macosx' }}
         run: |
           mkdir -p rcenet/x86_64-arm64/${{ matrix.config.kind }}
