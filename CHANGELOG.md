@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.6.0](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.5.1...v1.6.0) (2024-07-21)
+
+
+### Features
+
+* add minimal version build for sdk ios and macox ([1398212](https://github.com/corentin35000/Crzgames_RCENet/commit/1398212ebef849dcf7b9ba0309900d3cd6d11bcd))
+* create fatlib universal for macos and ios ([327a05d](https://github.com/corentin35000/Crzgames_RCENet/commit/327a05d33125e5f64e5100fe1132df7b8608946b))
+
+
+### Bug Fixes
+
+* fixed documentation is not correct for api enet_host_create ([e819c90](https://github.com/corentin35000/Crzgames_RCENet/commit/e819c90584e6d99540c4e9371acb4e2d8be7abf3))
+
 ## [1.5.1](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.5.0...v1.5.1) (2024-06-19)
 
 
