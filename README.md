@@ -31,8 +31,8 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 |----------|---------------|----------------|------------|
 | **Windows** | x86 / x64 / arm / arm64 / arm64ec | Windows Vista+  | ✓          |
 | **macOS** | Intel x86_64 / Apple Silicon arm64 | macOS 11.0+ | ✓ |
-| **visionOS** | x86_64 / arm64 | visionOS 1.2+ | ✓ |
-| **tvOS** | x86_64 / arm64 | tvOS 12.0+ | ✓ |
+| **visionOS** | x86_64 / arm64 (xros) - x86_64 / arm64 (xrsimulator) | visionOS 1.2+ | ✓ |
+| **tvOS** | x86_64 / arm64 (appletvos) - x86_64 / arm64 (appletvsimulator) | tvOS 12.0+ | ✓ |
 | **iOS** | arm64 / arm64e (iphoneos) - arm64 / x86_64 (iphonesimulator) | iOS 12.0+ | ✓ |
 | **Android** | arm64-v8a / armeabi-v7a / x86_64 / x86 | Android 6.0+ | ✓ |
 | **BSD** | x86 / x86_64 | glibc ?+ | ✓ |
