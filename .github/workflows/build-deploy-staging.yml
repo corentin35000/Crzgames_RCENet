@@ -51,10 +51,10 @@ jobs:
         - { runner: ubuntu-latest,  platform: android,                             arch: armeabi-v7a, kind: static  }
         - { runner: ubuntu-latest,  platform: android,                             arch: arm64-v8a, kind: shared }
         - { runner: ubuntu-latest,  platform: android,                             arch: arm64-v8a, kind: static }
-        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: shared, target_minver=11.0 }
-        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: static, target_minver=11.0 }
-        - { runner: macos-14,       platform: ios,           sdk: iphoneos,        arch: "arm64,arm64e", kind: static, target_minver=12.0 }
-        - { runner: macos-14,       platform: ios,           sdk: iphonesimulator, arch: "x86_64,arm64", kind: static, target_minver=12.0 }
+        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: shared, target_minver="11.0" }
+        - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: static, target_minver="11.0" }
+        - { runner: macos-14,       platform: ios,           sdk: iphoneos,        arch: "arm64,arm64e", kind: static, target_minver="12.0" }
+        - { runner: macos-14,       platform: ios,           sdk: iphonesimulator, arch: "x86_64,arm64", kind: static, target_minver="12.0" }
         mode: [debug]  # Rajouter : release (si besoin)
     name: ${{ matrix.config.platform }}-${{ matrix.config.arch }}-${{ matrix.config.sdk }}-${{ matrix.mode }}-${{ matrix.config.kind }}
     runs-on: ${{ matrix.config.runner }}
