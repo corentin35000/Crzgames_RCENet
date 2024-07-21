@@ -62,8 +62,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup dependencies i386 - Linux / BSD
-        if: ${{ matrix.config.arch == 'i386' && (matrix.config.platform == 'linux' || matrix.config.platform == 'bsd') }}
+      - name: Setup dependencies i386 - Linux / BSD / Haiku
+        if: ${{ matrix.config.arch == 'i386' && (matrix.config.platform == 'linux' || matrix.config.platform == 'bsd') || matrix.config.platform == 'haiku') }}
         run: sudo apt-get update && sudo apt-get install -y gcc-multilib g++-multilib
 
       - name: Setup MSys2 - MinGW
