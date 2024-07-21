@@ -29,8 +29,7 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 
 | Platform | Architectures | System Version | Compatible |
 |----------|---------------|----------------|------------|
-| **Windows-MSVC** | x86 / x64 / arm / arm64 / arm64ec | Windows Vista+  | ✓          |
-| **Windows-MinGW** | x86 / x64 | Windows Vista+  | ✓          |
+| **Windows** | x86 / x64 / arm / arm64 / arm64ec | Windows Vista+  | ✓          |
 | **macOS** | Intel x86_64 / Apple Silicon arm64 | macOS 11.0+ | ✓ |
 | **visionOS** | x86_64 / arm64 | visionOS 1.2+ | ✓ |
 | **tvOS** | x86_64 / arm64 | tvOS 12.0+ | ✓ |
