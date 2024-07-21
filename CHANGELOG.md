@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.5](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.6.4...v1.6.5) (2024-07-21)
+
+
+### Bug Fixes
+
+* toto ([432cecf](https://github.com/corentin35000/Crzgames_RCENet/commit/432cecfc6ae878a1e4ae1ec232f0750be52b62dd))
+
 ## [1.6.4](https://github.com/corentin35000/Crzgames_RCENet/compare/v1.6.3...v1.6.4) (2024-07-21)
 
 
