@@ -56,7 +56,7 @@ jobs:
         - { runner: macos-14,       platform: ios,           sdk: iphoneos,        arch: "arm64,arm64e", kind: static }
         - { runner: macos-14,       platform: ios,           sdk: iphonesimulator, arch: "x86_64,arm64", kind: static }
         - { runner: macos-14,       platform: appletvos,     sdk: appletvos,       arch: "armv7,arm64,i386,x86_64", kind: static }
-        - { runner: macos-14,       platform: applexros,     sdk: applexros,       arch: "arm64,x86_64", kind: static }
+        - { runner: macos-14,       platform: applexros,     sdk: xros,            arch: "arm64,x86_64", kind: static }
         mode: [debug]  # Rajouter : release (si besoin)
     name: ${{ matrix.config.platform }}-${{ matrix.config.arch }}-${{ matrix.config.sdk }}-${{ matrix.mode }}-${{ matrix.config.kind }}
     runs-on: ${{ matrix.config.runner }}
