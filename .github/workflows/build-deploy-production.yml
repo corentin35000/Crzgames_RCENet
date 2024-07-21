@@ -211,11 +211,11 @@ jobs:
           mv librcenet-windows-arm--release-static/lib/*.lib windows/arm/static/
           mv librcenet-windows-arm64--release-static/lib//*.lib windows/arm64/static/
           mv librcenet-windows-arm64ec--release-static/lib/*.lib windows/arm64ec/static/
-          mv librcenet-windows-x64--release-shared/lib/*.dll windows/x64/shared/
-          mv librcenet-windows-x86--release-shared/lib/*.dll windows/x86/shared/
-          mv librcenet-windows-arm--release-shared/lib/*.dll windows/arm/shared/
-          mv librcenet-windows-arm64--release-shared/lib/*.dll windows/arm64/shared/
-          mv librcenet-windows-arm64ec--release-shared/lib/*.dll windows/arm64ec/shared/
+          mv librcenet-windows-x64--release-shared/bin/*.dll windows/x64/shared/
+          mv librcenet-windows-x86--release-shared/bin/*.dll windows/x86/shared/
+          mv librcenet-windows-arm--release-shared/bin/*.dll windows/arm/shared/
+          mv librcenet-windows-arm64--release-shared/bin/*.dll windows/arm64/shared/
+          mv librcenet-windows-arm64ec--release-shared/bin/*.dll windows/arm64ec/shared/
           zip -r librcenet-windows.zip windows/
 
           # Organize macOS artifacts
