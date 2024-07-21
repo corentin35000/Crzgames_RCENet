@@ -126,7 +126,7 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 
 
 ## 🔄 Cycle Development
-1. Generate project for Executable (Visual Studio 2022, xCode..)
+1. Generate project for Executable (Visual Studio 2022, xCode...)
 2. Open project with Visual Studio, xCode..
 3. Edit or add files in 'src' or 'include' folder
 4. Run project
