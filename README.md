@@ -52,6 +52,8 @@ Ensuring that your game runs smoothly requires understanding the minimal system 
 | **Windows-MSVC** | `.lib / .dll` | CL | static / shared |
 | **Windows-MinGW** | `.a` | GCC | static |
 | **macOS** | `.a / .dylib` | Clang | static / shared |
+| **visionOS** | `.a` | Clang | static |
+| **tvOS** | `.a` | Clang | static |
 | **Linux** | `.a / .so` | GCC | static / shared |
 | **Android** | `.a / .so` | NDK (Clang) | static / shared |
 | **iOS** | `.a` | Clang | static |
