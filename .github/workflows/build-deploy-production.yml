@@ -55,7 +55,7 @@ jobs:
         - { runner: macos-14,       platform: macos,         sdk: macosx,          arch: "x86_64,arm64", kind: static }
         - { runner: macos-14,       platform: ios,           sdk: iphoneos,        arch: "arm64,arm64e", kind: static }
         - { runner: macos-14,       platform: ios,           sdk: iphonesimulator, arch: "x86_64,arm64", kind: static }
-        mode: [release]  # Rajouter : release (si besoin)
+        mode: [release]
     name: ${{ matrix.config.platform }}-${{ matrix.config.arch }}-${{ matrix.config.sdk }}-${{ matrix.mode }}-${{ matrix.config.kind }}
     runs-on: ${{ matrix.config.runner }}
     steps:
@@ -111,8 +111,8 @@ jobs:
         with:
           xmake-version: latest
 
-      - name: Configure project with xMake - Windows-MSVC / Linux / BSD
-        if: ${{ matrix.config.platform == 'windows' || matrix.config.platform == 'linux' || matrix.config.platform == 'bsd' }}
+      - name: Configure project with xMake - Windows-MSVC / Linux / BSD / Haiku
+        if: ${{ matrix.config.platform == 'windows' || matrix.config.platform == 'linux' || matrix.config.platform == 'bsd' || matrix.config.platform == 'haiku' }}
         run: xmake config --plat=${{ matrix.config.platform }} --arch=${{ matrix.config.arch }} --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes
 
       - name: Configure project with xMake - Android
@@ -178,8 +178,6 @@ jobs:
           # Organize Haiku artifacts
           mv librcenet-haiku-x86_64--release-static/lib/*.a haiku/x86_64/static/
           mv librcenet-haiku-i386--release-static/lib/*.a haiku/i386/static/
-          mv librcenet-haiku-x86_64--release-shared/lib/*.so haiku/x86_64/shared/
-          mv librcenet-haiku-i386--release-shared/lib/*.so haiku/i386/shared/
           zip -r librcenet-haiku.zip haiku/
 
           # Organize Android artifacts
@@ -206,11 +204,6 @@ jobs:
           tar -czvf librcenet-bsd.tar.gz bsd/
 
           # Organize Windows artifacts
-          mv librcenet-windows-x64--release-shared/bin/*.dll windows/x64/shared/
-          mv librcenet-windows-x86--release-shared/bin/*.dll windows/x86/shared/
-          mv librcenet-windows-arm--release-shared/bin/*.dll windows/arm/shared/
-          mv librcenet-windows-arm64--release-shared/bin/*.dll windows/arm64/shared/
-          mv librcenet-windows-arm64ec--release-shared/bin/*.dll windows/arm64ec/shared/
           mv librcenet-windows-x64--release-static/lib/*.lib windows/x64/static/
           mv librcenet-windows-x86--release-static/lib/*.lib windows/x86/static/
           mv librcenet-windows-arm--release-static/lib/*.lib windows/arm/static/
