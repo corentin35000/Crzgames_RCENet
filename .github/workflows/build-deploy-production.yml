@@ -229,8 +229,8 @@ jobs:
           tar -czvf librcenet-ios.tar.gz ios/
 
           # Organize Linux artifacts
-          mv librcenet-linux-x86--release-static/lib/*.a linux/i386/static/
-          mv librcenet-linux-x86--release-shared/lib/*.so linux/i386/shared/
+          mv librcenet-linux-i386--release-static/lib/*.a linux/i386/static/
+          mv librcenet-linux-i386--release-shared/lib/*.so linux/i386/shared/
           mv librcenet-linux-x86_64--release-static/lib/*.a linux/x86_64/static/
           mv librcenet-linux-x86_64--release-shared/lib/*.so linux/x86_64/shared/
           mv librcenet-linux-arm--release-static/lib/*.a linux/arm/static/
