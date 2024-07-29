@@ -171,6 +171,22 @@ jobs:
           xmake install -v -o rcenet/
           ls -l -R rcenet/
 
+      - name: Check architecture - macOS
+        if: ${{ matrix.config.sdk == 'macosx' }}
+        run: lipo -info rcenet/lib/librcenet.dylib
+
+      - name: Check architecture - iOS
+        if: ${{ matrix.config.platform == 'ios' }}
+        run: lipo -info rcenet/lib/librcenet.a
+
+      - name: Check architecture - tvOS
+        if: ${{ matrix.config.platform == 'tvos' }}
+        run: lipo -info rcenet/lib/librcenet.a
+
+      - name: Check architecture - xROS
+        if: ${{ matrix.config.platform == 'xros' }}
+        run: lipo -info rcenet/lib/librcenet.a
+
       - name: Create fatlib universal (dynamic) - macOS
         if: ${{ matrix.config.sdk == 'macosx' }}
         run: |
