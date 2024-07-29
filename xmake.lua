@@ -2,20 +2,11 @@ add_rules("mode.debug", "mode.release")
 
 -- Configuration des drapeaux du compilateur
 if is_plat("windows") then
-    -- Détection de l'outil de compilation
-    if is_arch("x86", "x64", "arm64") then
-        -- Configuration pour Windows
-        -- /W3 : Niveau d'avertissement 3 (equivalent a -Wall en C)
-        -- /W4 : Niveau d'avertissement 4 (equivalent a -Wextra en C)
-        -- /permissive- : Bien que principalement un drapeau C++, peut aider à identifier des constructions ambigües
-        add_cxflags("/W3", "/W4", "/permissive-", {force = true}) -- Niveaux d'avertissement et mode strict
-    elseif is_arch("arm", "arm64ec") then
-        -- Configuration pour Clang sur Windows
-        -- -Wall : Active tous les avertissements de base
-        -- -Wextra : Active des avertissements supplémentaires
-        -- -Wpedantic : Enforce strictement les standards C
-        add_cxflags("-Wall", "-Wextra", "-Wpedantic", {force = true})
-    end
+    -- Configuration pour Windows
+    -- /W3 : Niveau d'avertissement 3 (equivalent a -Wall en C)
+    -- /W4 : Niveau d'avertissement 4 (equivalent a -Wextra en C)
+    -- /permissive- : Bien que principalement un drapeau C++, peut aider à identifier des constructions ambigües
+    add_cxflags("/W3", "/W4", "/permissive-", {force = true}) -- Niveaux d'avertissement et mode strict
 
     -- Gestion des runtimes selon le mode de compilation
     if is_mode("release") then
