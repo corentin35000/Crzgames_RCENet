@@ -172,9 +172,6 @@ jobs:
         # a remplacer quand xmake auront fixer "xmake m package"
         # Pas de library shared pour tvOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
         run: |
-        #  xmake m package --plat=applexros --arch="arm64" -f "--appledev=simulator --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
-        #  xmake
-        #  xmake install -v -o rcenet2/
           xmake m package --plat=applexros --arch="x86_64" -f "--appledev=simulator --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - iOS (iphoneos)
