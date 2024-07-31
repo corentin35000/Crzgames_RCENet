@@ -29,7 +29,16 @@ typedef struct _ENetCallbacks
     void (ENET_CALLBACK * no_memory) (void);
 } ENetCallbacks;
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 extern void * enet_malloc (size_t);
 extern void   enet_free (void *);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // RCENET_CALLBACKS_H

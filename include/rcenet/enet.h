@@ -10,10 +10,6 @@
 #ifndef RCENET_ENET_H
 #define RCENET_ENET_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 // Inclusions et configurations basées sur la plateforme.
 #include <stdlib.h>
 #ifdef _WIN32
@@ -765,6 +761,11 @@ typedef struct _ENetEvent
    enet_uint32          data;
    ENetPacket *         packet;
 } ENetEvent;
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 /** 
   Initializes ENet globally.  Must be called prior to using any functions in

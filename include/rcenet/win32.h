@@ -18,8 +18,12 @@
 #pragma warning (disable: 4244) /* Désactive l'avertissement pour la conversion de 64 bits en 32 bits. */
 #pragma warning (disable: 4018) /* Désactive l'avertissement pour les comparaisons signées/non signées. */
 #pragma warning (disable: 4146) /* Désactive l'avertissement pour l'opérateur moins unaire sur un type non signé. */
+#ifndef _CRT_SECURE_NO_DEPRECATE
 #define _CRT_SECURE_NO_DEPRECATE /* Désactive les avertissements pour les fonctions CRT considérées comme non sécurisées. */
+#endif
+#ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS /* Désactive les avertissements pour l'utilisation de fonctions CRT non sécurisées. */
+#endif
 #endif
 #endif
 
