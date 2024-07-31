@@ -248,8 +248,8 @@ jobs:
           mkdir -p rcenet/x86_64-arm64/${{ matrix.config.kind }}
           lipo -create rcenet/lib/librcenet.a rcenet2/lib/librcenet.a -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
 
-      - name: Create fatlib universal (static) - xROS (xrossimulator)
-        if: ${{ matrix.config.sdk == 'xrossimulator' }}
+      - name: Create fatlib universal (static) - xROS (xrsimulator)
+        if: ${{ matrix.config.sdk == 'xrsimulator' }}
         run: |
           mkdir -p rcenet/x86_64-arm64/${{ matrix.config.kind }}
           lipo -create rcenet/lib/librcenet.a rcenet2/lib/librcenet.a -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
