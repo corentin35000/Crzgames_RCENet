@@ -218,14 +218,38 @@ jobs:
           mkdir -p rcenet/x86_64-arm64/${{ matrix.config.kind }}
           lipo -create rcenet/lib/librcenet.a rcenet2/lib/librcenet.a -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
 
-      - name: Create fatlib universal - iOS (iphoneos)
+      - name: Create fatlib universal (static) - iOS (iphoneos)
         if: ${{ matrix.config.sdk == 'iphoneos' }}
         run: |
           mkdir -p rcenet/arm64-arm64e/${{ matrix.config.kind }}
           lipo -create rcenet/lib/librcenet.a rcenet2/lib/librcenet.a -output rcenet/arm64-arm64e/${{ matrix.config.kind }}/librcenet.a
 
-      - name: Create fatlib universal - iOS (iphonesimulator)
+      - name: Create fatlib universal (static) - iOS (iphonesimulator)
         if: ${{ matrix.config.sdk == 'iphonesimulator' }}
+        run: |
+          mkdir -p rcenet/x86_64-arm64/${{ matrix.config.kind }}
+          lipo -create rcenet/lib/librcenet.a rcenet2/lib/librcenet.a -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
+
+      - name: Create fatlib universal (static) - tvOS (appletvos)
+        if: ${{ matrix.config.sdk == 'appletvos' }}
+        run: |
+          mkdir -p rcenet/x86_64-arm64/${{ matrix.config.kind }}
+          lipo -create rcenet/lib/librcenet.a rcenet2/lib/librcenet.a -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
+
+      - name: Create fatlib universal (static) - tvOS (appletvsimulator)
+        if: ${{ matrix.config.sdk == 'appletvsimulator' }}
+        run: |
+          mkdir -p rcenet/x86_64-arm64/${{ matrix.config.kind }}
+          lipo -create rcenet/lib/librcenet.a rcenet2/lib/librcenet.a -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
+
+      - name: Create fatlib universal (static) - xROS (xros)
+        if: ${{ matrix.config.sdk == 'xros' }}
+        run: |
+          mkdir -p rcenet/x86_64-arm64/${{ matrix.config.kind }}
+          lipo -create rcenet/lib/librcenet.a rcenet2/lib/librcenet.a -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
+
+      - name: Create fatlib universal (static) - xROS (xrossimulator)
+        if: ${{ matrix.config.sdk == 'xrossimulator' }}
         run: |
           mkdir -p rcenet/x86_64-arm64/${{ matrix.config.kind }}
           lipo -create rcenet/lib/librcenet.a rcenet2/lib/librcenet.a -output rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
@@ -238,21 +262,21 @@ jobs:
         if: ${{ matrix.config.sdk == 'macosx' && matrix.config.kind == 'static' }}
         run: lipo -info rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
         
-      - name: Check architecture - iOS (iphoneos)
+      - name: Check architecture (static) - iOS (iphoneos)
         if: ${{ matrix.config.platform == 'ios' && matrix.config.sdk == 'iphoneos' }}
         run: lipo -info rcenet/arm64-arm64e/${{ matrix.config.kind }}/librcenet.a
 
-      - name: Check architecture - iOS (iphonesimulator)
+      - name: Check architecture (static) - iOS (iphonesimulator)
         if: ${{ matrix.config.platform == 'ios' && matrix.config.sdk == 'iphonesimulator' }}
         run: lipo -info rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
 
-      - name: Check architecture - tvOS
-        if: ${{ matrix.config.platform == 'tvos' }}
-        run: lipo -info rcenet/lib/librcenet.a
+      - name: Check architecture (static) - tvOS (appletvos / appletvsimulator)
+        if: ${{ matrix.config.platform == 'appletvos' || matrix.config.platform == 'appletvsimulator' }}
+        run: lipo -info rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
 
-      - name: Check architecture - xROS
-        if: ${{ matrix.config.platform == 'xros' }}
-        run: lipo -info rcenet/lib/librcenet.a
+      - name: Check architecture (static) - xROS (xros / xrossimulator)
+        if: ${{ matrix.config.platform == 'xros' || matrix.config.platform == 'xrossimulator' }}
+        run: lipo -info rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
 
       - name: Upload artifacts Binary RCENet
         uses: actions/upload-artifact@v4
