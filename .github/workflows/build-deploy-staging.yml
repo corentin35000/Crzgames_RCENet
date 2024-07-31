@@ -172,9 +172,9 @@ jobs:
         # a remplacer quand xmake auront fixer "xmake m package"
         # Pas de library shared pour tvOS (.dylib) suite au restrictions d'Apple, utiliser .framework, .xcframework ou .a
         run: |
-          xmake m package --plat=applexros --arch="arm64" -f "--appledev=simulator --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
-          xmake
-          xmake install -v -o rcenet2/
+        #  xmake m package --plat=applexros --arch="arm64" -f "--appledev=simulator --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
+        #  xmake
+        #  xmake install -v -o rcenet2/
           xmake m package --plat=applexros --arch="x86_64" -f "--appledev=simulator --mode=${{ matrix.mode }} --kind=${{ matrix.config.kind }} --yes"
 
       - name: Configure project with xMake - iOS (iphoneos)
@@ -271,11 +271,11 @@ jobs:
         run: lipo -info rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
 
       - name: Check architecture (static) - tvOS (appletvos / appletvsimulator)
-        if: ${{ matrix.config.platform == 'appletvos' || matrix.config.platform == 'appletvsimulator' }}
+        if: ${{ matrix.config.sdk == 'appletvos' || matrix.config.sdk == 'appletvsimulator' }}
         run: lipo -info rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
 
       - name: Check architecture (static) - xROS (xros / xrsimulator)
-        if: ${{ matrix.config.platform == 'xros' || matrix.config.platform == 'xrsimulator' }}
+        if: ${{ matrix.config.sdk == 'xros' || matrix.config.sdk == 'xrsimulator' }}
         run: lipo -info rcenet/x86_64-arm64/${{ matrix.config.kind }}/librcenet.a
 
       - name: Upload artifacts Binary RCENet
